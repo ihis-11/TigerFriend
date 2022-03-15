@@ -1,1 +1,1 @@
-web: gunicorn tigerfriend:app
+web:gunicorn tigerfriend:app
