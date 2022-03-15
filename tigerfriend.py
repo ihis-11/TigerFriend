@@ -13,7 +13,7 @@ app = Flask(__name__, template_folder='templates')
 @app.route('/', methods=['GET'])
 @app.route('/home', methods=['GET'])
 def home():
-    html = render_template('home.html')
+    html = render_template('page2.html')
     response = make_response(html)
     return response
 
