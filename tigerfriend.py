@@ -10,7 +10,7 @@ app = Flask(__name__, template_folder='templates')
 
 #---------------------------------------------------------------------
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 @app.route('/home', methods=['GET'])
 def home():
     html = render_template('home.html')
@@ -43,5 +43,5 @@ def page4():
 
 #---------------------------------------------------------------------
 
-if __name__ == '__main__':
-   app.run(debug=True)
+#if __name__ == '__main__':
+ #  app.run(debug=True)
