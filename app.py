@@ -2,37 +2,44 @@
 # tigerfriend.py
 #---------------------------------------------------------------------
 
-from html import escape
 from flask import Flask, request, make_response, redirect, url_for, render_template
 
 #---------------------------------------------------------------------
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 #---------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
 @app.route('/home', methods=['GET'])
 def home():
-    return render_template('home.html')
+    html = render_template('home.html')
+    response = make_response(html)
+    return response
 
 #---------------------------------------------------------------------
 
 @app.route('/page2', methods=['GET'])
 def page2():
-    return render_template('page2.html')
+    html = render_template('page2.html')
+    response = make_response(html)
+    return response
 
 #---------------------------------------------------------------------
 
 @app.route('/page3', methods=['GET'])
 def page3():
-    return render_template('page3.html')
+    html = render_template('page3.html')
+    response = make_response(html)
+    return response
 
 #---------------------------------------------------------------------
 
 @app.route('/page4', methods=['GET'])
 def page4():
-    return render_template('page4.html')
+    html = render_template('page4.html')
+    response = make_response(html)
+    return response
 
 #---------------------------------------------------------------------
 
