@@ -19,29 +19,24 @@ def home():
 
 #---------------------------------------------------------------------
 
-@app.route('/page2', methods=['GET'])
+@app.route('/survey', methods=['GET'])
 def page2():
-    html = render_template('page2.html')
+    html = render_template('survey.html')
     response = make_response(html)
     return response
 
 #---------------------------------------------------------------------
 
-@app.route('/page3', methods=['GET'])
+@app.route('/matches', methods=['GET'])
 def page3():
-    html = render_template('page3.html')
+    html = render_template('matches.html')
     response = make_response(html)
     return response
 
 #---------------------------------------------------------------------
 
-@app.route('/page4', methods=['GET'])
+@app.route('/chat', methods=['GET'])
 def page4():
-    html = render_template('page4.html')
+    html = render_template('chat.html')
     response = make_response(html)
     return response
-
-#---------------------------------------------------------------------
-
-#if __name__ == '__main__':
- #  app.run(debug=True)
