@@ -3,7 +3,7 @@ import psycopg2
 
 def account_creation(net_id, year, maj):
     try:
-        connect = psycopg2.connect(host = "localhost",
+        connect = psycopg2.connect(host = "10.8.53.63",
                                    database = "TigerFriend",
                                    user = "postgres",
                                    password = "RNCHL")
@@ -27,7 +27,7 @@ def account_creation(net_id, year, maj):
 
 def account_population(net_id, user, bio, q1, q2):
     try:
-        connect = psycopg2.connect(host = "localhost",
+        connect = psycopg2.connect(host = "10.8.53.63",
                                    database = "TigerFriend",
                                    user = "postgres",
                                    password = "RNCHL")
@@ -54,7 +54,7 @@ def account_population(net_id, user, bio, q1, q2):
 
 def update_bio(net_id, bio):
     try:
-        connect = psycopg2.connect(host = "localhost",
+        connect = psycopg2.connect(host = "10.8.53.63",
                                    database = "TigerFriend",
                                    user = "postgres",
                                    password = "RNCHL")
@@ -78,7 +78,7 @@ def update_bio(net_id, bio):
 
 def update_username(net_id, user):
     try:
-        connect = psycopg2.connect(host = "localhost",
+        connect = psycopg2.connect(host = "10.8.53.63",
                                    database = "TigerFriend",
                                    user = "postgres",
                                    password = "RNCHL")
