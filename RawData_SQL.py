@@ -1,7 +1,7 @@
 from sys import stderr, exit
 import psycopg2
 
-def accountCreation(net_id, year, maj):
+def account_creation(net_id, year, maj):
     try:
         connect = psycopg2.connect(host = "localhost",
                                    database = "TigerFriend",
@@ -25,7 +25,7 @@ def accountCreation(net_id, year, maj):
             cursor.close()
             connect.close()
 
-def accountPopulation(net_id, user, bio, q1, q2):
+def account_population(net_id, user, bio, q1, q2):
     try:
         connect = psycopg2.connect(host = "localhost",
                                    database = "TigerFriend",
@@ -52,7 +52,7 @@ def accountPopulation(net_id, user, bio, q1, q2):
             cursor.close()
             connect.close()
 
-def updateBio(net_id, bio):
+def update_bio(net_id, bio):
     try:
         connect = psycopg2.connect(host = "localhost",
                                    database = "TigerFriend",
@@ -76,7 +76,7 @@ def updateBio(net_id, bio):
             cursor.close()
             connect.close()
 
-def updateUsername(net_id, user):
+def update_username(net_id, user):
     try:
         connect = psycopg2.connect(host = "localhost",
                                    database = "TigerFriend",

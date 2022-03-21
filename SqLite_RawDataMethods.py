@@ -4,7 +4,7 @@ from sqlite3 import connect
 
 DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
 
-def accountCreation(net_id, year, maj):
+def account_creation(net_id, year, maj):
     try:
         with connect(DATABASE_URL, isolation_level=None,
         uri=True) as connection:
@@ -18,7 +18,7 @@ def accountCreation(net_id, year, maj):
         print(ex, file=stderr)
         exit(1)
 
-def accountPopulation(net_id, user, bio, q1, q2):
+def account_population(net_id, user, bio, q1, q2):
     try:
         with connect(DATABASE_URL, isolation_level=None,
         uri=True) as connection:
@@ -34,7 +34,7 @@ def accountPopulation(net_id, user, bio, q1, q2):
         print(ex, file=stderr)
         exit(1)
 
-def updateBio(net_id, bio):
+def update_bio(net_id, bio):
     try:
         with connect(DATABASE_URL, isolation_level=None,
         uri=True) as connection:
@@ -47,7 +47,7 @@ def updateBio(net_id, bio):
         print(ex, file=stderr)
         exit(1)
 
-def updateUsername(net_id, user):
+def update_username(net_id, user):
     try:
         with connect(DATABASE_URL, isolation_level=None,
         uri=True) as connection:
