@@ -1,3 +1,4 @@
 Flask==1.0.2
 gunicorn==20.1.0
 itsdangerous==2.0.1
+pyscog2==2.9.3
