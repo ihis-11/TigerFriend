@@ -1,32 +1,28 @@
 <html>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/home.css')}}">
-</head>
-
 <body style="background-color:orange;">
 
-    <form action="\home" method="get">
+    <form action="data" method="get">
         <table>
             <tr>
                 <td align="right">Netid:</td>
-                <td><input type="text" name="net_id"></td>
+                <td><input type="text" name="net_id" value={{net_id}}></td>
             </tr>
             <tr>
                 <td align="right">Class Year:</td>
-                <td><input type="text" name="class_year"></td>
+                <td><input type="text" name="class_year" value={{class_year}}></td>
             </tr>
             <tr>
                 <td align="right">Residential College:</td>
-                <td><input type="text" name="res_college"></td>
+                <td><input type="text" name="res_college" value={{res_college}}></td>
             </tr>
             <tr>
                 <td align="right">Major:</td>
-                <td><input type="text" name="major"></td>
+                <td><input type="text" name="major" value={{major}}></td>
             </tr>
             <tr>
                 <td align="right">Bio:</td>
-                <td><textarea rows="4" cols="50"></textarea></td>
+                <td><textarea rows="4" cols="50" name="bio" value={{bio}}></textarea></td>
             </tr>
             <tr>
                 <td></td>

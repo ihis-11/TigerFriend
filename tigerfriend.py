@@ -45,13 +45,22 @@ def page4():
 #---------------------------------------------------------------------
 
 @app.route('/data', methods=['GET'])
+@app.route('/gatherdata', methods=['GET'])
 def page5():
     # getting the input data for the query
-    net_id = request.args.get('net_id')
-    class_year = request.args.get('class_year')
-    res_college = request.args.get('res_college')
-    major = request.args.get('major')
-    bio = request.args.get('bio')
+    net_id = None
+    class_year = None
+    res_college = None
+    major = None
+    bio = None
+    if (net_id is None and class_year is None and
+        res_college is None and major is None and
+        bio is None):
+        net_id = request.args.get('net_id')
+        class_year = request.args.get('class_year')
+        res_college = request.args.get('res_college')
+        major = request.args.get('major')
+        bio = request.args.get('bio')
 
     if net_id is None:
         net_id = ''
@@ -63,9 +72,11 @@ def page5():
         bio = ''
     if res_college is None:
         res_college = ''
-    
+    print("Gathered Data:")
+    print(net_id, class_year, major)
     # input the data to the database
-    if net_id is not '':
+    if net_id != '':
+        print("creating")
         account_creation(net_id, class_year, major)
 
     html = render_template('data.html')

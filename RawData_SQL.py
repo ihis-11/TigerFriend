@@ -7,11 +7,13 @@ def account_creation(net_id, year, maj):
                                    database = "TigerFriend",
                                    user = "postgres",
                                    password = "RNCHL")
-
+        if connect is not None:
+            print("CONNECTED TO POSTGRESQL")
+        else: print(connect)
         cursor = connect.cursor()
-        stmt = "INSERT INTO RawData (net_id, class_year, major) VALUE"
-        stmt += "((%s), (%s), (%s))"
-        cursor.execute(stmt, (net_id, year, maj))
+        stmt = "INSERT INTO RawData (net_id, class_year, major) VALUES (\'" + net_id + "\', \'" + year + "\', \'" + maj + "\');"
+        print(stmt)
+        cursor.execute(stmt)
 
         connect.commit()
         count = cursor.rowcount
