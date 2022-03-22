@@ -95,14 +95,15 @@ def get_user_year(net_id):
                                    user = "postgres",
                                    password = "RNCHL") as connect:
             with connect.cursor() as cursor:
-                stmt = "SELECT class_year FROM \"RawData\" WHERE net_id = ?" #"" because postgres not case sensitive
-                cursor.execute(stmt, [net_id])
+                stmt = "SELECT class_year FROM RawData WHERE net_id = \'" + net_id + "\'"
+                print(stmt)
+                cursor.execute(stmt)
 
                 row = cursor.fetchone()
                 if row is None:
-                    return "unknown (" + net_id + "USER NOT FOUND)"
+                    return "unknown (" + net_id + " USER NOT FOUND)"
                 else:
-                    return row
+                    return row[0]
     
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)

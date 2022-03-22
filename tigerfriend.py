@@ -34,9 +34,10 @@ def page3():
     net_id = request.cookies.get('prev_net_id')
     print(net_id)
     if net_id is not None:
-        year = get_user_year("net_id")
+        year = get_user_year(net_id)
     else:
         year = get_user_year("testing123")
+    print(year)
     html = render_template('matches.html',
                             net_id = net_id,
                             year = year)
