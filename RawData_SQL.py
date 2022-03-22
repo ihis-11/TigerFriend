@@ -102,8 +102,8 @@ def get_user_year(net_id):
                                    user = "postgres",
                                    password = "RNCHL")
         cursor = connect.cursor()
-        stmt = "SELECT class_year from RawData WHERE net_id = ?"
-        cursor.execute(stmt, (net_id))
+        stmt = "SELECT class_year FROM \"RawData\" WHERE net_id = testing123" #"" because postgres not case sensitive, also net_id hard coded for now for testing
+        cursor.execute(stmt)
 
         row = cursor.fetchone()
         return row
