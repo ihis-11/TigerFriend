@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------
 
 from flask import Flask, request, make_response, redirect, url_for, render_template
-from RawData_SQL import account_creation
+from RawData_SQL import account_creation, get_user_year
 
 #---------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ def page2():
 
 @app.route('/matches', methods=['GET'])
 def page3():
-    html = render_template('matches.html')
+    html = render_template('matches.html', year = get_user_year('testNet1'))
     response = make_response(html)
     return response
 
@@ -65,7 +65,8 @@ def page5():
         res_college = ''
     
     # input the data to the database
-    account_creation(net_id, class_year, major)
+    if net_id is not '':
+        account_creation(net_id, class_year, major)
 
     html = render_template('data.html')
     response = make_response(html)

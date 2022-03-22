@@ -94,3 +94,24 @@ def update_username(net_id, user):
         if(connect):
             cursor.close()
             connect.close()
+
+def get_user_year(net_id):
+    try:
+        connect = psycopg2.connect(host = "10.8.53.63",
+                                   database = "TigerFriend",
+                                   user = "postgres",
+                                   password = "RNCHL")
+        cursor = connect.cursor()
+        stmt = "SELECT class_year from RawData WHERE net_id = ?"
+        cursor.execute(stmt, (net_id))
+
+        row = cursor.fetchone()
+        return row
+    
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+        exit(1)
+    finally:
+        if(connect):
+            cursor.close()
+            connect.close()
