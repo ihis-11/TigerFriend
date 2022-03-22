@@ -30,7 +30,10 @@ def page2():
 
 @app.route('/matches', methods=['GET'])
 def page3():
-    html = render_template('matches.html', year = get_user_year('testNet1'))
+    # commented out because the server not working
+    #year = get_user_year('testNet1')
+    #html = render_template('matches.html', year = year)
+    html = render_template('matches.html', year = "2000, database not working")
     response = make_response(html)
     return response
 
