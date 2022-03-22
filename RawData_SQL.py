@@ -100,11 +100,11 @@ def get_user_year(net_id):
 
                 row = cursor.fetchone()
                 if row is None:
-                    return "unknown (USER NOT FOUND)"
+                    return "unknown (" + net_id + "USER NOT FOUND)"
                 else:
                     return row
     
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
-        return "unknown (USER NOT FOUND)"
+        return "unknown (database connection failed)"

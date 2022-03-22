@@ -31,8 +31,15 @@ def page2():
 @app.route('/matches', methods=['GET'])
 def page3():
     # commented out because the server not working
-    year = get_user_year('testNet1')
-    html = render_template('matches.html', year = year)
+    net_id = request.cookies.get('prev_net_id')
+    print(net_id)
+    if net_id is not None:
+        year = get_user_year("net_id")
+    else:
+        year = get_user_year("testing123")
+    html = render_template('matches.html',
+                            net_id = net_id,
+                            year = year)
     #html = render_template('matches.html', year = "2000, database not working")
     response = make_response(html)
     return response
@@ -84,4 +91,5 @@ def page5():
 
     html = render_template('data.html')
     response = make_response(html)
+    response.set_cookie('prev_net_id', net_id)
     return response
