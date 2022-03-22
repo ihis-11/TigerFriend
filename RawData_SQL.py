@@ -88,14 +88,14 @@ def update_username(net_id, user):
         print(ex, file=stderr)
         print("Update username failed", file=stderr)
 
-def get_user_year(net_id):
+def get_user_data(net_id): # returns year and major
     try:
         with psycopg2.connect(host = "10.8.53.63",
                                    database = "TigerFriend",
                                    user = "postgres",
                                    password = "RNCHL") as connect:
             with connect.cursor() as cursor:
-                stmt = "SELECT class_year FROM RawData WHERE net_id = \'" + net_id + "\'"
+                stmt = "SELECT class_year, major FROM RawData WHERE net_id = \'" + net_id + "\'"
                 print(stmt)
                 cursor.execute(stmt)
 
@@ -103,9 +103,9 @@ def get_user_year(net_id):
                 if row is None:
                     return "unknown (" + net_id + " USER NOT FOUND)"
                 else:
-                    return row[0]
+                    return [row[0], row[1]]
     
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
-        return "unknown (database connection failed)"
+        return ["unknown (database connection failed)", "unknown"]

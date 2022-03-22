@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------
 
 from flask import Flask, request, make_response, redirect, url_for, render_template
-from RawData_SQL import account_creation, get_user_year
+from RawData_SQL import account_creation, get_user_data
 
 #---------------------------------------------------------------------
 
@@ -34,13 +34,14 @@ def page3():
     net_id = request.cookies.get('prev_net_id')
     print(net_id)
     if net_id is not None:
-        year = get_user_year(net_id)
+        data = get_user_data(net_id)
     else:
-        year = get_user_year("testing123")
-    print(year)
+        data = "something went wrong"
+    print(data)
     html = render_template('matches.html',
                             net_id = net_id,
-                            year = year)
+                            year = data[0],
+                            major = data[1])
     #html = render_template('matches.html', year = "2000, database not working")
     response = make_response(html)
     return response
