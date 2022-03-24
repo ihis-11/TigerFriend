@@ -1,0 +1,143 @@
+/* Survey Page CSS */
+
+/* Define the main Navigation block */
+.myNav {
+    background-color: white;
+    overflow: hidden;
+}
+/* Remove bullets, margin and padding */
+.myNav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;    
+    width: 100%;
+}
+
+.myNav li {
+    float: right;
+}
+/* Define the block styling for the links */
+.myNav li a {
+    display: block;
+    color: black;
+    font-size: 24px;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.myNav li a:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.image{
+    position:fixed;
+    right:1.5vw;
+    bottom: 2.5vh;
+    height: auto;
+    width: auto;
+    max-width: 20vw;
+    max-height: 20vh;
+}
+
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 12vw;
+    background-color: orange;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    left:0px;
+    top: 55px;
+    font-size: 1.5vw;
+}
+  
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+    background-color: #FFD580;
+    color: black;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.rightsidebar {
+    margin: 0;
+    padding: 0;
+    width: 12vw;
+    background-color: orange;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    right:0px;
+    top: 55px;
+}
+
+/* Style the form */
+#regForm {
+    background-color:rgb(243, 237, 237);
+    margin: 100px auto;
+    padding: 0px;
+    width: 70%;
+    min-width: 300px;
+}
+
+/* Style the input fields 
+input {
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    font-family: Playfair Display;
+    border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: 
+input.invalid {
+    background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+    display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+    opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+    background-color: #04AA6D;
+}
