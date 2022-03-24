@@ -76,11 +76,19 @@ footer {
     position:fixed;
     right:25px;
     bottom: 65px;
+    height: auto;
+    width: auto;
+    max-width: 20vw;
+    max-height: 20vh;
 }
 
 .image2{
     position:fixed;
     left:25px;
     bottom: 65px;
+    height: auto;
+    width: auto;
+    max-width: 20vw;
+    max-height: 20vh;
     transform: scaleX(-1);
 }
