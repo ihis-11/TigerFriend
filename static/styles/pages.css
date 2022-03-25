@@ -2,24 +2,24 @@
 
 /* Define the main Navigation block */
 .myNav {
-    background-color: white;
-    overflow: hidden;
+  background-color: white;
+  overflow: hidden;
 }
 /* Remove bullets, margin and padding */
 .myNav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: white;
-    position: fixed;
-    top: 0;
-    left: 0;    
-    width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;    
+  width: 100%;
 }
 
 .myNav li {
-    float: right;
+  float: right;
 }
 
 .myNav li b {
@@ -33,23 +33,23 @@
 
 /* Define the block styling for the links */
 .myNav li a {
-    display: block;
-    color: black;
-    font-size: 24px;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
+  display: block;
+  color: black;
+  font-size: 24px;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
 }
 
 .myNav li a:hover {
-    background-color: #4CAF50;
-    color: white;
+  background-color: #4CAF50;
+  color: white;
 }
 
 .image{
   position:fixed;
-  right:25px;
-  bottom: 25px;
+  right:1.5vw;
+  bottom: 2.5vh;
   height: auto;
   width: auto;
   max-width: 20vw;
@@ -58,8 +58,8 @@
 
 .image2{
   position:fixed;
-  left:25px;
-  bottom: 25px;
+  left:1.5vw;
+  bottom: 2.5vh;
   height: auto;
   width: auto;
   max-width: 20vw;
@@ -69,46 +69,46 @@
 
 /* The side navigation menu */
 .sidebar {
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: orange;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-    left:0px;
-    top: 55px;
-    font-size: 20px;
-  }
-  
-  /* Sidebar links */
-  .sidebar a {
-    display: block;
-    color: black;
-    padding: 16px;
-    text-decoration: none;
-  }
-  
-  /* Active/current link */
-  .sidebar a.active {
-    background-color: #FFD580;
-    color: black;
-  }
-  
-  /* Links on mouse-over */
-  .sidebar a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-  }
+  margin: 0;
+  padding: 0;
+  width: 12vw;
+  background-color: orange;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  left:0px;
+  top: 55px;
+  font-size: 1.5vw;
+}
 
-  .rightsidebar {
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: orange;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-    right:0px;
-    top: 55px;
-  }
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+  background-color: #FFD580;
+  color: black;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+.rightsidebar {
+  margin: 0;
+  padding: 0;
+  width: 12vw;
+  background-color: orange;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  right:0px;
+  top: 55px;
+}
