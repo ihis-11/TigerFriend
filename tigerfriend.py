@@ -3,8 +3,9 @@
 #---------------------------------------------------------------------
 
 from flask import Flask, request, make_response, redirect, url_for, render_template
-from RawData_SQL import account_creation, get_user_data
+from RawData_SQL import api_account_creation, get_user_data, account_creation
 from keys import APP_SECRET_KEY
+from req_lib import getOneUndergrad
 
 #---------------------------------------------------------------------
 
@@ -28,6 +29,20 @@ def home():
 @app.route('/survey', methods=['GET'])
 def page2():
     user = auth.authenticate().strip()
+
+    # Should do this only first time (currently it does it every time)
+    # Eventually move this code + inputting bio and username to end of
+    #survey, so only users who do survey get an account made
+    req = getOneUndergrad(netid=user)
+    if req.ok:
+        print(req.json())
+    else:
+        print(req.text)
+    api_account_creation(user, 
+                        '20' + str(req.json()['class_year']), 
+                        req.json()['major_code'],
+                        req.json()['res_college'])
+    
 
     html = render_template('survey.html')
     response = make_response(html)
@@ -61,19 +76,9 @@ def page4():
 
 #---------------------------------------------------------------------
 
-@app.route('/about', methods=['GET'])
-def page5():
-    user = auth.authenticate().strip()
-
-    html = render_template('about.html')
-    response = make_response(html)
-    return response
-
-#---------------------------------------------------------------------
-
 @app.route('/data', methods=['GET'])
 @app.route('/gatherdata', methods=['GET'])
-def page6():
+def page5():
     user = auth.authenticate().strip()
 
     # getting the input data for the query

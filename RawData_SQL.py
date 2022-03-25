@@ -20,15 +20,34 @@ def account_creation(net_id, year, maj):
                 connect.commit()
                 count = cursor.rowcount
                 print(count, "Record inserted successfully into account")
-
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("Account creation failed", file = stderr)
-    #finally:
-    #   if connect is not None:
-    #       if(connect):
-    #           cursor.close()
-    #           connect.close()
+
+#above method will be pointless eventually (currently it's used for /data page)
+def api_account_creation(net_id, year, major, res_college):
+    try:
+        with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
+                                   database = "d2fdvi8f5tvpvo",
+                                   user = "yfdafrxedkbxza",
+                                   password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+            if connect is not None:
+                print("CONNECTED TO POSTGRESQL")
+            else: 
+                print(connect)
+                raise Exception("Connect was null")
+            with connect.cursor() as cursor:
+                stmt = "INSERT INTO account (net_id, class_year, major, res_college) VALUES \
+                (\'" + net_id + "\', \'" + year + "\', \'" + major + "\', \'" + res_college + "\');"
+                print(stmt)
+                cursor.execute(stmt)
+
+                connect.commit()
+                count = cursor.rowcount
+                print(count, "Record inserted successfully into account")
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+        print("Account creation failed", file = stderr)
 
 def account_population(net_id, user, bio, q1, q2):
     try:
