@@ -38,7 +38,7 @@ def account_population(net_id, user, bio, q1, q2):
                                    password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
 
             with connect.cursor() as cursor:
-                stmt = "UPDATE Raccount SET username = (%s), "
+                stmt = "UPDATE account SET username = (%s), "
                 stmt += "bio_string = (%s), "
                 stmt += "survery_q1_response = (%s), "
                 stmt += "survery_q1_response = (%s), "
@@ -95,13 +95,13 @@ def get_user_data(net_id): # returns year and major
                                    user = "yfdafrxedkbxza",
                                    password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
             with connect.cursor() as cursor:
-                stmt = "SELECT class_year, major FROM account WHERE net_id = \'" + net_id + "\'"
+                stmt = "SELECT class_year, major FROM account WHERE net_id=\'" + net_id + "\'"
                 print(stmt)
-                cursor.execute(stmt)
+                cursor.execute(stmt, net_id)
 
                 row = cursor.fetchone()
                 if row is None:
-                    return "unknown (" + net_id + " USER NOT FOUND)"
+                    return ["unknown (" + net_id + " not found)", "?"]
                 else:
                     return [row[0], row[1]]
     

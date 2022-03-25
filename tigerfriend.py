@@ -4,10 +4,15 @@
 
 from flask import Flask, request, make_response, redirect, url_for, render_template
 from RawData_SQL import account_creation, get_user_data
+from keys import APP_SECRET_KEY
 
 #---------------------------------------------------------------------
 
 app = Flask(__name__, template_folder='templates')
+
+app.secret_key = APP_SECRET_KEY
+
+import auth
 
 #---------------------------------------------------------------------
 
@@ -22,6 +27,8 @@ def home():
 
 @app.route('/survey', methods=['GET'])
 def page2():
+    user = auth.authenticate().strip()
+
     html = render_template('survey.html')
     response = make_response(html)
     return response
@@ -30,19 +37,15 @@ def page2():
 
 @app.route('/matches', methods=['GET'])
 def page3():
-    # commented out because the server not working
-    net_id = request.cookies.get('prev_net_id')
-    print(net_id)
-    if net_id is not None:
-        data = get_user_data(net_id)
-    else:
-        data = "something went wrong"
+    user = auth.authenticate().strip()
+
+    print(user)
+    data = get_user_data(user)
     print(data)
     html = render_template('matches.html',
-                            net_id = net_id,
+                            net_id = user,
                             year = data[0],
                             major = data[1])
-    #html = render_template('matches.html', year = "2000, database not working")
     response = make_response(html)
     return response
 
@@ -50,6 +53,8 @@ def page3():
 
 @app.route('/chat', methods=['GET'])
 def page4():
+    user = auth.authenticate().strip()
+
     html = render_template('chat.html')
     response = make_response(html)
     return response
@@ -59,6 +64,8 @@ def page4():
 @app.route('/data', methods=['GET'])
 @app.route('/gatherdata', methods=['GET'])
 def page5():
+    user = auth.authenticate().strip()
+
     # getting the input data for the query
     net_id = None
     class_year = None
@@ -93,5 +100,4 @@ def page5():
 
     html = render_template('data.html')
     response = make_response(html)
-    response.set_cookie('prev_net_id', net_id)
     return response
