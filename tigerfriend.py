@@ -76,9 +76,20 @@ def page4():
 
 #---------------------------------------------------------------------
 
+@app.route('/about', methods=['GET'])
+def page5():
+    user = auth.authenticate().strip()
+
+    html = render_template('about.html')
+    response = make_response(html)
+    return response
+
+#---------------------------------------------------------------------
+
+
 @app.route('/data', methods=['GET'])
 @app.route('/gatherdata', methods=['GET'])
-def page5():
+def page6():
     user = auth.authenticate().strip()
 
     # getting the input data for the query
