@@ -36,12 +36,12 @@ def page2():
     req = getOneUndergrad(netid=user)
     if req.ok:
         print(req.json())
-    else:
-        print(req.text)
-    api_account_creation(user, 
+        api_account_creation(user, 
                         '20' + str(req.json()['class_year']), 
                         req.json()['major_code'],
                         req.json()['res_college'])
+    else:
+        print(req.text)
     
 
     html = render_template('survey.html')
