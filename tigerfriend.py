@@ -6,6 +6,8 @@ from flask import Flask, request, make_response, redirect, url_for, render_templ
 from RawData_SQL import api_account_creation, get_user_data, account_creation
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
+import psycopg2
+from sys import stderr, exit
 
 #---------------------------------------------------------------------
 
@@ -43,8 +45,25 @@ def page2():
     else:
         print(req.text)
     
+    try:
+        with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
+                                   database = "d2fdvi8f5tvpvo",
+                                   user = "yfdafrxedkbxza",
+                                   password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+            with connect.cursor() as cursor:
+                stmt = "SELECT question, answer1, answer2, answer3, answer4, answer5 FROM survey"
+                cursor.execute(stmt)
 
-    html = render_template('survey.html')
+                questions = [0]
+                row = cursor.fetchone()
+                while row is not None:
+                    questions.append([row[0], row[1], row[2], row[3], row[4], row[5]])
+                    row = cursor.fetchone()
+    
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+
+    html = render_template('survey.html', questions=questions)
     response = make_response(html)
     return response
 
