@@ -146,3 +146,51 @@ def page6():
     html = render_template('data.html')
     response = make_response(html)
     return response
+
+#---------------------------------------------------------------------
+
+
+@app.route('/surveydata', methods=['GET'])
+
+def survey_answer():
+
+    q = [0]
+    for x in range(1, 25): {
+        q.append(request.args.get('q'+str(x)))
+    }
+
+    user = auth.authenticate().strip()
+
+    try:
+        with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
+                                   database = "d2fdvi8f5tvpvo",
+                                   user = "yfdafrxedkbxza",
+                                   password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+
+            with connect.cursor() as cursor:
+                stmt = "INSERT INTO rawdata (net_id, q1_response, q2_response, q3_response, q4_response, q5_response, \
+                q6_response, q7_response, q8_response, q9_response, q10_response, q11_response, q12_response, q13_response, \
+                q14_response, q15_response, q16_response, q17_response, q18_response, q19_response, q20_response, q21_response, \
+                q22_response, q23_response, q24_response) VALUES \
+                (\'" + user + "\', \'" + q[1] + "\', \'" + q[2] \
+                + "\', \'" + q[3] + "\', \'" + q[4] + "\', \'" + \
+                q[5] + "\', \'" + q[6] + "\', \'" + q[7] + "\', \'" + \
+                q[8] + "\', \'" + q[9] + "\', \'" + q[10] + "\', \'" + q[11] \
+                + "\', \'" + q[12] + "\', \'" + q[13] + "\', \'" + q[14] \
+                + "\', \'" + q[15] + "\', \'" + q[16] + "\', \'" + q[17] \
+                + "\', \'" + q[18] + "\', \'" + q[19] + "\', \'" + q[20] \
+                + "\', \'" + q[21] + "\', \'" + q[22] + "\', \'" + q[23] \
+                + "\', \'" + q[24] + "\');"
+                print(stmt)
+                cursor.execute(stmt)
+
+                connect.commit()
+                count = cursor.rowcount
+                print(count, "Responses inserted successfully into rawdata")
+    
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)   
+
+    html = render_template('account.html')
+    response = make_response(html)
+    return response
