@@ -17,10 +17,9 @@
         </ul>
     </nav>
 
-    <!-- The sidebar -->
     <div class="sidebar">
         <a></a>
-        <a class="active" href="/data">Survey</a> <!-- return back to \survey later!-->
+        <a class="active" href="/data">Survey</a>
         <a href="/matches">Matches</a>
         <a href="/chat">Chat</a>
     </div>
@@ -213,6 +212,7 @@
             <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
           </div>
         </div>
+
         <!-- Circles which indicates the steps of the form: -->
         <div style="text-align:center;margin-top:40px;">
           <span class="step"></span>
@@ -268,18 +268,27 @@
       
       function validateForm() {
         // This function deals with validation of the form fields
-        var x, y, i, valid = true;
-        x = document.getElementsByClassName("tab");
-        y = x[currentTab].getElementsByTagName("input");
-        // A loop that checks every input field in the current tab:
-        for (i = 0; i < y.length; i++) {
-          // If a field is empty...
-          if (y[i].value == "") {
-            // add an "invalid" class to the field:
-            y[i].className += " invalid";
-            // and set the current valid status to false
-            valid = false;
-          }
+        var valid = true;
+        for(var i = 1 ; i <= 6 ; i++)
+        {
+            var radios = document.getElementsByName('q'+(i+(currentTab*6)));
+            
+            var checked = false;
+            for (var j = 0, length = radios.length; j < length; j++) 
+            {
+
+              if (radios[j].checked) 
+              {
+                checked = true;
+                break;
+              }
+            }
+            if(checked == false)
+            {
+              valid = false;
+              alert("Not all questions have been answered.");
+              break;
+            }
         }
         // If the valid status is true, mark the step as finished and valid:
         if (valid) {
