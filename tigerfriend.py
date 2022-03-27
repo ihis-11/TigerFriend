@@ -29,7 +29,7 @@ def home():
 #---------------------------------------------------------------------
 
 @app.route('/survey', methods=['GET'])
-def page2():
+def survey():
     #authenticated net id
     user = auth.authenticate().strip()
     
@@ -58,7 +58,7 @@ def page2():
 #---------------------------------------------------------------------
 
 @app.route('/matches', methods=['GET'])
-def page3():
+def matches():
     #authenticated net id
     user = auth.authenticate().strip()
 
@@ -97,7 +97,7 @@ def page3():
 #---------------------------------------------------------------------
 
 @app.route('/chat', methods=['GET'])
-def page4():
+def chat():
     #authenticated net id
     user = auth.authenticate().strip()
 
@@ -108,7 +108,7 @@ def page4():
 #---------------------------------------------------------------------
 
 @app.route('/about', methods=['GET'])
-def page5():
+def about():
     #authenticated net id
     user = auth.authenticate().strip()
 
@@ -119,54 +119,9 @@ def page5():
 #---------------------------------------------------------------------
 
 
-@app.route('/data', methods=['GET'])
-@app.route('/gatherdata', methods=['GET'])
-def page6():
-    #authenticated net id
-    user = auth.authenticate().strip()
+@app.route('/account', methods=['GET'])
 
-    # getting the input data for the query
-    net_id = None
-    class_year = None
-    res_college = None
-    major = None
-    bio = None
-    if (net_id is None and class_year is None and
-        res_college is None and major is None and
-        bio is None):
-        net_id = request.args.get('net_id')
-        class_year = request.args.get('class_year')
-        res_college = request.args.get('res_college')
-        major = request.args.get('major')
-        bio = request.args.get('bio')
-
-    if net_id is None:
-        net_id = ''
-    if class_year is None:
-        class_year = ''
-    if major is None:
-        major = ''
-    if bio is None:
-        bio = ''
-    if res_college is None:
-        res_college = ''
-    print("Gathered Data:")
-    print(net_id, class_year, major)
-    # input the data to the database
-    if net_id != '':
-        print("creating")
-        account_creation(net_id, class_year, major)
-
-    html = render_template('data.html')
-    response = make_response(html)
-    return response
-
-#---------------------------------------------------------------------
-
-
-@app.route('/surveydata', methods=['GET'])
-
-def survey_answer():
+def account():
     #authenticated net id
     user = auth.authenticate().strip()
 
