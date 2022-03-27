@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='styles/pages.css')}}">
+    <link rel="import" href="/path/to/template.html">
 </head>
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
@@ -30,7 +31,26 @@
 
 <div style= "height:180px; padding-top: 50px; text-align: center;">
     <h1 style="font-size:50px; color:black; margin:10px;">Account Creation</h1>
+    <h3>Please input a username and short bio (max 150 chars).</h3>
+    <h3>This is the only information that is not anonymized and will be displayed to matches!</h3>
 </div>
+
+<form action="matches" method="get" style="padding-left: 12vw; font-size: 25px; font-family:Playfair Display">
+    <table>
+        <tr>
+            <td align="right">Username:</td>
+            <td><input type="text" maxlength="20" name="username" value={{net_id}}></td>
+        </tr>
+        <tr>
+            <td align="right">Bio:</td>
+            <td><textarea maxlength="150" rows="3" cols="50" name="bio" value={{bio}}></textarea></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>

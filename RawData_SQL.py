@@ -25,7 +25,7 @@ def account_creation(net_id, year, maj):
         print("Account creation failed", file = stderr)
 
 #above method will be pointless eventually (currently it's used for /data page)
-def api_account_creation(net_id, year, major, res_college):
+def api_account_creation(net_id, year, major, res_college, username, bio):
     try:
         with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
                                    database = "d2fdvi8f5tvpvo",
@@ -37,8 +37,8 @@ def api_account_creation(net_id, year, major, res_college):
                 print(connect)
                 raise Exception("Connect was null")
             with connect.cursor() as cursor:
-                stmt = "INSERT INTO account (net_id, class_year, major, res_college) VALUES \
-                (\'" + net_id + "\', \'" + year + "\', \'" + major + "\', \'" + res_college + "\');"
+                stmt = "INSERT INTO account (net_id, class_year, major, res_college, username, bio_string) VALUES \
+                (\'" + net_id + "\', \'" + year + "\', \'" + major + "\', \'" + res_college + "\', \'" + username + "\', \'" + bio + "\');"
                 print(stmt)
                 cursor.execute(stmt)
 
@@ -48,29 +48,6 @@ def api_account_creation(net_id, year, major, res_college):
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("Account creation failed", file = stderr)
-
-def account_population(net_id, user, bio, q1, q2):
-    try:
-        with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
-                                   database = "d2fdvi8f5tvpvo",
-                                   user = "yfdafrxedkbxza",
-                                   password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
-
-            with connect.cursor() as cursor:
-                stmt = "UPDATE account SET username = (%s), "
-                stmt += "bio_string = (%s), "
-                stmt += "survery_q1_response = (%s), "
-                stmt += "survery_q1_response = (%s), "
-                stmt += "WHERE net_id = (%s)"
-                cursor.execute(stmt, (user, bio, q1, q2, net_id))
-
-                connect.commit()
-                count = cursor.rowcount
-                print(count, "Record inserted successfully into account")
-
-    except (Exception, psycopg2.Error) as ex:
-        print(ex, file=stderr)
-        print("Account population failed", file=stderr)
 
 def update_bio(net_id, bio):
     try:

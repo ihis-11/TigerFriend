@@ -30,20 +30,8 @@ def home():
 
 @app.route('/survey', methods=['GET'])
 def page2():
+    #authenticated net id
     user = auth.authenticate().strip()
-
-    # Should do this only first time (currently it does it every time)
-    # Eventually move this code + inputting bio and username to end of
-    #survey, so only users who do survey get an account made
-    req = getOneUndergrad(netid=user)
-    if req.ok:
-        print(req.json())
-        api_account_creation(user, 
-                        '20' + str(req.json()['class_year']), 
-                        req.json()['major_code'],
-                        req.json()['res_college'])
-    else:
-        print(req.text)
     
     try:
         with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
@@ -71,7 +59,30 @@ def page2():
 
 @app.route('/matches', methods=['GET'])
 def page3():
+    #authenticated net id
     user = auth.authenticate().strip()
+
+    # Only happens when coming from account creation
+    if request.args.get('username') is not None:
+        username = request.args.get('username') # DEAL WITH EMPTY USERNAME INPUT HERE
+        bio = request.args.get('bio')
+
+         #Should do this only first time
+        # Eventually move this code + inputting bio and username to end of
+        #survey, so only users who do survey get an account made (here)
+        req = getOneUndergrad(netid=user)
+        yr = ''
+        major = ''
+        res = ''
+        if req.ok:
+            print(req.json())
+            yr = '20' + str(req.json()['class_year'])
+            major =  req.json()['major_code']
+            res = req.json()['res_college']
+        else:
+            print("Error w/API call: " + req.text)
+
+        api_account_creation(user, yr, major, res, username, bio)
 
     print(user)
     data = get_user_data(user)
@@ -87,6 +98,7 @@ def page3():
 
 @app.route('/chat', methods=['GET'])
 def page4():
+    #authenticated net id
     user = auth.authenticate().strip()
 
     html = render_template('chat.html')
@@ -97,6 +109,7 @@ def page4():
 
 @app.route('/about', methods=['GET'])
 def page5():
+    #authenticated net id
     user = auth.authenticate().strip()
 
     html = render_template('about.html')
@@ -109,6 +122,7 @@ def page5():
 @app.route('/data', methods=['GET'])
 @app.route('/gatherdata', methods=['GET'])
 def page6():
+    #authenticated net id
     user = auth.authenticate().strip()
 
     # getting the input data for the query
@@ -153,13 +167,13 @@ def page6():
 @app.route('/surveydata', methods=['GET'])
 
 def survey_answer():
+    #authenticated net id
+    user = auth.authenticate().strip()
 
     q = [0]
     for x in range(1, 25): {
         q.append(request.args.get('q'+str(x)))
     }
-
-    user = auth.authenticate().strip()
 
     try:
         with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
