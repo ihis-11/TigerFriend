@@ -109,8 +109,6 @@ def chat():
 
 @app.route('/about', methods=['GET'])
 def about():
-    #authenticated net id
-    user = auth.authenticate().strip()
 
     html = render_template('about.html')
     response = make_response(html)
