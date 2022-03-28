@@ -112,7 +112,7 @@ def get_user_data(net_id):  # returns year and major
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
 
-def get_account_details(net_id):  # returns user and bio
+def get_account_details(net_id):  # returns user and bio, None if account doesn't exist
     try:
         with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
                               database="d2fdvi8f5tvpvo",
