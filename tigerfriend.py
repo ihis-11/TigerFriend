@@ -147,8 +147,6 @@ def account():
                 cursor.execute(stmt)
 
                 connect.commit()
-                count = cursor.rowcount
-                print(count, "Responses inserted successfully into rawdata")
 
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
@@ -192,9 +190,7 @@ def accountdetails():
 
         api_account_creation(user, yr, major, res, username, bio)
 
-    print(user)
     data = get_user_data(user)
-    print(data)
     html = render_template('accountdetails.html',
                            net_id=user,
                            year=data[0],
