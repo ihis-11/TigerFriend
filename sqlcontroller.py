@@ -2,12 +2,12 @@ from sys import stderr
 import psycopg2
 
 try:
-    #connect to db hopefully
+    # connect to db hopefully
     connect = psycopg2.connect(
-        host = "localhost",
-        database = "TigerFriend",
-        user = "postgres",
-        password = "RNCHL")
+        host="localhost",
+        database="TigerFriend",
+        user="postgres",
+        password="RNCHL")
     print("It worked?")
     cursor = connect.cursor()
     print("PostgreSQL server information")
@@ -19,6 +19,6 @@ try:
 except Exception as ex:
     print("Error connecting to PostgreSQL", stderr)
 finally:
-    if(connect):
+    if connect:
         cursor.close()
         connect.close()

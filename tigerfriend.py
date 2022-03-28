@@ -1,15 +1,15 @@
-#---------------------------------------------------------------------
+# --------------------------------------------------------------------
 # tigerfriend.py
-#---------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 from flask import Flask, request, make_response, redirect, url_for, render_template
 from RawData_SQL import api_account_creation, get_user_data, account_creation
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
-from sys import stderr, exit
+from sys import stderr
 
-#---------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 app = Flask(__name__, template_folder='templates')
 
@@ -17,7 +17,7 @@ app.secret_key = APP_SECRET_KEY
 
 import auth
 
-#---------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
 @app.route('/home', methods=['GET'])
@@ -26,18 +26,19 @@ def home():
     response = make_response(html)
     return response
 
-#---------------------------------------------------------------------
+
+# --------------------------------------------------------------------
 
 @app.route('/survey', methods=['GET'])
 def survey():
-    #authenticated net id
+    # authenticated net id
     user = auth.authenticate().strip()
-    
+
     try:
-        with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
-                                   database = "d2fdvi8f5tvpvo",
-                                   user = "yfdafrxedkbxza",
-                                   password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
+                              database="d2fdvi8f5tvpvo",
+                              user="yfdafrxedkbxza",
+                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT question, answer1, answer2, answer3, answer4, answer5 FROM survey"
                 cursor.execute(stmt)
@@ -47,7 +48,7 @@ def survey():
                 while row is not None:
                     questions.append([row[0], row[1], row[2], row[3], row[4], row[5]])
                     row = cursor.fetchone()
-    
+
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
 
@@ -55,21 +56,22 @@ def survey():
     response = make_response(html)
     return response
 
-#---------------------------------------------------------------------
+
+# --------------------------------------------------------------------
 
 @app.route('/matches', methods=['GET'])
 def matches():
-    #authenticated net id
+    # authenticated net id
     user = auth.authenticate().strip()
 
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
-        username = request.args.get('username') # DEAL WITH EMPTY USERNAME INPUT HERE
+        username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
         bio = request.args.get('bio')
 
-         #Should do this only first time
+        # Should do this only first time
         # Eventually move this code + inputting bio and username to end of
-        #survey, so only users who do survey get an account made (here)
+        # survey, so only users who do survey get an account made (here)
         req = getOneUndergrad(netid=user)
         yr = ''
         major = ''
@@ -77,7 +79,7 @@ def matches():
         if req.ok:
             print(req.json())
             yr = '20' + str(req.json()['class_year'])
-            major =  req.json()['major_code']
+            major = req.json()['major_code']
             res = req.json()['res_college']
         else:
             print("Error w/API call: " + req.text)
@@ -88,51 +90,51 @@ def matches():
     data = get_user_data(user)
     print(data)
     html = render_template('matches.html',
-                            net_id = user,
-                            year = data[0],
-                            major = data[1])
+                           net_id=user,
+                           year=data[0],
+                           major=data[1])
     response = make_response(html)
     return response
 
-#---------------------------------------------------------------------
+
+# --------------------------------------------------------------------
 
 @app.route('/chat', methods=['GET'])
 def chat():
-    #authenticated net id
+    # authenticated net id
     user = auth.authenticate().strip()
 
     html = render_template('chat.html')
     response = make_response(html)
     return response
 
-#---------------------------------------------------------------------
+
+# --------------------------------------------------------------------
 
 @app.route('/about', methods=['GET'])
 def about():
-
     html = render_template('about.html')
     response = make_response(html)
     return response
 
-#---------------------------------------------------------------------
+
+# --------------------------------------------------------------------
 
 
 @app.route('/account', methods=['GET'])
-
 def account():
-    #authenticated net id
+    # authenticated net id
     user = auth.authenticate().strip()
 
     q = [0]
-    for x in range(1, 25): {
-        q.append(request.args.get('q'+str(x)))
-    }
+    for x in range(1, 25):
+        q.append(request.args.get('q' + str(x)))
 
     try:
-        with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
-                                   database = "d2fdvi8f5tvpvo",
-                                   user = "yfdafrxedkbxza",
-                                   password = "3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
+                              database="d2fdvi8f5tvpvo",
+                              user="yfdafrxedkbxza",
+                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
 
             with connect.cursor() as cursor:
                 stmt = "INSERT INTO rawdata (net_id, q1_response, q2_response, q3_response, q4_response, q5_response, \
@@ -140,23 +142,23 @@ def account():
                 q14_response, q15_response, q16_response, q17_response, q18_response, q19_response, q20_response, q21_response, \
                 q22_response, q23_response, q24_response) VALUES \
                 (\'" + user + "\', \'" + q[1] + "\', \'" + q[2] \
-                + "\', \'" + q[3] + "\', \'" + q[4] + "\', \'" + \
-                q[5] + "\', \'" + q[6] + "\', \'" + q[7] + "\', \'" + \
-                q[8] + "\', \'" + q[9] + "\', \'" + q[10] + "\', \'" + q[11] \
-                + "\', \'" + q[12] + "\', \'" + q[13] + "\', \'" + q[14] \
-                + "\', \'" + q[15] + "\', \'" + q[16] + "\', \'" + q[17] \
-                + "\', \'" + q[18] + "\', \'" + q[19] + "\', \'" + q[20] \
-                + "\', \'" + q[21] + "\', \'" + q[22] + "\', \'" + q[23] \
-                + "\', \'" + q[24] + "\');"
+                       + "\', \'" + q[3] + "\', \'" + q[4] + "\', \'" + \
+                       q[5] + "\', \'" + q[6] + "\', \'" + q[7] + "\', \'" + \
+                       q[8] + "\', \'" + q[9] + "\', \'" + q[10] + "\', \'" + q[11] \
+                       + "\', \'" + q[12] + "\', \'" + q[13] + "\', \'" + q[14] \
+                       + "\', \'" + q[15] + "\', \'" + q[16] + "\', \'" + q[17] \
+                       + "\', \'" + q[18] + "\', \'" + q[19] + "\', \'" + q[20] \
+                       + "\', \'" + q[21] + "\', \'" + q[22] + "\', \'" + q[23] \
+                       + "\', \'" + q[24] + "\');"
                 print(stmt)
                 cursor.execute(stmt)
 
                 connect.commit()
                 count = cursor.rowcount
                 print(count, "Responses inserted successfully into rawdata")
-    
+
     except (Exception, psycopg2.Error) as ex:
-        print(ex, file=stderr)   
+        print(ex, file=stderr)
 
     html = render_template('account.html')
     response = make_response(html)

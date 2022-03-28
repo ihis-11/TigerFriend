@@ -5,7 +5,7 @@
 # Author: Bob Dondero
 # -----------------------------------------------------------------------
 
-from sys import argv, stderr, exit
+from sys import stderr, exit
 from contextlib import closing
 from sqlite3 import connect
 
