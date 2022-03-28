@@ -203,9 +203,21 @@ def surveydetails():
                     questions.append([row[0], row[1], row[2], row[3], row[4], row[5]])
                     row = cursor.fetchone()
 
+                stmt = "SELECT q1_response, q2_response, q3_response, q4_response, q5_response, \
+                q6_response, q7_response, q8_response, q9_response, q10_response, q11_response, q12_response, q13_response, \
+                q14_response, q15_response, q16_response, q17_response, q18_response, q19_response, q20_response, q21_response, \
+                q22_response, q23_response, q24_response FROM rawdata WHERE net_id = (%s)"
+                cursor.execute(stmt, [user])
+
+                answers = [0]
+                row = cursor.fetchone()
+                if row is not None:
+                    for x in range(0,24):
+                        answers.append(row[x])
+
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
 
-    html = render_template('surveydetails.html', questions=questions)
+    html = render_template('surveydetails.html', questions=questions, answers=answers)
     response = make_response(html)
     return response
