@@ -167,12 +167,16 @@ def accountdetails():
 
         api_account_creation(user, yr, major, res, username, bio)
 
+    username = request.args.get('username')
+    bio = request.args.get('bio')
     print(user)
     data = get_user_data(user)
     print(data)
     html = render_template('accountdetails.html',
                            net_id=user,
                            year=data[0],
-                           major=data[1])
+                           major=data[1],
+                           username=username,
+                           bio=bio)
     response = make_response(html)
     return response
