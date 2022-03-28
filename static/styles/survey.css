@@ -1,11 +1,12 @@
 /* Survey Page CSS */
 
-/* Define the main Navigation block */
+/* Define the top nav bar */
 .myNav {
     background-color: white;
     overflow: hidden;
 }
-/* Remove bullets, margin and padding */
+
+/* Remove bullets, margin, and padding */
 .myNav ul {
     list-style-type: none;
     margin: 0;
@@ -21,7 +22,8 @@
 .myNav li {
     float: right;
 }
-/* Define the block styling for the links */
+
+/* Styling for links */
 .myNav li a {
     display: block;
     color: black;
@@ -31,6 +33,7 @@
     text-decoration: none;
 }
 
+/* Styling for logo */
 .myNav li b {
     display: block;
     color: black;
@@ -55,7 +58,7 @@
     max-height: 20vh;
 }
 
-/* The side navigation menu */
+/* Define side nav bar */
 .sidebar {
     margin: 0;
     padding: 0;
@@ -83,7 +86,6 @@
     color: black;
 }
 
-/* Links on mouse-over */
 .sidebar a:hover:not(.active) {
     background-color: #555;
     color: white;
@@ -110,12 +112,12 @@
     min-width: 300px;
 }
 
-/* Hide all steps by default: */
+/* Hide all steps by default */
 .tab {
     display: none;
 }
 
-/* Make circles that indicate the steps of the form: */
+/* Circles that indicate the steps of the form */
 .step {
     height: 15px;
     width: 15px;
@@ -127,12 +129,12 @@
     opacity: 0.5;
 }
 
-/* Mark the active step: */
+/* Mark the active step */
 .step.active {
     opacity: 1;
 }
 
-/* Mark the steps that are finished and valid: */
+/* Mark the steps that are finished and valid */
 .step.finish {
     background-color: #04AA6D;
 }

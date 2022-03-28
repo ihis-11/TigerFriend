@@ -1,11 +1,12 @@
 /* Page CSS */
 
-/* Define the main Navigation block */
+/* Define the top nav bar */
 .myNav {
   background-color: white;
   overflow: hidden;
 }
-/* Remove bullets, margin and padding */
+
+/* Remove bullets, margin, and padding */
 .myNav ul {
   list-style-type: none;
   margin: 0;
@@ -21,7 +22,8 @@
 .myNav li {
   float: right;
 }
-/* Define the block styling for the links */
+
+/* Styling for links */
 .myNav li a {
   display: block;
   color: black;
@@ -31,6 +33,7 @@
   text-decoration: none;
 }
 
+/* Styling for logo */
 .myNav li b {
   display: block;
   color: black;
@@ -66,7 +69,7 @@
   transform: scaleX(-1);
 }
 
-/* The side navigation menu */
+/* The side nav bar */
 .sidebar {
   margin: 0;
   padding: 0;
@@ -88,13 +91,12 @@
   text-decoration: none;
 }
 
-/* Active/current link */
+/* Active/current tab */
 .sidebar a.active {
   background-color: #FFD580;
   color: black;
 }
 
-/* Links on mouse-over */
 .sidebar a:hover:not(.active) {
   background-color: #555;
   color: white;

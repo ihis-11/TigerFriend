@@ -1,11 +1,12 @@
 /* Landing Page CSS */
 
-/* Define the main Navigation block */
+/* Define the top nav bar */
 .myNav {
     background-color: white;
     overflow: hidden;
 }
-/* Remove bullets, margin and padding */
+
+/* Removes bullets, margin, and padding */
 .myNav ul {
     list-style-type: none;
     margin: 0;
@@ -21,7 +22,8 @@
 .myNav li {
     float: right;
 }
-/* Define the block styling for the links */
+
+/* Styling for links */
 .myNav li a {
     display: block;
     color: black;
@@ -31,6 +33,7 @@
     text-decoration: none;
 }
 
+/* Styling for logo */
 .myNav li b {
     display: block;
     color: black;
