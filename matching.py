@@ -17,10 +17,10 @@ DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
 def get_user_matches(net_id):
     try:
         # connect to database
-        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
-                              database="d2fdvi8f5tvpvo",
-                              user="yfdafrxedkbxza",
-                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
             with connect.cursor() as cursor:
                 # get user's survey response
                 stmt = "SELECT * FROM rawdata WHERE net_id=\'" + net_id + "\'"
@@ -117,10 +117,10 @@ def get_user_matches(net_id):
 def get_match_info(match_dict):
     try:
         # connect to database
-        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
-                              database="d2fdvi8f5tvpvo",
-                              user="yfdafrxedkbxza",
-                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
             with connect.cursor() as cursor:
                 match_info = ()
                 for key in match_dict:

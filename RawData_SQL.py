@@ -4,10 +4,10 @@ import psycopg2
 
 def api_account_creation(net_id, year, major, res_college, username, bio):
     try:
-        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
-                              database="d2fdvi8f5tvpvo",
-                              user="yfdafrxedkbxza",
-                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
             if connect is not None:
                 print("CONNECTED TO POSTGRESQL")
             else:
@@ -29,10 +29,10 @@ def api_account_creation(net_id, year, major, res_college, username, bio):
 
 def update_bio(net_id, bio):
     try:
-        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
-                              database="d2fdvi8f5tvpvo",
-                              user="yfdafrxedkbxza",
-                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
 
             with connect.cursor() as cursor:
                 stmt = "UPDATE account SET bio_string = (%s)"
@@ -50,10 +50,10 @@ def update_bio(net_id, bio):
 
 def update_username(net_id, user):
     try:
-        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
-                              database="d2fdvi8f5tvpvo",
-                              user="yfdafrxedkbxza",
-                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
             with connect.cursor() as cursor:
                 stmt = "UPDATE account SET username = (%s)"
                 stmt += "WHERE net_id = (%s)"
@@ -66,10 +66,10 @@ def update_username(net_id, user):
 
 def get_user_data(net_id):  # returns year and major
     try:
-        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
-                              database="d2fdvi8f5tvpvo",
-                              user="yfdafrxedkbxza",
-                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT class_year, major FROM account WHERE net_id=\'" + net_id + "\'"
                 print(stmt)
@@ -88,10 +88,10 @@ def get_user_data(net_id):  # returns year and major
 
 def get_account_details(net_id):  # returns user and bio, None if account doesn't exist
     try:
-        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
-                              database="d2fdvi8f5tvpvo",
-                              user="yfdafrxedkbxza",
-                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT username, bio_string FROM account WHERE net_id=\'" + net_id + "\'"
                 cursor.execute(stmt)
