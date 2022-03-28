@@ -1,0 +1,304 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/survey.css')}}">
+    <title>TigerFriend | Survey</title>
+</head>
+
+<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
+
+    <nav class="myNav">
+        <ul>
+            <li style="float:left"><b>TigerFriend</b></li>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidebar">
+        <a></a>
+        <a class="active" href="/surveydetails">Survey</a>
+        <a href="/matches">Matches</a>
+        <a href="/chat">Chat</a>
+        <a href="/accountdetails">Account</a>
+    </div>
+
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />
+    </div>
+
+    <form id="regForm" method="get">
+        <h1 style="text-align: center; font-size: 50px;">Survey</h1><br>
+        <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
+            {{questions[1][0]}}<br>
+            <input type="radio" name="q1" value="1"> {{questions[1][1]}}<br>
+            <input type="radio" name="q1" value="2"> {{questions[1][2]}}<br>
+            <input type="radio" name="q1" value="3"> {{questions[1][3]}}<br>
+            <input type="radio" name="q1" value="4"> {{questions[1][4]}}<br>
+            <input type="radio" name="q1" value="5"> {{questions[1][5]}}<br>
+            <br>
+            {{questions[2][0]}}<br>
+            <input type="radio" name="q2" value="1"> {{questions[2][1]}}<br>
+            <input type="radio" name="q2" value="2"> {{questions[2][2]}}<br>
+            <input type="radio" name="q2" value="3"> {{questions[2][3]}}<br>
+            <input type="radio" name="q2" value="4"> {{questions[2][4]}}<br>
+            <input type="radio" name="q2" value="5"> {{questions[2][5]}}<br>
+            <br>
+            {{questions[3][0]}}<br>
+            <input type="radio" name="q3" value="1"> {{questions[3][1]}}<br>
+            <input type="radio" name="q3" value="2"> {{questions[3][2]}}<br>
+            <input type="radio" name="q3" value="3"> {{questions[3][3]}}<br>
+            <input type="radio" name="q3" value="4"> {{questions[3][4]}}<br>
+            <input type="radio" name="q3" value="5"> {{questions[3][5]}}<br>
+            <br>
+            {{questions[4][0]}}<br>
+            <input type="radio" name="q4" value="1"> {{questions[4][1]}}<br>
+            <input type="radio" name="q4" value="2"> {{questions[4][2]}}<br>
+            <input type="radio" name="q4" value="3"> {{questions[4][3]}}<br>
+            <input type="radio" name="q4" value="4"> {{questions[4][4]}}<br>
+            <input type="radio" name="q4" value="5"> {{questions[4][5]}}<br>
+            <br>
+            {{questions[5][0]}}<br>
+            <input type="radio" name="q5" value="1"> {{questions[5][1]}}<br>
+            <input type="radio" name="q5" value="2"> {{questions[5][2]}}<br>
+            <input type="radio" name="q5" value="3"> {{questions[5][3]}}<br>
+            <input type="radio" name="q5" value="4"> {{questions[5][4]}}<br>
+            <input type="radio" name="q5" value="5"> {{questions[5][5]}}<br>
+            <br>
+            {{questions[6][0]}}<br>
+            <input type="radio" name="q6" value="1"> {{questions[6][1]}}<br>
+            <input type="radio" name="q6" value="2"> {{questions[6][2]}}<br>
+            <input type="radio" name="q6" value="3"> {{questions[6][3]}}<br>
+            <input type="radio" name="q6" value="4"> {{questions[6][4]}}<br>
+            <input type="radio" name="q6" value="5"> {{questions[6][5]}}<br>
+            <br>
+        </div>
+        <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
+            {{questions[7][0]}}<br>
+            <input type="radio" name="q7" value="1"> {{questions[7][1]}}<br>
+            <input type="radio" name="q7" value="2"> {{questions[7][2]}}<br>
+            <input type="radio" name="q7" value="3"> {{questions[7][3]}}<br>
+            <input type="radio" name="q7" value="4"> {{questions[7][4]}}<br>
+            <input type="radio" name="q7" value="5"> {{questions[7][5]}}<br>
+            <br>
+            {{questions[8][0]}}<br>
+            <input type="radio" name="q8" value="1"> {{questions[8][1]}}<br>
+            <input type="radio" name="q8" value="2"> {{questions[8][2]}}<br>
+            <input type="radio" name="q8" value="3"> {{questions[8][3]}}<br>
+            <input type="radio" name="q8" value="4"> {{questions[8][4]}}<br>
+            <input type="radio" name="q8" value="5"> {{questions[8][5]}}<br>
+            <br>
+            {{questions[9][0]}}<br>
+            <input type="radio" name="q9" value="1"> {{questions[9][1]}}<br>
+            <input type="radio" name="q9" value="2"> {{questions[9][2]}}<br>
+            <input type="radio" name="q9" value="3"> {{questions[9][3]}}<br>
+            <input type="radio" name="q9" value="4"> {{questions[9][4]}}<br>
+            <input type="radio" name="q9" value="5"> {{questions[9][5]}}<br>
+            <br>
+            {{questions[10][0]}}<br>
+            <input type="radio" name="q10" value="1"> {{questions[10][1]}}<br>
+            <input type="radio" name="q10" value="2"> {{questions[10][2]}}<br>
+            <input type="radio" name="q10" value="3"> {{questions[10][3]}}<br>
+            <input type="radio" name="q10" value="4"> {{questions[10][4]}}<br>
+            <input type="radio" name="q10" value="5"> {{questions[10][5]}}<br>
+            <br>
+            {{questions[11][0]}}<br>
+            <input type="radio" name="q11" value="1"> {{questions[11][1]}}<br>
+            <input type="radio" name="q11" value="2"> {{questions[11][2]}}<br>
+            <input type="radio" name="q11" value="3"> {{questions[11][3]}}<br>
+            <input type="radio" name="q11" value="4"> {{questions[11][4]}}<br>
+            <input type="radio" name="q11" value="5"> {{questions[11][5]}}<br>
+            <br>
+            {{questions[12][0]}}<br>
+            <input type="radio" name="q12" value="1"> {{questions[12][1]}}<br>
+            <input type="radio" name="q12" value="2"> {{questions[12][2]}}<br>
+            <input type="radio" name="q12" value="3"> {{questions[12][3]}}<br>
+            <input type="radio" name="q12" value="4"> {{questions[12][4]}}<br>
+            <input type="radio" name="q12" value="5"> {{questions[12][5]}}<br>
+            <br>
+        </div>
+        <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
+            {{questions[13][0]}}<br>
+            <input type="radio" name="q13" value="1"> {{questions[13][1]}}<br>
+            <input type="radio" name="q13" value="2"> {{questions[13][2]}}<br>
+            <input type="radio" name="q13" value="3"> {{questions[13][3]}}<br>
+            <input type="radio" name="q13" value="4"> {{questions[13][4]}}<br>
+            <input type="radio" name="q13" value="5"> {{questions[13][5]}}<br>
+            <br>
+            {{questions[14][0]}}<br>
+            <input type="radio" name="q14" value="1"> {{questions[14][1]}}<br>
+            <input type="radio" name="q14" value="2"> {{questions[14][2]}}<br>
+            <input type="radio" name="q14" value="3"> {{questions[14][3]}}<br>
+            <input type="radio" name="q14" value="4"> {{questions[14][4]}}<br>
+            <input type="radio" name="q14" value="5"> {{questions[14][5]}}<br>
+            <br>
+            {{questions[15][0]}}<br>
+            <input type="radio" name="q15" value="1"> {{questions[15][1]}}<br>
+            <input type="radio" name="q15" value="2"> {{questions[15][2]}}<br>
+            <input type="radio" name="q15" value="3"> {{questions[15][3]}}<br>
+            <input type="radio" name="q15" value="4"> {{questions[15][4]}}<br>
+            <input type="radio" name="q15" value="5"> {{questions[15][5]}}<br>
+            <br>
+            {{questions[16][0]}}<br>
+            <input type="radio" name="q16" value="1"> {{questions[16][1]}}<br>
+            <input type="radio" name="q16" value="2"> {{questions[16][2]}}<br>
+            <input type="radio" name="q16" value="3"> {{questions[16][3]}}<br>
+            <input type="radio" name="q16" value="4"> {{questions[16][4]}}<br>
+            <input type="radio" name="q16" value="5"> {{questions[16][5]}}<br>
+            <br>
+            {{questions[17][0]}}<br>
+            <input type="radio" name="q17" value="1"> {{questions[17][1]}}<br>
+            <input type="radio" name="q17" value="2"> {{questions[17][2]}}<br>
+            <input type="radio" name="q17" value="3"> {{questions[17][3]}}<br>
+            <input type="radio" name="q17" value="4"> {{questions[17][4]}}<br>
+            <input type="radio" name="q17" value="5"> {{questions[17][5]}}<br>
+            <br>
+            {{questions[18][0]}}<br>
+            <input type="radio" name="q18" value="1"> {{questions[18][1]}}<br>
+            <input type="radio" name="q18" value="2"> {{questions[18][2]}}<br>
+            <input type="radio" name="q18" value="3"> {{questions[18][3]}}<br>
+            <input type="radio" name="q18" value="4"> {{questions[18][4]}}<br>
+            <input type="radio" name="q18" value="5"> {{questions[18][5]}}<br>
+            <br>
+        </div>
+        <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
+            {{questions[19][0]}}<br>
+            <input type="radio" name="q19" value="1"> {{questions[19][1]}}<br>
+            <input type="radio" name="q19" value="2"> {{questions[19][2]}}<br>
+            <input type="radio" name="q19" value="3"> {{questions[19][3]}}<br>
+            <input type="radio" name="q19" value="4"> {{questions[19][4]}}<br>
+            <input type="radio" name="q19" value="5"> {{questions[19][5]}}<br>
+            <br>
+            {{questions[20][0]}}<br>
+            <input type="radio" name="q20" value="1"> {{questions[20][1]}}<br>
+            <input type="radio" name="q20" value="2"> {{questions[20][2]}}<br>
+            <input type="radio" name="q20" value="3"> {{questions[20][3]}}<br>
+            <input type="radio" name="q20" value="4"> {{questions[20][4]}}<br>
+            <input type="radio" name="q20" value="5"> {{questions[20][5]}}<br>
+            <br>
+            {{questions[21][0]}}<br>
+            <input type="radio" name="q21" value="1"> {{questions[21][1]}}<br>
+            <input type="radio" name="q21" value="2"> {{questions[21][2]}}<br>
+            <input type="radio" name="q21" value="3"> {{questions[21][3]}}<br>
+            <input type="radio" name="q21" value="4"> {{questions[21][4]}}<br>
+            <input type="radio" name="q21" value="5"> {{questions[21][5]}}<br>
+            <br>
+            {{questions[22][0]}}<br>
+            <input type="radio" name="q22" value="1"> {{questions[22][1]}}<br>
+            <input type="radio" name="q22" value="2"> {{questions[22][2]}}<br>
+            <input type="radio" name="q22" value="3"> {{questions[22][3]}}<br>
+            <input type="radio" name="q22" value="4"> {{questions[22][4]}}<br>
+            <input type="radio" name="q22" value="5"> {{questions[22][5]}}<br>
+            <br>
+            {{questions[23][0]}}<br>
+            <input type="radio" name="q23" value="1"> {{questions[23][1]}}<br>
+            <input type="radio" name="q23" value="2"> {{questions[23][2]}}<br>
+            <input type="radio" name="q23" value="3"> {{questions[23][3]}}<br>
+            <input type="radio" name="q23" value="4"> {{questions[23][4]}}<br>
+            <input type="radio" name="q23" value="5"> {{questions[23][5]}}<br>
+            <br>
+            {{questions[24][0]}}<br>
+            <input type="radio" name="q24" value="1"> {{questions[24][1]}}<br>
+            <input type="radio" name="q24" value="2"> {{questions[24][2]}}<br>
+            <input type="radio" name="q24" value="3"> {{questions[24][3]}}<br>
+            <input type="radio" name="q24" value="4"> {{questions[24][4]}}<br>
+            <input type="radio" name="q24" value="5"> {{questions[24][5]}}<br>
+            <br>
+        </div>
+        <div style="overflow:auto;">
+          <div style="float:right;">
+            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+          </div>
+        </div>
+
+        <!-- Circles which indicates the steps of the form: -->
+        <div style="text-align:center;margin-top:40px;">
+          <span class="step"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+        </div>
+      </form>
+      
+      <script>    
+
+      for(var i=1;i<=24;i++)
+      {
+        var radio=document.getElementsByName("q"+i);
+        var len=radio.length;
+        for(var j=0;j<len;j++)
+        {
+            radio[j].disabled=true;
+        }
+      }
+
+      var currentTab = 0; // Current tab is set to be the first tab (0)
+      showTab(currentTab); // Display the current tab
+      
+      function showTab(n) {
+        // This function will display the specified tab of the form...
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        //... and fix the Previous/Next buttons:
+        if (n == 0) {
+          document.getElementById("prevBtn").style.display = "none";
+        } else {
+          document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+          document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+          document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        //... and run a function that will display the correct step indicator:
+        fixStepIndicator(n)
+
+        window.scroll(0,0);
+      }
+      
+      function nextPrev(n) {
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tab");
+        // Exit the function if any field in the current tab is invalid:
+        if (n == 1 && !validateForm()) return false;
+        // Hide the current tab:
+        x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+        // if you have reached the end of the form...
+        if (currentTab >= x.length) {
+          // ... the form gets submitted:
+          alert("Cannot change/resubmit survey once completed.");
+          document.getElementById("regForm").submit();
+          return false;
+        }
+        // Otherwise, display the correct tab:
+        showTab(currentTab);
+      }
+      
+      function validateForm() {
+        // This function deals with validation of the form fields
+        var valid = true;
+        // If the valid status is true, mark the step as finished and valid:
+        if (valid) {
+          document.getElementsByClassName("step")[currentTab].className += " finish";
+        }
+        return valid; // return the valid status
+      }
+      
+      function fixStepIndicator(n) {
+        // This function removes the "active" class of all steps...
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+          x[i].className = x[i].className.replace(" active", "");
+        }
+        //... and adds the "active" class on the current step:
+        x[n].className += " active";
+      }
+      </script>
+
+</body>
+
+</html>
