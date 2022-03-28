@@ -19,9 +19,10 @@
 <!-- The sidebar -->
 <div class="sidebar">
     <a></a>
-    <a class="active" href="/data">Survey</a>
+    <a class="active" href="/survey">Survey</a>
     <a href="/matches">Matches</a>
     <a href="/chat">Chat</a>
+    <a href="/accountdetails">Account</a>
 </div>
 
 <div class="rightsidebar">
@@ -29,15 +30,13 @@
     class="image" width="150" height="150"/>
 </div>
 
+<form class="form" action="accountdetails" method="get">
+    <h1 style="text-align: center; font-size: 50px;">Account Creation Page</h1>
+    <h3 style="text-align: center;">Please input a username and short bio (max 150 characters).</h3>
+    <h3 style="text-align: center;">This is the only information that is not anonymized and will be displayed to matches!</h3>
+    <br>
 
-<div style= "height:180px; padding-top: 50px; text-align: center;">
-    <h1 style="font-size:50px; color:black; margin:10px;">Account Creation</h1>
-    <h3>Please input a username and short bio (max 150 chars).</h3>
-    <h3>This is the only information that is not anonymized and will be displayed to matches!</h3>
-</div>
-
-<form action="matches" method="get" style="padding-left: 12vw; font-size: 25px; font-family:Playfair Display">
-    <table>
+    <table style="padding-left: 15vw; font-size: 1.75vw; font-family:Playfair Display">
         <tr>
             <td align="right">Username:</td>
             <td><input type="text" maxlength="20" name="username" value={{net_id}}></td>
@@ -46,6 +45,7 @@
             <td align="right">Bio:</td>
             <td><textarea maxlength="150" rows="3" cols="50" name="bio" value={{bio}}></textarea></td>
         </tr>
+        <tr><td></td></tr>
         <tr>
             <td></td>
             <td><input type="submit" value="Submit"></td>
