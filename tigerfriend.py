@@ -2,7 +2,7 @@
 # tigerfriend.py
 # --------------------------------------------------------------------
 
-from flask import Flask, request, make_response, render_template
+from flask import Flask, request, make_response, render_template, redirect, url_for
 from RawData_SQL import api_account_creation, get_user_data
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
@@ -41,6 +41,12 @@ def survey():
                               user="yfdafrxedkbxza",
                               password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
             with connect.cursor() as cursor:
+                stmt = "SELECT net_id FROM account WHERE net_id = (%s)"
+                cursor.execute(stmt, [user])
+                row = cursor.fetchone()
+                if row is not None:
+                    return redirect(url_for("accountdetails", code=302))
+
                 stmt = "SELECT question, answer1, answer2, answer3, answer4, answer5 FROM survey"
                 cursor.execute(stmt)
 
