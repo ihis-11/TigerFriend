@@ -124,9 +124,8 @@ def account():
     user = auth.authenticate().strip()
 
     q = [0]
-    for x in range(1, 25): {
+    for x in range(1, 25):
         q.append(request.args.get('q'+str(x)))
-    }
 
     try:
         with psycopg2.connect(host = "ec2-3-229-161-70.compute-1.amazonaws.com",
