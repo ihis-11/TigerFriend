@@ -165,6 +165,8 @@ def accountdetails():
     # authenticated net id
     user = auth.authenticate().strip()
 
+    username = ""
+    bio = ""
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
         username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
