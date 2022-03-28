@@ -2,8 +2,8 @@
 # tigerfriend.py
 # --------------------------------------------------------------------
 
-from flask import Flask, request, make_response, redirect, url_for, render_template
-from RawData_SQL import api_account_creation, get_user_data, account_creation
+from flask import Flask, request, make_response, render_template
+from RawData_SQL import api_account_creation, get_user_data
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
@@ -16,6 +16,7 @@ app = Flask(__name__, template_folder='templates')
 app.secret_key = APP_SECRET_KEY
 
 import auth
+
 
 # --------------------------------------------------------------------
 
