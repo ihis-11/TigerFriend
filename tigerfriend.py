@@ -2,7 +2,7 @@
 # tigerfriend.py
 # --------------------------------------------------------------------
 
-from flask import Flask, request, make_response, render_template
+from flask import Flask, request, make_response, render_template, redirect, url_for
 from RawData_SQL import api_account_creation, get_user_data, get_account_details
 from matching import get_user_match_info
 from keys import APP_SECRET_KEY
@@ -42,6 +42,12 @@ def survey():
                               user="yfdafrxedkbxza",
                               password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
             with connect.cursor() as cursor:
+                stmt = "SELECT net_id FROM account WHERE net_id = (%s)"
+                cursor.execute(stmt, [user])
+                row = cursor.fetchone()
+                if row is not None:
+                    return redirect(url_for("accountdetails", code=302))
+
                 stmt = "SELECT question, answer1, answer2, answer3, answer4, answer5 FROM survey"
                 cursor.execute(stmt)
 
@@ -193,5 +199,46 @@ def accountdetails():
                            major=data[1],
                            username=username,
                            bio=bio)
+    response = make_response(html)
+    return response
+
+# --------------------------------------------------------------------
+
+@app.route('/surveydetails', methods=['GET'])
+def surveydetails():
+    # authenticated net id
+    user = auth.authenticate().strip()
+
+    try:
+        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
+                              database="d2fdvi8f5tvpvo",
+                              user="yfdafrxedkbxza",
+                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+            with connect.cursor() as cursor:
+                stmt = "SELECT question, answer1, answer2, answer3, answer4, answer5 FROM survey"
+                cursor.execute(stmt)
+
+                questions = [0]
+                row = cursor.fetchone()
+                while row is not None:
+                    questions.append([row[0], row[1], row[2], row[3], row[4], row[5]])
+                    row = cursor.fetchone()
+
+                stmt = "SELECT q1_response, q2_response, q3_response, q4_response, q5_response, \
+                q6_response, q7_response, q8_response, q9_response, q10_response, q11_response, q12_response, q13_response, \
+                q14_response, q15_response, q16_response, q17_response, q18_response, q19_response, q20_response, q21_response, \
+                q22_response, q23_response, q24_response FROM rawdata WHERE net_id = (%s)"
+                cursor.execute(stmt, [user])
+
+                answers = [0]
+                row = cursor.fetchone()
+                if row is not None:
+                    for x in range(0,24):
+                        answers.append(row[x])
+
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+
+    html = render_template('surveydetails.html', questions=questions, answers=answers)
     response = make_response(html)
     return response
