@@ -65,35 +65,7 @@ def matches():
     # authenticated net id
     user = auth.authenticate().strip()
 
-    # Only happens when coming from account creation
-    if request.args.get('username') is not None:
-        username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
-        bio = request.args.get('bio')
-
-        # Should do this only first time
-        # Eventually move this code + inputting bio and username to end of
-        # survey, so only users who do survey get an account made (here)
-        req = getOneUndergrad(netid=user)
-        yr = ''
-        major = ''
-        res = ''
-        if req.ok:
-            print(req.json())
-            yr = '20' + str(req.json()['class_year'])
-            major = req.json()['major_code']
-            res = req.json()['res_college']
-        else:
-            print("Error w/API call: " + req.text)
-
-        api_account_creation(user, yr, major, res, username, bio)
-
-    print(user)
-    data = get_user_data(user)
-    print(data)
-    html = render_template('matches.html',
-                           net_id=user,
-                           year=data[0],
-                           major=data[1])
+    html = render_template('matches.html')
     response = make_response(html)
     return response
 
@@ -162,5 +134,45 @@ def account():
         print(ex, file=stderr)
 
     html = render_template('account.html')
+    response = make_response(html)
+    return response
+
+#---------------------------------------------------------------------
+
+@app.route('/accountdetails', methods=['GET'])
+def accountdetails():
+
+    #authenticated net id
+    user = auth.authenticate().strip()
+
+    # Only happens when coming from account creation
+    if request.args.get('username') is not None:
+        username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
+        bio = request.args.get('bio')
+
+        # Should do this only first time
+        # Eventually move this code + inputting bio and username to end of
+        # survey, so only users who do survey get an account made (here)
+        req = getOneUndergrad(netid=user)
+        yr = ''
+        major = ''
+        res = ''
+        if req.ok:
+            print(req.json())
+            yr = '20' + str(req.json()['class_year'])
+            major = req.json()['major_code']
+            res = req.json()['res_college']
+        else:
+            print("Error w/API call: " + req.text)
+
+        api_account_creation(user, yr, major, res, username, bio)
+
+    print(user)
+    data = get_user_data(user)
+    print(data)
+    html = render_template('accountdetails.html',
+                           net_id=user,
+                           year=data[0],
+                           major=data[1])
     response = make_response(html)
     return response

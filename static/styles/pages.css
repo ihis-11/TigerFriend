@@ -21,8 +21,8 @@
 .myNav li {
   float: right;
 }
-
-.myNav li b {
+/* Define the block styling for the links */
+.myNav li a {
   display: block;
   color: black;
   font-size: 24px;
@@ -31,8 +31,7 @@
   text-decoration: none;
 }
 
-/* Define the block styling for the links */
-.myNav li a {
+.myNav li b {
   display: block;
   color: black;
   font-size: 24px;
@@ -111,4 +110,12 @@
   overflow: auto;
   right:0px;
   top: 55px;
+}
+
+.form {
+  background-color:rgb(243, 237, 237);
+  margin: 100px auto;
+  padding: 0px;
+  width: 70%;
+  min-width: 300px;
 }
