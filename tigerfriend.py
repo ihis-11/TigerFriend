@@ -192,6 +192,24 @@ def accountdetails():
 
         api_account_creation(user, yr, major, res, username, bio)
 
+    try:
+        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
+                              database="d2fdvi8f5tvpvo",
+                              user="yfdafrxedkbxza",
+                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+            with connect.cursor() as cursor:
+                stmt = "SELECT username, bio_string FROM account WHERE net_id = (%s)"
+                cursor.execute(stmt, [user])
+                row = cursor.fetchone()
+                if row is not None:
+                    username = row[0]
+                    bio = row[1]
+                else:
+                    username = None
+                    bio = None
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+
     print(user)
     data = get_user_data(user)
     print(data)
