@@ -3,7 +3,8 @@
 # --------------------------------------------------------------------
 
 from flask import Flask, request, make_response, render_template
-from RawData_SQL import api_account_creation, get_user_data
+from RawData_SQL import api_account_creation, get_user_data, get_account_details
+from matching import get_user_match_info
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
@@ -65,7 +66,20 @@ def matches():
     # authenticated net id
     user = auth.authenticate().strip()
 
-    html = render_template('matches.html')
+    match_info = get_user_match_info(user)
+
+    html = render_template('matches.html',
+                           overall_match_user=match_info["overall_match"][0],
+                           overall_match_bio=match_info["overall_match"][1],
+                           academic_match_user=match_info["academic_match"][0],
+                           academic_match_bio=match_info["academic_match"][1],
+                           extracurricular_match_user=match_info["extracurricular_match"][0],
+                           extracurricular_match_bio=match_info["extracurricular_match"][1],
+                           personality_match_user=match_info["personality_match"][0],
+                           personality_match_bio=match_info["personality_match"][1],
+                           opinion_match_user=match_info["opinion_match"][0],
+                           opinion_match_bio=match_info["opinion_match"][1]
+                           )
     response = make_response(html)
     return response
 
@@ -137,22 +151,25 @@ def account():
     response = make_response(html)
     return response
 
-#---------------------------------------------------------------------
+
+# --------------------------------------------------------------------
 
 @app.route('/accountdetails', methods=['GET'])
 def accountdetails():
-
-    #authenticated net id
+    # authenticated net id
     user = auth.authenticate().strip()
 
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
         username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
         bio = request.args.get('bio')
+    else:
+        account_info = get_account_details(user)
+        username = account_info[0]
+        bio = account_info[1]
 
-        # Should do this only first time
-        # Eventually move this code + inputting bio and username to end of
-        # survey, so only users who do survey get an account made (here)
+    # if the user doesn't already have an account
+    if account_info is None:
         req = getOneUndergrad(netid=user)
         yr = ''
         major = ''
@@ -167,8 +184,6 @@ def accountdetails():
 
         api_account_creation(user, yr, major, res, username, bio)
 
-    username = request.args.get('username')
-    bio = request.args.get('bio')
     print(user)
     data = get_user_data(user)
     print(data)

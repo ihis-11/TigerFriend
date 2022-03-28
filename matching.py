@@ -39,7 +39,7 @@ def get_user_matches(net_id):
                 # print(q_types)
 
                 # compare survey responses with other users
-                stmt = "SELECT * FROM rawdata WHERE net_id NOT LIKE \'" + net_id + "\'"
+                stmt = "SELECT * FROM rawdata Except SELECT * FROM rawdata WHERE net_id=\'" + net_id + "\'"
                 cursor.execute(stmt)
                 other_raw_data = cursor.fetchone()
 
@@ -64,7 +64,7 @@ def get_user_matches(net_id):
                     for i in range(len(q_types)):
                         # print("Question " + str(i + 1))
                         if user_raw_data[i + 1] == other_raw_data[i + 1]:
-                            # print("collado and " + str(other_raw_data[0]) + " matched  with answer choice " + str(
+                            # print(str(user_raw_data[0]) + " and " + str(other_raw_data[0]) + " matched  with answer choice " + str(
                             # user_raw_data[i+1]))
                             overall_match_score += 1
                             # print("Question type " + str(q_types[i]))
@@ -109,8 +109,48 @@ def get_user_matches(net_id):
     }
 
 
+# "overall_match": [user, bio]
+# "academic_match": [user, bio]
+# "extracurricular_match": [user, bio]
+# "personality_match": [user, bio]
+# "opinion_match": [user, bio]
+def get_match_info(match_dict):
+    try:
+        # connect to database
+        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
+                              database="d2fdvi8f5tvpvo",
+                              user="yfdafrxedkbxza",
+                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+            with connect.cursor() as cursor:
+                match_info = ()
+                for key in match_dict:
+                    net_id = match_dict[key]
+                    stmt = "SELECT username, bio_string FROM account WHERE net_id=\'" + net_id + "\'"
+                    cursor.execute(stmt)
+                    account_data = cursor.fetchone()
+                    match_info += ([str(account_data[0]), str(account_data[1])],)
+
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+        print("Data base connection failed", file=stderr)
+        return ["unknown (database connection failed)", "unknown"]
+
+    return {
+        "overall_match": match_info[0],
+        "academic_match": match_info[1],
+        "extracurricular_match": match_info[2],
+        "personality_match": match_info[3],
+        "opinion_match": match_info[4]
+    }
+
+
+def get_user_match_info(net_id):
+    return get_match_info(get_user_matches(net_id))
+
+
+# unit test
 def main():
-    print(get_user_matches("collado"))
+    print(get_user_match_info("hishimwe"))
 
 
 # ----------------------------------------------------------------------

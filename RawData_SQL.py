@@ -111,3 +111,23 @@ def get_user_data(net_id):  # returns year and major
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
+def get_account_details(net_id):  # returns user and bio
+    try:
+        with psycopg2.connect(host="ec2-3-229-161-70.compute-1.amazonaws.com",
+                              database="d2fdvi8f5tvpvo",
+                              user="yfdafrxedkbxza",
+                              password="3768ffff6c40b7ca1d4274e6d428b9adbd6c5d8becd30b6c479236de989a8f1e") as connect:
+            with connect.cursor() as cursor:
+                stmt = "SELECT username, bio_string FROM account WHERE net_id=\'" + net_id + "\'"
+                cursor.execute(stmt)
+                row = cursor.fetchone()
+                if row is None:
+                    return None
+                else:
+                    return [row[0], row[1]]
+
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+        print("Data base connection failed", file=stderr)
+        return ["unknown (database connection failed)", "unknown"]
