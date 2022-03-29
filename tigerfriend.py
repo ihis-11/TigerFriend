@@ -174,6 +174,23 @@ def accountdetails():
         username = account_info[0]
         bio = account_info[1]
 
+    # checking if the username is unique
+    try:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
+
+            with connect.cursor() as cursor:
+                stmt = "SELECT username FROM account WHERE username=\'" + username + "\'"
+                cursor.execute(stmt)
+                row = cursor.fetchone()
+                if row is not None:
+                    return 
+
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+
     # if the user doesn't already have an account
     if account_info is None:
         req = getOneUndergrad(netid=user)
