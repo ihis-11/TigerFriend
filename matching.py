@@ -6,6 +6,7 @@ import psycopg2
 
 DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
 
+
 # --------------------------------------------------------------------
 
 # given a user's net_id, returns a dictionary containing the following
