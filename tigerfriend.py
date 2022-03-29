@@ -119,6 +119,11 @@ def account():
     # authenticated net id
     user = auth.authenticate().strip()
 
+    # error handling
+    error_msg = request.args.get('error_msg')
+    if error_msg is None:
+        error_msg = ''
+
     q = [0]
     for x in range(1, 25):
         q.append(request.args.get('q' + str(x)))
@@ -151,7 +156,7 @@ def account():
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
 
-    html = render_template('account.html')
+    html = render_template('account.html', error_msg=error_msg)
     response = make_response(html)
     return response
 
@@ -174,6 +179,11 @@ def accountdetails():
         username = account_info[0]
         bio = account_info[1]
 
+    # Dealing with empty username input
+    if username.strip() == '':
+        error_msg = "Please input a username."
+        return redirect(url_for('account', error_msg=error_msg)) 
+
     # if the user doesn't already have an account
     if account_info is None:
         req = getOneUndergrad(netid=user)
@@ -187,7 +197,7 @@ def accountdetails():
             res = req.json()['res_college']
         else:
             print("Error w/API call: " + req.text)
-        
+
         # checking if the username is unique
         try:
             with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
@@ -200,7 +210,8 @@ def accountdetails():
                     cursor.execute(stmt)
                     row = cursor.fetchone()
                     if row is not None:
-                        return redirect(url_for("account", code=302))
+                        error_msg = 'Please choose another username, the one entered is already exist'
+                        return redirect(url_for("account", error_msg=error_msg))
 
         except (Exception, psycopg2.Error) as ex:
             print(ex, file=stderr)

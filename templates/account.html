@@ -1,56 +1,60 @@
 <html>
+
 <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='styles/pages.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/pages.css')}}">
     <link rel="import" href="/path/to/template.html">
     <title>TigerFriend | Account</title>
 </head>
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
 
-<nav class="myNav">                     
-    <ul>
-        <li style="float:left"><b>TigerFriend</b></li>
-        <li><a href="/logout">Logout</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/">Home</a></li>
-    </ul>
-</nav>
+    <nav class="myNav">
+        <ul>
+            <li style="float:left"><b>TigerFriend</b></li>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
 
-<div class="sidebar">
-    <a></a>
-    <a class="active">Survey</a>
-    <a>Matches</a>
-    <a>Chat</a>
-    <a>Account</a>
-</div>
+    <div class="sidebar">
+        <a></a>
+        <a class="active">Survey</a>
+        <a>Matches</a>
+        <a>Chat</a>
+        <a>Account</a>
+    </div>
 
-<div class="rightsidebar">
-    <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" 
-    class="image" width="150" height="150"/>
-</div>
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />
+    </div>
 
-<form class="form" action="accountdetails" method="get">
-    <h1 style="text-align: center; font-size: 50px;">Account Creation Page</h1>
-    <h3 style="text-align: center;">Please input a username and short bio (max 150 characters).</h3>
-    <h3 style="text-align: center;">This is the only information that is not anonymized and will be displayed to matches!</h3>
-    <br>
+    <form class="form" action="accountdetails" method="get">
+        <h1 style="text-align: center; font-size: 50px;">Account Creation Page</h1>
+        <h3 style="text-align: center;">Please input a username and short bio (max 150 characters).</h3>
+        <h3 style="text-align: center;">This is the only information that is not anonymized and will be displayed to matches!</h3>
+        <h4 style="text-align: center; color: red;">{{error_msg}}</h4>
+        <br>
 
-    <table style="padding-left: 15vw; font-size: 1.75vw; font-family:Playfair Display">
-        <tr>
-            <td align="right">Username:</td>
-            <td><input type="text" maxlength="20" name="username" value={{net_id}}></td>
-        </tr>
-        <tr>
-            <td align="right">Bio:</td>
-            <td><textarea maxlength="150" rows="3" cols="50" name="bio" value={{bio}}></textarea></td>
-        </tr>
-        <tr><td></td></tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Submit"></td>
-        </tr>
-    </table>
-</form>
+        <table style="padding-left: 15vw; font-size: 1.75vw; font-family:Playfair Display">
+            <tr>
+                <td align="right">Username:</td>
+                <td><input type="text" maxlength="20" name="username" value={{net_id}}></td>
+            </tr>
+            <tr>
+                <td align="right">Bio:</td>
+                <td><textarea maxlength="150" rows="3" cols="50" name="bio" value={{bio}}></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+    </form>
 
 </body>
+
 </html>
