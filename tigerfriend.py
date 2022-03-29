@@ -72,7 +72,6 @@ def matches():
     # authenticated net id
     user = auth.authenticate().strip()
 
-
     req = getOneUndergrad(netid=user)
     yr = ''
     major = ''
@@ -195,9 +194,9 @@ def accountdetails():
     # Dealing with empty username input
     if username.strip() == '':
         error_msg = "Please input a username."
-        return redirect(url_for('account', error_msg=error_msg)) 
+        return redirect(url_for('account', error_msg=error_msg))
 
-    # if the user doesn't already have an account
+        # if the user doesn't already have an account
     if account_info is None:
         req = getOneUndergrad(netid=user)
         yr = ''
@@ -214,9 +213,9 @@ def accountdetails():
         # checking if the username is unique
         try:
             with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
-                              database="d1qoonauda49lp",
-                              user="gehgaeoepuqelg",
-                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
+                                  database="d1qoonauda49lp",
+                                  user="gehgaeoepuqelg",
+                                  password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
 
                 with connect.cursor() as cursor:
                     stmt = "SELECT username FROM account WHERE username=\'" + username + "\'"
@@ -228,7 +227,7 @@ def accountdetails():
 
         except (Exception, psycopg2.Error) as ex:
             print(ex, file=stderr)
-        
+
         api_account_creation(user, yr, major, res, username, bio)
 
     data = get_user_data(user)
@@ -240,6 +239,7 @@ def accountdetails():
                            bio=bio)
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -272,7 +272,7 @@ def surveydetails():
                 answers = [0]
                 row = cursor.fetchone()
                 if row is not None:
-                    for x in range(0,24):
+                    for x in range(0, 24):
                         answers.append(row[x])
 
     except (Exception, psycopg2.Error) as ex:
