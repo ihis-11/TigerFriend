@@ -72,7 +72,20 @@ def matches():
     # authenticated net id
     user = auth.authenticate().strip()
 
-    match_info = get_user_match_info(user)
+
+    req = getOneUndergrad(netid=user)
+    yr = ''
+    major = ''
+    res = ''
+    if req.ok:
+        print(req.json())
+        yr = '20' + str(req.json()['class_year'])
+        major = req.json()['major_code']
+        res = req.json()['res_college']
+    else:
+        print("Error w/API call: " + req.text)
+
+    match_info = get_user_match_info(user, yr, major, res)
 
     html = render_template('matches.html',
                            overall_match_user=match_info["overall_match"][0],

@@ -191,7 +191,7 @@ def get_user_match_info(net_id, yr, major, res):
 
 # unit test
 def main():
-    print(get_user_match_info("collado", 2024, "COS", "Whitman"))
+    print(get_user_match_info("collado", "2024", "COS", "Whitman"))
 
 
 # ----------------------------------------------------------------------
