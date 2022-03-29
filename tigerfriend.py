@@ -186,7 +186,7 @@ def accountdetails():
                 cursor.execute(stmt)
                 row = cursor.fetchone()
                 if row is not None:
-                    return 
+                    return redirect(url_for("account", code=302))
 
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
