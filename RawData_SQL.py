@@ -105,3 +105,26 @@ def get_account_details(net_id):  # returns user and bio, None if account doesn'
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
+# Method for deleting rows in matchscores since it won't let us in pgAdmin
+def delete():  # returns user and bio, None if account doesn't exist
+    try:
+        with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
+                              database="d1qoonauda49lp",
+                              user="gehgaeoepuqelg",
+                              password="8a2c415ed295edded3641f084099f247971fc720d4c83c7e79bf1951c3dcd38a") as connect:
+            with connect.cursor() as cursor:
+                # HARD CODE IN NET_ID YOU WANT TO DELETE
+                stmt = "DELETE FROM matchscores WHERE net_id1=\'NET_ID\' OR net_id2=\'NET_ID\'"
+                cursor.execute(stmt)
+                connect.commit()
+
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+        print("Data base connection failed", file=stderr)
+        return ["unknown (database connection failed)", "unknown"]
+
+# ----------------------------------------------------------------------
+
+if __name__ == '__main__':
+    delete()

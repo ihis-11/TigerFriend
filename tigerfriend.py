@@ -4,7 +4,7 @@
 
 from flask import Flask, request, make_response, render_template, redirect, url_for
 from RawData_SQL import api_account_creation, get_user_data, get_account_details
-from matching import get_user_match_info
+from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
@@ -77,26 +77,21 @@ def matches():
     major = ''
     res = ''
     if req.ok:
-        print(req.json())
+        #print(req.json())
         yr = '20' + str(req.json()['class_year'])
         major = req.json()['major_code']
         res = req.json()['res_college']
     else:
         print("Error w/API call: " + req.text)
 
-    match_info = get_user_match_info(user, yr, major, res)
+    matches = get_matches(user)
 
     html = render_template('matches.html',
-                           overall_match_user=match_info["overall_match"][0],
-                           overall_match_bio=match_info["overall_match"][1],
-                           academic_match_user=match_info["academic_match"][0],
-                           academic_match_bio=match_info["academic_match"][1],
-                           extracurricular_match_user=match_info["extracurricular_match"][0],
-                           extracurricular_match_bio=match_info["extracurricular_match"][1],
-                           personality_match_user=match_info["personality_match"][0],
-                           personality_match_bio=match_info["personality_match"][1],
-                           opinion_match_user=match_info["opinion_match"][0],
-                           opinion_match_bio=match_info["opinion_match"][1]
+                           overall=matches["overall"],
+                           academic=matches["academic"],
+                           ec=matches["ec"],
+                           personality=matches["personality"],
+                           opinion=matches["opinion"],
                            )
     response = make_response(html)
     return response
@@ -198,18 +193,6 @@ def accountdetails():
 
         # if the user doesn't already have an account
     if account_info is None:
-        req = getOneUndergrad(netid=user)
-        yr = ''
-        major = ''
-        res = ''
-        if req.ok:
-            print(req.json())
-            yr = '20' + str(req.json()['class_year'])
-            major = req.json()['major_code']
-            res = req.json()['res_college']
-        else:
-            print("Error w/API call: " + req.text)
-
         # checking if the username is unique
         try:
             with psycopg2.connect(host="ec2-52-54-212-232.compute-1.amazonaws.com",
@@ -228,8 +211,21 @@ def accountdetails():
         except (Exception, psycopg2.Error) as ex:
             print(ex, file=stderr)
 
-        api_account_creation(user, yr, major, res, username, bio)
+        req = getOneUndergrad(netid=user)
+        yr = ''
+        major = ''
+        res = ''
+        if req.ok:
+            print(req.json())
+            yr = '20' + str(req.json()['class_year'])
+            major = req.json()['major_code']
+            res = req.json()['res_college']
+        else:
+            print("Error w/API call: " + req.text)
 
+        api_account_creation(user, yr, major, res, username, bio)
+        input_match_scores(user)
+ 
     data = get_user_data(user)
     html = render_template('accountdetails.html',
                            net_id=user,

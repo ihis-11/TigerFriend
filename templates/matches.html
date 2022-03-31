@@ -6,58 +6,62 @@
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
 
-<nav class="myNav">                     
-    <ul>
-        <li style="float:left"><b>TigerFriend</b></li>
-        <li><a href="/logout">Logout</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/">Home</a></li>
-    </ul>
-</nav>
+    <nav class="myNav">                     
+        <ul>
+            <li style="float:left"><b>TigerFriend</b></li>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
 
-<div class="sidebar">
-    <a></a>
-    <a href="/surveydetails">Survey</a>
-    <a class="active" href="/matches">Matches</a>
-    <a href="/chat">Chat</a>
-    <a href="/accountdetails">Account</a>
-</div>
+    <div class="sidebar">
+        <a></a>
+        <a href="/surveydetails">Survey</a>
+        <a class="active" href="/matches">Matches</a>
+        <a href="/chat">Chat</a>
+        <a href="/accountdetails">Account</a>
+    </div>
 
-<div class="rightsidebar">
-    <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" 
-    class="image" width="150" height="150"/>
-</div>
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" 
+        class="image" width="150" height="150"/>
+    </div>
 
-<div style= "height:180px; padding-top: 50px; text-align: center;">
-    <h1 style="font-size:80px; color:black; margin:10px;">You've got matches!</h1>
-    </br>
-    </br>
-    <h1 style="font-size:30px; color:black; margin:10px;">Overall Match</h1>
-    </br>
-    <h2 style="font-size:30px; color:black; margin:10px;">{{overall_match_user}}</h2>
-    <h3 style="font-size:20px; color:black; margin:10px;">{{overall_match_bio}}</h3>
-    </br>
-    <h1 style="font-size:30px; color:black; margin:10px;">Academic Match</h1>
-    </br>
-    <h2 style="font-size:30px; color:black; margin:10px;">{{academic_match_user}}</h2>
-    <h3 style="font-size:20px; color:black; margin:10px;">{{academic_match_bio}}</h3>
-    </br>
-    <h1 style="font-size:30px; color:black; margin:10px;">Extracurricular Match</h1>
-    </br>
-    <h2 style="font-size:30px; color:black; margin:10px;">{{extracurricular_match_user}}</h2>
-    <h3 style="font-size:20px; color:black; margin:10px;">{{extracurricular_match_bio}}</h3>
-    </br>
-    <h1 style="font-size:30px; color:black; margin:10px;">Personality Match</h1>
-    </br>
-    <h2 style="font-size:30px; color:black; margin:10px;">{{personality_match_user}}</h2>
-    <h3 style="font-size:20px; color:black; margin:10px;">{{personality_match_bio}}</h3>
-    </br>
-    <h1 style="font-size:30px; color:black; margin:10px;">Opinions Match</h1>
-    </br>
-    <h2 style="font-size:30px; color:black; margin:10px;">{{opinion_match_user}}</h2>
-    <h3 style="font-size:20px; color:black; margin:10px;">{{opinion_match_bio}}</h3>
-    </br>
-</div>
+    <div style= "height:180px; padding-top: 50px; text-align: center;">
+        <h1 style="font-size:80px; color:black; margin:10px;">You've got matches!</h1>
+        </br>
+        </br>
+        <h1 style="font-size:30px; color:black; margin:10px;">Overall Matches</h1>
+            {% for i in range(overall|count) %}
+                <h2>{{ (i+1)|string + ". " + overall[i] }}</h2>
+            {% endfor %}
+        </br>
+        <h1 style="font-size:30px; color:black; margin:10px;">Academic Matches</h1>
+        </br>
+            {% for i in range(academic|count) %}
+                <h2>{{(i+1)|string + ". " + academic[i]}}</h2>
+            {% endfor %}
+        </br>
+        <h1 style="font-size:30px; color:black; margin:10px;">Extracurricular Matches</h1>
+        </br>
+            {% for i in range(ec|count) %}
+                <h2>{{(i+1)|string + ". " + ec[i]}}</h2>
+            {% endfor %}
+        </br>
+        <h1 style="font-size:30px; color:black; margin:10px;">Personality Matches</h1>
+        </br>
+            {% for i in range(personality|count) %}
+                <h2>{{(i+1)|string + ". " + personality[i]}}</h2>
+            {% endfor %}
+        </br>
+        <h1 style="font-size:30px; color:black; margin:10px;">Opinions Matches</h1>
+        </br>
+            {% for i in range(opinion|count) %}
+                <h2>{{(i+1)|string + ". " + opinion[i]}}</h2>
+            {% endfor %}
+        </br>
+    </div>
 
 </body>
 </html>
