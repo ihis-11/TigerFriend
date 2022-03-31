@@ -205,7 +205,7 @@ def accountdetails():
                     cursor.execute(stmt)
                     row = cursor.fetchone()
                     if row is not None:
-                        error_msg = 'Please choose another username, the one entered is already exist'
+                        error_msg = 'Please choose another username, the one entered already exist!'
                         return redirect(url_for("account", error_msg=error_msg))
 
         except (Exception, psycopg2.Error) as ex:
