@@ -3,7 +3,6 @@
 # --------------------------------------------------------------------
 from cgitb import reset
 from sys import stderr
-from tkinter.tix import Y_REGION
 import psycopg2
 
 DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
