@@ -4,10 +4,10 @@ import psycopg2
 
 def api_account_creation(net_id, year, major, res_college, username, bio):
     try:
-        with psycopg2.connect(host="ec2-18-215-96-22.compute-1.amazonaws.com",
-                              database="d2g71rp6qun4ib",
-                              user="ypznbfglgkepdl",
-                              password="192341b8fbfc264df394f1255cf60b5f630a16dbcf06bf6171d673bc8e4ef0e8") as connect:
+        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
+                              database="dfagq7oedu757o",
+                              user="pzfolydjviaygu",
+                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
             if connect is not None:
                 print("CONNECTED TO POSTGRESQL")
             else:
@@ -29,10 +29,10 @@ def api_account_creation(net_id, year, major, res_college, username, bio):
 
 def update_bio(net_id, bio):
     try:
-        with psycopg2.connect(host="ec2-18-215-96-22.compute-1.amazonaws.com",
-                              database="d2g71rp6qun4ib",
-                              user="ypznbfglgkepdl",
-                              password="192341b8fbfc264df394f1255cf60b5f630a16dbcf06bf6171d673bc8e4ef0e8") as connect:
+        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
+                              database="dfagq7oedu757o",
+                              user="pzfolydjviaygu",
+                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
 
             with connect.cursor() as cursor:
                 stmt = "UPDATE account SET bio_string = (%s)"
@@ -50,10 +50,10 @@ def update_bio(net_id, bio):
 
 def update_username(net_id, user):
     try:
-        with psycopg2.connect(host="ec2-18-215-96-22.compute-1.amazonaws.com",
-                              database="d2g71rp6qun4ib",
-                              user="ypznbfglgkepdl",
-                              password="192341b8fbfc264df394f1255cf60b5f630a16dbcf06bf6171d673bc8e4ef0e8") as connect:
+        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
+                              database="dfagq7oedu757o",
+                              user="pzfolydjviaygu",
+                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
             with connect.cursor() as cursor:
                 stmt = "UPDATE account SET username = (%s)"
                 stmt += "WHERE net_id = (%s)"
@@ -66,10 +66,10 @@ def update_username(net_id, user):
 
 def get_user_data(net_id):  # returns year and major
     try:
-        with psycopg2.connect(host="ec2-18-215-96-22.compute-1.amazonaws.com",
-                              database="d2g71rp6qun4ib",
-                              user="ypznbfglgkepdl",
-                              password="192341b8fbfc264df394f1255cf60b5f630a16dbcf06bf6171d673bc8e4ef0e8") as connect:
+        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
+                              database="dfagq7oedu757o",
+                              user="pzfolydjviaygu",
+                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT class_year, major FROM account WHERE net_id=\'" + net_id + "\'"
                 print(stmt)
@@ -88,10 +88,10 @@ def get_user_data(net_id):  # returns year and major
 
 def get_account_details(net_id):  # returns user and bio, None if account doesn't exist
     try:
-        with psycopg2.connect(host="ec2-18-215-96-22.compute-1.amazonaws.com",
-                              database="d2g71rp6qun4ib",
-                              user="ypznbfglgkepdl",
-                              password="192341b8fbfc264df394f1255cf60b5f630a16dbcf06bf6171d673bc8e4ef0e8") as connect:
+        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
+                              database="dfagq7oedu757o",
+                              user="pzfolydjviaygu",
+                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT username, bio_string FROM account WHERE net_id=\'" + net_id + "\'"
                 cursor.execute(stmt)
@@ -109,10 +109,10 @@ def get_account_details(net_id):  # returns user and bio, None if account doesn'
 # Method for deleting rows in matchscores since it won't let us in pgAdmin
 def delete():  # returns user and bio, None if account doesn't exist
     try:
-        with psycopg2.connect(host="ec2-18-215-96-22.compute-1.amazonaws.com",
-                              database="d2g71rp6qun4ib",
-                              user="ypznbfglgkepdl",
-                              password="192341b8fbfc264df394f1255cf60b5f630a16dbcf06bf6171d673bc8e4ef0e8") as connect:
+        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
+                              database="dfagq7oedu757o",
+                              user="pzfolydjviaygu",
+                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
             with connect.cursor() as cursor:
                 # HARD CODE IN NET_ID YOU WANT TO DELETE
                 stmt = "DELETE FROM matchscores WHERE net_id1=\'NET_ID\' OR net_id2=\'NET_ID\'"
