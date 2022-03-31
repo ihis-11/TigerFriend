@@ -8,6 +8,7 @@ from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
+import auth
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -15,9 +16,6 @@ from sys import stderr
 app = Flask(__name__, template_folder='templates')
 
 app.secret_key = APP_SECRET_KEY
-
-import auth
-
 
 # --------------------------------------------------------------------
 
@@ -27,7 +25,6 @@ def home():
     html = render_template('home.html')
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 
