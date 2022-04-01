@@ -38,25 +38,21 @@
             {% endfor %}
         </br>
         <h1 style="font-size:30px; color:black; margin:10px;">Academic Matches</h1>
-        </br>
             {% for i in range(academic|count) %}
                 <h2>{{(i+1)|string + ". " + academic[i]}}</h2>
             {% endfor %}
         </br>
         <h1 style="font-size:30px; color:black; margin:10px;">Extracurricular Matches</h1>
-        </br>
             {% for i in range(ec|count) %}
                 <h2>{{(i+1)|string + ". " + ec[i]}}</h2>
             {% endfor %}
         </br>
         <h1 style="font-size:30px; color:black; margin:10px;">Personality Matches</h1>
-        </br>
             {% for i in range(personality|count) %}
                 <h2>{{(i+1)|string + ". " + personality[i]}}</h2>
             {% endfor %}
         </br>
         <h1 style="font-size:30px; color:black; margin:10px;">Opinions Matches</h1>
-        </br>
             {% for i in range(opinion|count) %}
                 <h2>{{(i+1)|string + ". " + opinion[i]}}</h2>
             {% endfor %}
