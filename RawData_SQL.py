@@ -106,7 +106,7 @@ def get_account_details(net_id):  # returns user and bio, None if account doesn'
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
 
-# Method for deleting rows in matchscores since it won't let us in pgAdmin
+# Method for deleting rows in matchscores, account, and rawdata
 def delete():  # returns user and bio, None if account doesn't exist
     try:
         with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
@@ -115,7 +115,16 @@ def delete():  # returns user and bio, None if account doesn't exist
                               password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
             with connect.cursor() as cursor:
                 # HARD CODE IN NET_ID YOU WANT TO DELETE
-                stmt = "DELETE FROM matchscores WHERE net_id1=\'NET_ID\' OR net_id2=\'NET_ID\'"
+                ID = "NET_ID" # REPLACE NET_ID HERE WITH WHAT YOU WANT TO REMOVE - then run "python RawData_SQL.py"
+                stmt = "DELETE FROM matchscores WHERE net_id1=\'" + ID + "\' OR net_id2=\'" + ID + "\'"
+                cursor.execute(stmt)
+                connect.commit()
+
+                stmt = "DELETE FROM account WHERE net_id=\'" + ID + "\'"
+                cursor.execute(stmt)
+                connect.commit()
+
+                stmt = "DELETE FROM rawdata WHERE net_id=\'" + ID + "\'"
                 cursor.execute(stmt)
                 connect.commit()
 
