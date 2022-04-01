@@ -225,7 +225,7 @@ def get_matches(net_id):
                     delete = 3
                     while matches["opinion"][delete] is None:
                         matches["opinion"].pop(delete)
-                        delete = delete - 3
+                        delete = delete - 1
                         if delete == -1:
                             break
     except (Exception, psycopg2.Error) as ex:
