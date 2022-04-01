@@ -185,13 +185,13 @@ def get_matches(net_id):
                 # Replace net_ids with usernames (get bios in this step as well in the future)
                 for i in range(len(categories)):
                     for j in range(len(matches[categories[i]])):
-                        print(matches[categories[i]][j])
+                        # print(matches[categories[i]][j])
                         id = matches[categories[i]][j]
                         stmt = "SELECT username FROM account WHERE net_id=\'" + id + "\'"
                         cursor.execute(stmt)
                         row = cursor.fetchone()
                         matches[categories[i]][j] = row[0]
-                print(matches)
+                
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)

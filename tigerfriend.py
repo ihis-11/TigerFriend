@@ -216,7 +216,7 @@ def accountdetails():
         if req.ok:
             print(req.json())
             yr = '20' + str(req.json()['class_year'])
-            major = req.json()['major_code']
+            major = req.json()['major_type']
             res = req.json()['res_college']
         else:
             print("Error w/API call: " + req.text)
