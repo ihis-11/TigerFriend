@@ -142,6 +142,8 @@ def get_matches(net_id):
                     opin.append(int(row[6]))
                     row = cursor.fetchone()
 
+                scores = [over, acad, ec, pers, opin]
+
                 #print(id1)
                 #print(over)
 
@@ -155,6 +157,7 @@ def get_matches(net_id):
                             "ec": [-1,-1,-1,-1],
                             "personality": [-1,-1,-1,-1],
                             "opinion": [-1,-1,-1,-1]}
+                categories = ["overall", "academic", "ec", "personality", "opinion"]
 
                 for i in range(len(id1)):
                     if id1[i] == net_id:
@@ -162,72 +165,33 @@ def get_matches(net_id):
                     else:
                         match = id1[i]
                     
-                    # overall
-                    if over[i] > match_vals["overall"][3]: # if match is better than worst match currently
-                        index = firstSmallerIndex(match_vals["overall"], over[i])
-                        match_vals["overall"] = insertAtIndex(match_vals["overall"], index, over[i])
-                        matches["overall"] = insertAtIndex(matches["overall"], index, match)
-
-                    # academic
-                    if acad[i] > match_vals["academic"][3]: # if match is better than worst match currently
-                        index = firstSmallerIndex(match_vals["academic"], acad[i])
-                        match_vals["academic"] = insertAtIndex(match_vals["academic"], index, acad[i])
-                        matches["academic"] = insertAtIndex(matches["academic"], index, match)
-
-                    # ec
-                    if ec[i] > match_vals["ec"][3]: # if match is better than worst match currently
-                        index = firstSmallerIndex(match_vals["ec"], ec[i])
-                        match_vals["ec"] = insertAtIndex(match_vals["ec"], index, ec[i])
-                        matches["ec"] = insertAtIndex(matches["ec"], index, match)
-
-                    # personality
-                    if pers[i] > match_vals["personality"][3]: # if match is better than worst match currently
-                        index = firstSmallerIndex(match_vals["personality"], pers[i])
-                        match_vals["personality"] = insertAtIndex(match_vals["personality"], index, pers[i])
-                        matches["personality"] = insertAtIndex(matches["personality"], index, match)
-
-                    # opinion
-                    if opin[i] > match_vals["opinion"][3]: # if match is better than worst match currently
-                        index = firstSmallerIndex(match_vals["opinion"], opin[i])
-                        match_vals["opinion"] = insertAtIndex(match_vals["opinion"], index, opin[i])
-                        matches["opinion"] = insertAtIndex(matches["opinion"], index, match)
-
-                # remove extra entries in case not 4 matches
-                if (matches["overall"][3] is None):
-                    delete = 3
-                    while matches["overall"][delete] is None:
-                        matches["overall"].pop(delete)
-                        delete = delete - 1
-                        if delete == -1:
-                            break
-                if (matches["academic"][3] is None):
-                    delete = 3
-                    while matches["academic"][delete] is None:
-                        matches["academic"].pop(delete)
-                        delete = delete - 1
-                        if delete == -1:
-                            break
-                if (matches["ec"][3] is None):
-                    delete = 3
-                    while matches["ec"][delete] is None:
-                        matches["ec"].pop(delete)
-                        delete = delete - 1
-                        if delete == -1:
-                            break
-                if (matches["personality"][3] is None):
-                    delete = 3
-                    while matches["personality"][delete] is None:
-                        matches["personality"].pop(delete)
-                        delete = delete - 1
-                        if delete == -1:
-                            break
-                if (matches["opinion"][3] is None):
-                    delete = 3
-                    while matches["opinion"][delete] is None:
-                        matches["opinion"].pop(delete)
-                        delete = delete - 1
-                        if delete == -1:
-                            break
+                    # get top 4
+                    for j in range(len(categories)):
+                        if scores[j][i] > match_vals[categories[j]][3]: # if match is better than worst match currently
+                            index = firstSmallerIndex(match_vals[categories[j]], scores[j][i])
+                            match_vals[categories[j]] = insertAtIndex(match_vals[categories[j]], index, scores[j][i])
+                            matches[categories[j]] = insertAtIndex(matches[categories[j]], index, match)
+                
+                # remove extra null entries (if any)
+                for i in range(len(categories)):
+                    if (matches[categories[i]][3] is None):
+                        delete = 3
+                        while matches[categories[i]][delete] is None:
+                            matches[categories[i]].pop(delete)
+                            delete = delete - 1
+                            if delete == -1:
+                                break
+                
+                # Replace net_ids with usernames (get bios in this step as well in the future)
+                for i in range(len(categories)):
+                    for j in range(len(matches[categories[i]])):
+                        print(matches[categories[i]][j])
+                        id = matches[categories[i]][j]
+                        stmt = "SELECT username FROM account WHERE net_id=\'" + id + "\'"
+                        cursor.execute(stmt)
+                        row = cursor.fetchone()
+                        matches[categories[i]][j] = row[0]
+                print(matches)
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
