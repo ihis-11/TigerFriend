@@ -244,7 +244,7 @@ def get_matches(net_id):
 def firstSmallerIndex(arr, val):
     for i in reversed(range(len(arr))):
         if val < arr[i]:
-            return i
+            return i+1
     return 0
 
 def insertAtIndex(arr, index, insert):
