@@ -4,6 +4,10 @@
 .myNav {
   background-color: white;
   overflow: hidden;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
 }
 
 /* Remove bullets, margin, and padding */
@@ -114,4 +118,53 @@
   padding: 0px;
   width: 70%;
   min-width: 300px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 10px auto;
+  padding: 5px 30px;
+  width: 800px;
+}
+
+.team {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.unit {
+  margin: 25px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.unit img {
+  border-radius: 100px;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 10px;
+  width: 150px;
+  filter: drop-shadow(0 10px 5px rgb(119, 115, 115));
+}
+
+.unit p {
+  text-align: left;
+  margin: 2px;
+  font-weight: bolder;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width:820px) {
+  .wrapper {
+    width: 80%;
+    padding: 5px 30px;
+  }
 }
