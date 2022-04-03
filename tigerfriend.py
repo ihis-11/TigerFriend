@@ -44,6 +44,11 @@ def survey():
                 cursor.execute(stmt, [user])
                 row = cursor.fetchone()
                 if row is not None:
+                    stmt = "SELECT username FROM account WHERE net_id = (%s)"
+                    cursor.execute(stmt, [user])
+                    row = cursor.fetchone()
+                    if row is None:
+                        return redirect(url_for("account", code=302))
                     return redirect(url_for("accountdetails", code=302))
 
                 stmt = "SELECT question, answer1, answer2, answer3, answer4, answer5 FROM survey"
