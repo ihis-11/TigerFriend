@@ -49,23 +49,17 @@
 }
 
 .image{
-  position:fixed;
-  right:1.5vw;
-  bottom: 2.5vh;
-  height: auto;
-  width: auto;
-  max-width: 20vw;
-  max-height: 20vh;
+  position:absolute;
+  bottom: 10vh;
+  width: 100%; 
+  object-fit: contain;
 }
 
 .image2{
-  position:fixed;
-  left:1.5vw;
-  bottom: 2.5vh;
-  height: auto;
-  width: auto;
-  max-width: 20vw;
-  max-height: 20vh;
+  position:absolute;
+  bottom: 10vh;
+  width: 100%; 
+  object-fit: contain;
   transform: scaleX(-1);
 }
 
