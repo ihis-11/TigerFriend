@@ -35,10 +35,10 @@ def survey():
     user = auth.authenticate().strip()
 
     try:
-        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                              database="dfagq7oedu757o",
-                              user="pzfolydjviaygu",
-                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT net_id FROM account WHERE net_id = (%s)"
                 cursor.execute(stmt, [user])
@@ -134,10 +134,10 @@ def account():
         q.append(request.args.get('q' + str(x)))
 
     try:
-        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                              database="dfagq7oedu757o",
-                              user="pzfolydjviaygu",
-                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
 
             with connect.cursor() as cursor:
                 stmt = "INSERT INTO rawdata (net_id, q1_response, q2_response, q3_response, q4_response, q5_response, \
@@ -193,10 +193,10 @@ def accountdetails():
     if account_info is None:
         # checking if the username is unique
         try:
-            with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                                  database="dfagq7oedu757o",
-                                  user="pzfolydjviaygu",
-                                  password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+            with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
 
                 with connect.cursor() as cursor:
                     stmt = "SELECT username FROM account WHERE username=\'" + username + "\'"
@@ -243,10 +243,10 @@ def surveydetails():
     user = auth.authenticate().strip()
 
     try:
-        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                              database="dfagq7oedu757o",
-                              user="pzfolydjviaygu",
-                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT question, answer1, answer2, answer3, answer4, answer5 FROM survey"
                 cursor.execute(stmt)

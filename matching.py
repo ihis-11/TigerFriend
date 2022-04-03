@@ -13,10 +13,10 @@ DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
 def input_match_scores(net_id):
     try:
         # connect to database
-        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                              database="dfagq7oedu757o",
-                              user="pzfolydjviaygu",
-                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
                 # get user's survey response
                 stmt = "SELECT * FROM rawdata WHERE net_id=\'" + net_id + "\'"
@@ -116,10 +116,10 @@ def input_match_scores(net_id):
 def get_matches(net_id):
     try:
         # connect to database
-        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                              database="dfagq7oedu757o",
-                              user="pzfolydjviaygu",
-                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
                 stmt = "SELECT * FROM matchscores WHERE net_id1=\'" + net_id + "\' OR net_id2=\'" + net_id + "\'"
                 cursor.execute(stmt)
@@ -230,10 +230,10 @@ def insertAtIndex(arr, index, insert):
 def get_user_matches(net_id, yr, major, res):
     try:
         # connect to database
-        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                              database="dfagq7oedu757o",
-                              user="pzfolydjviaygu",
-                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
                 # get user's survey response
                 stmt = "SELECT * FROM rawdata WHERE net_id=\'" + net_id + "\'"
@@ -370,10 +370,10 @@ def get_user_matches(net_id, yr, major, res):
 def get_match_info(match_dict):
     try:
         # connect to database
-        with psycopg2.connect(host="ec2-52-3-60-53.compute-1.amazonaws.com",
-                              database="dfagq7oedu757o",
-                              user="pzfolydjviaygu",
-                              password="6dd3f090dbd28d3f490995cee28aa289d19ea7c344ea3a596d0f993b4238592b") as connect:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
                 match_info = ()
                 for key in match_dict:
