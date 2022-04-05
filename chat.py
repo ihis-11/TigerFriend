@@ -7,6 +7,8 @@ import random
 from sys import stderr
 import psycopg2
 
+from RawData_SQL import get_account_details
+
 DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
 
 # --------------------------------------------------------------------
@@ -162,7 +164,8 @@ def get_messages(chat_id):
                 msgs = cursor.fetchone()
                 chat_history = ()
                 while msgs is not None:
-                    chat_history += ((str(msgs[1]), str(msgs[2]),
+                    user = get_account_details(str(msgs[1]))[0]
+                    chat_history += ((user, str(msgs[2]),
                                      str(msgs[3])),)
                     msgs = cursor.fetchone()
 
