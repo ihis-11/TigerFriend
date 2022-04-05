@@ -1,5 +1,6 @@
-from sys import stderr, exit
-from turtle import update
+#!/usr/bin/env python
+
+from sys import stderr
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database import Account
