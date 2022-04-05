@@ -106,6 +106,9 @@ def fetching_chats():
     
     # fetching all the chats for the user
     open_chats = get_all_chats(user)
+    if type(open_chats) is not list:
+        html = ''
+        return make_response(html)
 
     html = '<table class="table table-striped"><tbody>'
     for chat in open_chats:
