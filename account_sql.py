@@ -74,6 +74,23 @@ def update_username(net_id, user):
         print(ex, file=stderr)
         print("Update username failed", file=stderr)
 
+# to get net_id from username
+def get_netid(user):
+    engine = create_engine(DATABASE_URL)
+         
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    user = (session.query(Account)
+            .filter(Account.username == user)
+            .all())
+    
+    session.close()
+    engine.dispose()
+    if user == []:
+            return None
+    return user[0].net_id
+
 # to get bio for the chat
 def get_bio(username):
     try:
