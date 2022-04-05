@@ -75,7 +75,6 @@ def get_chat_id(user, match):
 
         chatid = None
         for chat in chats:
-            print("Matching " + matchid + " to " + chat.net_id1 + " or " + chat.net_id2)
             if ((str(chat.net_id1) == (matchid)) | (str(chat.net_id2) == str(matchid))):
                 chatid = chat.chat_id
                 break
