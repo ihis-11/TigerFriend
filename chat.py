@@ -162,8 +162,8 @@ def get_messages(chat_id):
                 msgs = cursor.fetchone()
                 chat_history = ()
                 while msgs is not None:
-                    chat_history += ((str(msgs[0]), str(msgs[1]),
-                                     str(msgs[2]), str(msgs[3])),)
+                    chat_history += ((str(msgs[1]), str(msgs[2]),
+                                     str(msgs[3]),)
                     msgs = cursor.fetchone()
 
                 return chat_history
