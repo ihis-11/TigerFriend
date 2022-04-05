@@ -3,7 +3,7 @@
 # --------------------------------------------------------------------
 
 from flask import Flask, request, make_response, render_template, redirect, url_for
-from RawData_SQL import api_account_creation, get_user_data, get_account_details, get_bio
+from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
@@ -195,7 +195,7 @@ def accountdetails():
     # authenticated net id
     user = auth.authenticate().strip()
 
-    account_info = get_account_details(user)
+    account_info = get_user_bio(user)
     username = ""
     bio = ""
     # Only happens when coming from account creation
@@ -246,7 +246,7 @@ def accountdetails():
         api_account_creation(user, yr, major, res, username, bio)
         input_match_scores(user)
  
-    data = get_user_data(user)
+    data = get_year_major(user)
     html = render_template('accountdetails.html',
                            net_id=user,
                            year=data[0],
