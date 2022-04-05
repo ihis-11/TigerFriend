@@ -107,15 +107,15 @@ def chat():
     return response
 
 # --------------------------------------------------------------------
-@app.route('/livemessages', methods=['GET'])
-def live_messaging():
+@app.route('/sendchat', methods=['GET'])
+def send_message():
     # authenticated net id
     user = auth.authenticate().strip()
     receiver = request.cookies.get('cur_receiver')
     chat_sent = request.args.get('message')
 
     # fetch add the message to the database
-    chat_id = get_chat_id(user,receiver)
+    chat_id = get_chat_id(user, receiver)
 
     # when the user sent a message
     if (chat_sent is not None) or (chat_sent.strip() != ''): 
@@ -124,6 +124,29 @@ def live_messaging():
     # getting all the messages then
     messages = get_messages(chat_id)
     
+    html = '<table class="table table-striped table-borderless"><tbody>'
+    for bundle in messages:
+        html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
+        html += '<td>%s</td>' % bundle[1]
+        html += '<td>sent at:%s</td></tr>' % bundle[2]
+
+    html += '</tbody></table>'
+    return make_response(html)
+
+
+# --------------------------------------------------------------------
+@app.route('/getmessages', methods=['GET'])
+def get_chats():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    receiver = request.cookies.get('cur_receiver')
+
+    # fetch add the message to the database
+    chat_id = get_chat_id(user, receiver)
+
+    # refreshing the messages
+    messages = get_messages(chat_id)
+
     html = '<table class="table table-striped table-borderless"><tbody>'
     for bundle in messages:
         html += '<tr><td><strong>%s:</strong></td>' % bundle[0]

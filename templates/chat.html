@@ -46,7 +46,22 @@
         function getMessages() {
             let messageSent = $('#chatSent').val();
             messageSent = encodeURIComponent(messageSent)
-            let url = '/livemessages?message=' + messageSent;
+            let url = '/getmessages'
+
+            if (request != null)
+                request.abort();
+
+            request = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse
+            });
+        }
+
+        function sendMessage() {
+            let messageSent = $('#chatSent').val();
+            messageSent = encodeURIComponent(messageSent)
+            let url = '/sendchat?message=' + messageSent;
 
             if (request != null)
                 request.abort();
@@ -61,8 +76,7 @@
         function setup() {
             getMessages();
             window.setInterval(getMessages, 5000);
-            $('#userSentChat').click(getMessages);
-
+            $('#userSentChat').click(sendMessage);
         }
 
         $('document').ready(setup);
