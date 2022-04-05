@@ -7,7 +7,7 @@
 </head>
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
-    <h1 style="text-align: center; font-size: 50px;">Chats</h1>
+    <h1 style="text-align: center; font-size: 50px;">Personal Chat</h1>
     <div class="container-fluid">
         <table class="table table-borderless">
             <thead>
@@ -44,8 +44,6 @@
         let request = null
 
         function getMessages() {
-            let messageSent = $('#chatSent').val();
-            messageSent = encodeURIComponent(messageSent)
             let url = '/getmessages'
 
             if (request != null)

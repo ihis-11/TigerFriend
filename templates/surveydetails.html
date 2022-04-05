@@ -20,7 +20,7 @@
         <a></a>
         <a class="active" href="/surveydetails">Survey</a>
         <a href="/matches">Matches</a>
-        <a href="/chat">Chat</a>
+        <a href="/allChats">Chat</a>
         <a href="/accountdetails">Account</a>
     </div>
 
@@ -31,227 +31,107 @@
     <form id="regForm" method="get">
         <h1 style="text-align: center; font-size: 45px;">Your Survey Responses</h1><br>
         <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
-            {{questions[1][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[1] == x %}
-                    <input type="radio" name="q1" checked = "checked"> <strong>{{questions[1][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q1"> {{questions[1][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[2][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[2] == x %}
-                    <input type="radio" name="q2" checked = "checked"> <strong>{{questions[2][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q2"> {{questions[2][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[3][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[3] == x %}
-                    <input type="radio" name="q3" checked = "checked"> <strong>{{questions[3][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q3"> {{questions[3][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[4][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[4] == x %}
-                    <input type="radio" name="q4" checked = "checked"> <strong>{{questions[4][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q4"> {{questions[4][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[5][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[5] == x %}
-                    <input type="radio" name="q5" checked = "checked"> <strong>{{questions[5][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q5"> {{questions[5][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[6][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[6] == x %}
-                    <input type="radio" name="q6" checked = "checked"> <strong>{{questions[6][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q6"> {{questions[6][x]}}<br>
-                {% endif %}
-            {% endfor %}
+            {{questions[1][0]}}<br> {% for x in range(1, 6) %} {% if answers[1] == x %}
+            <input type="radio" name="q1" checked="checked"> <strong>{{questions[1][x]}}</strong><br> {% else %}
+            <input type="radio" name="q1"> {{questions[1][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[2][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[2] == x %}
+            <input type="radio" name="q2" checked="checked"> <strong>{{questions[2][x]}}</strong><br> {% else %}
+            <input type="radio" name="q2"> {{questions[2][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[3][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[3] == x %}
+            <input type="radio" name="q3" checked="checked"> <strong>{{questions[3][x]}}</strong><br> {% else %}
+            <input type="radio" name="q3"> {{questions[3][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[4][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[4] == x %}
+            <input type="radio" name="q4" checked="checked"> <strong>{{questions[4][x]}}</strong><br> {% else %}
+            <input type="radio" name="q4"> {{questions[4][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[5][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[5] == x %}
+            <input type="radio" name="q5" checked="checked"> <strong>{{questions[5][x]}}</strong><br> {% else %}
+            <input type="radio" name="q5"> {{questions[5][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[6][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[6] == x %}
+            <input type="radio" name="q6" checked="checked"> <strong>{{questions[6][x]}}</strong><br> {% else %}
+            <input type="radio" name="q6"> {{questions[6][x]}}<br> {% endif %} {% endfor %}
             <br>
         </div>
         <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
-            {{questions[7][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[7] == x %}
-                    <input type="radio" name="q7" checked = "checked"> <strong>{{questions[7][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q7"> {{questions[7][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[8][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[8] == x %}
-                    <input type="radio" name="q8" checked = "checked"> <strong>{{questions[8][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q8"> {{questions[8][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[9][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[9] == x %}
-                    <input type="radio" name="q9" checked = "checked"> <strong>{{questions[9][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q9"> {{questions[9][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[10][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[10] == x %}
-                    <input type="radio" name="q10" checked = "checked"> <strong>{{questions[10][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q10"> {{questions[10][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[11][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[11] == x %}
-                    <input type="radio" name="q11" checked = "checked"> <strong>{{questions[11][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q11"> {{questions[11][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[12][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[12] == x %}
-                    <input type="radio" name="q12" checked = "checked"> <strong>{{questions[12][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q12"> {{questions[12][x]}}<br>
-                {% endif %}
-            {% endfor %}
+            {{questions[7][0]}}<br> {% for x in range(1, 6) %} {% if answers[7] == x %}
+            <input type="radio" name="q7" checked="checked"> <strong>{{questions[7][x]}}</strong><br> {% else %}
+            <input type="radio" name="q7"> {{questions[7][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[8][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[8] == x %}
+            <input type="radio" name="q8" checked="checked"> <strong>{{questions[8][x]}}</strong><br> {% else %}
+            <input type="radio" name="q8"> {{questions[8][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[9][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[9] == x %}
+            <input type="radio" name="q9" checked="checked"> <strong>{{questions[9][x]}}</strong><br> {% else %}
+            <input type="radio" name="q9"> {{questions[9][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[10][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[10] == x %}
+            <input type="radio" name="q10" checked="checked"> <strong>{{questions[10][x]}}</strong><br> {% else %}
+            <input type="radio" name="q10"> {{questions[10][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[11][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[11] == x %}
+            <input type="radio" name="q11" checked="checked"> <strong>{{questions[11][x]}}</strong><br> {% else %}
+            <input type="radio" name="q11"> {{questions[11][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[12][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[12] == x %}
+            <input type="radio" name="q12" checked="checked"> <strong>{{questions[12][x]}}</strong><br> {% else %}
+            <input type="radio" name="q12"> {{questions[12][x]}}<br> {% endif %} {% endfor %}
             <br>
         </div>
         <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
-            {{questions[13][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[13] == x %}
-                    <input type="radio" name="q13" checked = "checked"> <strong>{{questions[13][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q13"> {{questions[13][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[14][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[14] == x %}
-                    <input type="radio" name="q14" checked = "checked"> <strong>{{questions[14][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q14"> {{questions[14][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[15][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[15] == x %}
-                    <input type="radio" name="q15" checked = "checked"> <strong>{{questions[15][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q15"> {{questions[15][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[16][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[16] == x %}
-                    <input type="radio" name="q16" checked = "checked"> <strong>{{questions[16][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q16"> {{questions[16][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[17][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[17] == x %}
-                    <input type="radio" name="q17" checked = "checked"> <strong>{{questions[17][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q17"> {{questions[17][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[18][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[18] == x %}
-                    <input type="radio" name="q18" checked = "checked"> <strong>{{questions[18][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q18"> {{questions[18][x]}}<br>
-                {% endif %}
-            {% endfor %}
+            {{questions[13][0]}}<br> {% for x in range(1, 6) %} {% if answers[13] == x %}
+            <input type="radio" name="q13" checked="checked"> <strong>{{questions[13][x]}}</strong><br> {% else %}
+            <input type="radio" name="q13"> {{questions[13][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[14][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[14] == x %}
+            <input type="radio" name="q14" checked="checked"> <strong>{{questions[14][x]}}</strong><br> {% else %}
+            <input type="radio" name="q14"> {{questions[14][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[15][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[15] == x %}
+            <input type="radio" name="q15" checked="checked"> <strong>{{questions[15][x]}}</strong><br> {% else %}
+            <input type="radio" name="q15"> {{questions[15][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[16][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[16] == x %}
+            <input type="radio" name="q16" checked="checked"> <strong>{{questions[16][x]}}</strong><br> {% else %}
+            <input type="radio" name="q16"> {{questions[16][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[17][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[17] == x %}
+            <input type="radio" name="q17" checked="checked"> <strong>{{questions[17][x]}}</strong><br> {% else %}
+            <input type="radio" name="q17"> {{questions[17][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[18][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[18] == x %}
+            <input type="radio" name="q18" checked="checked"> <strong>{{questions[18][x]}}</strong><br> {% else %}
+            <input type="radio" name="q18"> {{questions[18][x]}}<br> {% endif %} {% endfor %}
             <br>
         </div>
         <div class="tab" style="padding-left: 2vw; font-size: 25px; font-family:Playfair Display">
-            {{questions[19][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[19] == x %}
-                    <input type="radio" name="q19" checked = "checked"> <strong>{{questions[19][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q19"> {{questions[19][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[20][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[20] == x %}
-                    <input type="radio" name="q20" checked = "checked"> <strong>{{questions[20][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q20"> {{questions[20][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[21][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[21] == x %}
-                    <input type="radio" name="q21" checked = "checked"> <strong>{{questions[21][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q21"> {{questions[21][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[22][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[22] == x %}
-                    <input type="radio" name="q22" checked = "checked"> <strong>{{questions[22][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q22"> {{questions[22][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[23][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[23] == x %}
-                    <input type="radio" name="q23" checked = "checked"> <strong>{{questions[23][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q23"> {{questions[23][x]}}<br>
-                {% endif %}
-            {% endfor %}
-            <br>
-            {{questions[24][0]}}<br>
-            {% for x in range(1, 6) %}
-                {% if answers[24] == x %}
-                    <input type="radio" name="q24" checked = "checked"> <strong>{{questions[24][x]}}</strong><br>
-                {% else %}
-                    <input type="radio" name="q24"> {{questions[24][x]}}<br>
-                {% endif %}
-            {% endfor %}
+            {{questions[19][0]}}<br> {% for x in range(1, 6) %} {% if answers[19] == x %}
+            <input type="radio" name="q19" checked="checked"> <strong>{{questions[19][x]}}</strong><br> {% else %}
+            <input type="radio" name="q19"> {{questions[19][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[20][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[20] == x %}
+            <input type="radio" name="q20" checked="checked"> <strong>{{questions[20][x]}}</strong><br> {% else %}
+            <input type="radio" name="q20"> {{questions[20][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[21][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[21] == x %}
+            <input type="radio" name="q21" checked="checked"> <strong>{{questions[21][x]}}</strong><br> {% else %}
+            <input type="radio" name="q21"> {{questions[21][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[22][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[22] == x %}
+            <input type="radio" name="q22" checked="checked"> <strong>{{questions[22][x]}}</strong><br> {% else %}
+            <input type="radio" name="q22"> {{questions[22][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[23][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[23] == x %}
+            <input type="radio" name="q23" checked="checked"> <strong>{{questions[23][x]}}</strong><br> {% else %}
+            <input type="radio" name="q23"> {{questions[23][x]}}<br> {% endif %} {% endfor %}
+            <br> {{questions[24][0]}}
+            <br> {% for x in range(1, 6) %} {% if answers[24] == x %}
+            <input type="radio" name="q24" checked="checked"> <strong>{{questions[24][x]}}</strong><br> {% else %}
+            <input type="radio" name="q24"> {{questions[24][x]}}<br> {% endif %} {% endfor %}
             <br>
         </div>
         <div style="overflow:auto;">
@@ -269,22 +149,19 @@
             <span class="step"></span>
         </div>
     </form>
-      
-    <script>    
 
-        for(var i=1;i<=24;i++)
-        {
-            var radio=document.getElementsByName("q"+i);
-            var len=radio.length;
-            for(var j=0;j<len;j++)
-            {
-                radio[j].disabled=true;
+    <script>
+        for (var i = 1; i <= 24; i++) {
+            var radio = document.getElementsByName("q" + i);
+            var len = radio.length;
+            for (var j = 0; j < len; j++) {
+                radio[j].disabled = true;
             }
         }
 
         var currentTab = 0; // Current tab is set to 0
         showTab(currentTab); // Display the current tab
-        
+
         // Displays correct tab and buttons
         function showTab(n) {
             var x = document.getElementsByClassName("tab");
@@ -301,18 +178,18 @@
             }
 
             fixStepIndicator(n)
-            window.scroll(0,0);
+            window.scroll(0, 0);
         }
-        
+
         // Determines which tab to display and when to submit
         function nextPrev(n) {
             var x = document.getElementsByClassName("tab");
-          
+
             if (n == 1 && !validateForm()) return false;
-            
+
             x[currentTab].style.display = "none";
             currentTab = currentTab + n;
-            
+
             if (currentTab >= x.length) {
                 alert("Cannot change/resubmit survey once completed.");
                 document.getElementById("regForm").submit();
@@ -321,21 +198,21 @@
 
             showTab(currentTab);
         }
-        
+
         // valid is always true
         function validateForm() {
             var valid = true;
             if (valid) {
                 document.getElementsByClassName("step")[currentTab].className += " finish";
             }
-            return valid; 
+            return valid;
         }
-        
+
         // Displays correct step indicator
         function fixStepIndicator(n) {
             var i, x = document.getElementsByClassName("step");
             for (i = 0; i < x.length; i++) {
-              x[i].className = x[i].className.replace(" active", "");
+                x[i].className = x[i].className.replace(" active", "");
             }
             x[n].className += " active";
         }
