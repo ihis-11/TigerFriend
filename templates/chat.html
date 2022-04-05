@@ -60,7 +60,9 @@
 
         function setup() {
             getMessages();
+            window.setInterval(getMessages, 1000);
             $('#userSentChat').click(getMessages);
+
         }
 
         $('document').ready(setup);
