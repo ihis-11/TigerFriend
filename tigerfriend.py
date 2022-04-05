@@ -8,7 +8,7 @@ from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
-from chat_sql import get_messages, get_chat_id, send_chat
+from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -88,7 +88,36 @@ def matches():
     response = make_response(html)
     return response
 
+# --------------------------------------------------------------------
+@app.route('/allChats', methods=['GET'])
+def all_chats():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    
+    html = render_template('chatlist.html')
+    response = make_response(html)
+    return response
 
+# --------------------------------------------------------------------
+@app.route('/getChats', methods=['GET'])
+def fetching_chats():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    
+    # fetching all the chats for the user
+    open_chats = get_all_chats(user)
+    if type(open_chats) is not list:
+        html = ''
+        return make_response(html)
+
+    html = '<table class="table table-striped"><tbody>'
+    for chat in open_chats:
+        link = '<a href="chat?receiver=%s">%s</a>' % (chat,chat)
+        html += '<tr><td>%s</td></tr>' % link
+
+    html += '</tbody></table>'
+    return make_response(html)
+    
 # --------------------------------------------------------------------
 @app.route('/chat', methods=['GET'])
 def chat():

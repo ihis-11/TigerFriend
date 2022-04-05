@@ -42,7 +42,7 @@ def get_all_chats(user):
             users = (session.query(Account)
                     .filter(Account.net_id == other)
                     .all())
-            other_users.append(users[0].username)
+            other_users.append(str(users[0].username))
 
         session.close()
         engine.dispose()
