@@ -64,7 +64,7 @@ class Messages(Base):
     chat_id = Column(String)
     sender_id = Column(String)
     message_content = Column(String)
-    datetime = Column(DateTime, primary_key=True)
+    date_time = Column(DateTime, primary_key=True)
 
 # class Reports(Base):
 #     __tablename__ = 'reports'

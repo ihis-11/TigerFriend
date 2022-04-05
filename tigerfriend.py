@@ -8,7 +8,7 @@ from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
-from chat import get_all_chats, get_messages, get_chat_id, send_chat
+from chat_sql import get_messages, get_chat_id, send_chat
 from sys import stderr
 
 # --------------------------------------------------------------------

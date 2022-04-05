@@ -5,7 +5,6 @@
 # --------------------------------------------------------------------
 from cgitb import reset
 from datetime import datetime
-import math
 import random
 from sys import stderr
 import psycopg2
@@ -30,10 +29,8 @@ def get_all_chats(user):
         Session = sessionmaker(bind=engine)
         session = Session()
         
-        chats = (session.query(Chats)
-                .filter((Chats.net_id1 == user) | (Chats.net_id2 == user))
-                .all())
-        
+        chats = (session.query(Chats).filter((Chats.net_id1 == user) | (Chats.net_id2 == user)).all())
+
         other_ids = []
         for chat in chats:
             if chat.net_id1 == user:
@@ -42,7 +39,7 @@ def get_all_chats(user):
                 other_ids.append(chat.net_id1)
 
         other_users = []
-        for other in other_users:
+        for other in other_ids:
             users = (session.query(Account)
                     .filter(Account.net_id == other)
                     .all())
