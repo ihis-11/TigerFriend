@@ -166,6 +166,9 @@ def get_messages(chat_id):
             user = get_user_bio(chat.sender_id)[0]
             chat_history.append((user, str(chat.message_content), str(chat.date_time)))
         
+        session.close()
+        engine.dispose()
+        
         return chat_history
 
     except Exception as ex:
