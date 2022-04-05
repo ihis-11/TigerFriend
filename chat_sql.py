@@ -159,6 +159,7 @@ def get_messages(chat_id):
 
         chats = (session.query(Messages)
                 .filter(Messages.chat_id == chat_id)
+                .order_by(Messages.date_time)
                 .all())
         
         chat_history = []
@@ -168,7 +169,7 @@ def get_messages(chat_id):
         
         session.close()
         engine.dispose()
-        
+
         return chat_history
 
     except Exception as ex:
