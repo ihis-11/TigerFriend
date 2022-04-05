@@ -19,7 +19,7 @@ DATABASE_URL = 'postgresql://fpzzhwdkkymqrr:b87ef0b3ae33d79f063d25d7ec8dde687140
 # --------------------------------------------------------------------
 
 # Takes user (net_id) and returns the list of usernames they have open
-# chats with.
+# chats with. SHOULDN'T RETURN DUPLICATES
 def get_all_chats(user):
     try:
         # connect to database
@@ -49,6 +49,8 @@ def get_all_chats(user):
         return other_users
 
     except (Exception) as ex:
+        session.close()
+        engine.dispose()
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
@@ -62,8 +64,9 @@ def get_chat_id(user, match):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        matchid = get_netid(match)
-        if matchid == None:
+        matchid = get_netid(str(match))
+        print(matchid)
+        if matchid is None:
             return "No match username found"
         
         chats = (session.query(Chats)
@@ -72,17 +75,20 @@ def get_chat_id(user, match):
 
         chatid = None
         for chat in chats:
-            if (chat.net_id1 == matchid) | (chat.net_id2 == matchid):
+            print("Matching " + matchid + " to " + chat.net_id1 + " or " + chat.net_id2)
+            if ((str(chat.net_id1) == (matchid)) | (str(chat.net_id2) == str(matchid))):
                 chatid = chat.chat_id
                 break
         if chatid is None:
-            __insert_chat_id__(user, match)
+            chatid = __insert_chat_id__(user, matchid)
 
         session.close()
         engine.dispose()
         return chatid
 
     except (Exception) as ex:
+        session.close()
+        engine.dispose()
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
@@ -115,8 +121,11 @@ def __insert_chat_id__(user, match):
 
         session.close()
         engine.dispose()
+        return id
 
     except Exception as ex:
+        session.close()
+        engine.dispose()
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
@@ -144,6 +153,8 @@ def send_chat(chat_id, sender, message):
         engine.dispose()
 
     except Exception as ex:
+        session.close()
+        engine.dispose()
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
@@ -172,6 +183,8 @@ def get_messages(chat_id):
         return chat_history
 
     except Exception as ex:
+        session.close()
+        engine.dispose()
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
@@ -181,7 +194,7 @@ def main():
     myself = 'collado'
     chats = get_all_chats(myself)
     print(chats)
-    id1 = get_chat_id(myself, chats[0])
+    id1 = get_chat_id(myself, 'haha371')
     print(id1)
     id2 = get_chat_id(myself, 'Kenny')
     print(id2)
