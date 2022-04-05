@@ -3,11 +3,12 @@
 # --------------------------------------------------------------------
 
 from flask import Flask, request, make_response, render_template, redirect, url_for
-from RawData_SQL import api_account_creation, get_user_data, get_account_details
+from RawData_SQL import api_account_creation, get_user_data, get_account_details, get_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
+import chat
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -106,8 +107,14 @@ def matches():
 def chat():
     # authenticated net id
     user = auth.authenticate().strip()
+    receiver_id = request.args.get('receiver')
 
-    html = render_template('chat.html')
+    # fetch the net_id and bio of the receiver
+    receiver_info = get_bio(receiver_id)
+
+    html = render_template('chat.html', 
+                            receiver=receiver_id,
+                            bio_receiver=receiver_info)
     response = make_response(html)
     return response
 
