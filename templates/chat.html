@@ -59,9 +59,7 @@
         function sendMessage() {
             let messageSent = $('#chatSent').val();
             messageSent = encodeURIComponent(messageSent)
-            let receiver = document.getElementById("receiver").innerHTML;
-            receiver = encodeURIComponent(receiver)
-            let url = '/sendchat?receiver=' + receiver + '&message=' + messageSent;
+            let url = '/sendchat?message=' + messageSent;
 
             if (request != null)
                 request.abort();
@@ -75,7 +73,7 @@
 
         function setup() {
             getMessages();
-            window.setInterval(getMessages, 1000);
+            window.setInterval(getMessages, 5000);
             $('#userSentChat').click(sendMessage);
         }
 
