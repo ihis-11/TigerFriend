@@ -7,9 +7,8 @@ from cgitb import reset
 from datetime import datetime
 import random
 from sys import stderr
-import psycopg2
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 from database import Chats, Account, Messages
 
@@ -159,7 +158,7 @@ def get_messages(chat_id):
 
         chats = (session.query(Messages)
                 .filter(Messages.chat_id == chat_id)
-                .order_by(Messages.date_time)
+                .order_by(desc(Messages.date_time))
                 .all())
         
         chat_history = []
