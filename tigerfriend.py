@@ -117,9 +117,9 @@ def send_message():
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)
 
-    # when the user sent a message
-    if (chat_sent is not None) or (chat_sent.strip() != ''): 
-        send_chat(chat_id, user, chat_sent)    
+    # when the user sends a non-empty message
+    if chat_sent.strip() != "":
+        send_chat(chat_id, user, chat_sent)
 
     # getting all the messages then
     messages = get_messages(chat_id)
