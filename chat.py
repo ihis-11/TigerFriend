@@ -155,8 +155,6 @@ def send_chat(chat_id, sender, message):
         return ["unknown (database connection failed)", "unknown"]
 
 # get all message history from a given chat_id
-
-
 def get_messages(chat_id):
     try:
         # connect to database
