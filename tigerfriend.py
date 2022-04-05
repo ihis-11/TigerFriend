@@ -140,7 +140,7 @@ def chat():
 def send_message():
     # authenticated net id
     user = auth.authenticate().strip()
-    receiver = request.cookies.get('cur_receiver')
+    receiver = request.args.get('receiver')
     chat_sent = request.args.get('message')
 
     # fetch add the message to the database
