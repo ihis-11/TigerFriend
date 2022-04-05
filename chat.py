@@ -13,8 +13,6 @@ DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
 
 # Takes user (net_id) and returns the list of usernames they have open
 # chats with.
-
-
 def get_all_chats(user):
     try:
         # connect to database
@@ -56,8 +54,6 @@ def get_all_chats(user):
 
 # Takes user (net_id) and their match (username), and returns their
 # chat_id. Makes a new one and inserts if it doesn't exist in the table.
-
-
 def get_chat_id(user, match):
     try:
         # connect to database
@@ -99,8 +95,6 @@ def get_chat_id(user, match):
         return ["unknown (database connection failed)", "unknown"]
 
 # helper method for get_chat_id
-
-
 def __insert_chat_id__(user, match):
     try:
         # connect to database
@@ -132,8 +126,6 @@ def __insert_chat_id__(user, match):
 
 # Takes chat_id, message content, and sender (net_id), and adds to
 # database
-
-
 def send_chat(chat_id, sender, message):
     try:
         # connect to database
