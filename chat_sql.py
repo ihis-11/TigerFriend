@@ -65,7 +65,6 @@ def get_chat_id(user, match):
         session = Session()
 
         matchid = get_netid(str(match))
-        print(matchid)
         if matchid is None:
             return "No match username found"
         
@@ -93,7 +92,7 @@ def get_chat_id(user, match):
         return "unknown (database connection failed)"
 
 # helper method for get_chat_id
-def __insert_chat_id__(user, match):
+def __insert_chat_id__(user, matchid):
     try:
         # connect to database
         engine = create_engine(DATABASE_URL)
