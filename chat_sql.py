@@ -64,7 +64,7 @@ def get_chat_id(user, match):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        matchid = get_netid(str(match))
+        matchid = get_netid(match)
         if matchid is None:
             return "No match username found"
         
@@ -78,6 +78,7 @@ def get_chat_id(user, match):
                 chatid = chat.chat_id
                 break
         if chatid is None:
+            print("will insert")
             chatid = __insert_chat_id__(user, matchid)
 
         session.close()
@@ -111,7 +112,7 @@ def __insert_chat_id__(user, matchid):
                     .all())
 
         newChat = Chats(net_id1 = user,
-                        net_id2 = match,
+                        net_id2 = matchid,
                         chat_id = id)
 
         session.add(newChat)
