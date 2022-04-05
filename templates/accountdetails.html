@@ -1,47 +1,48 @@
 <html>
+
 <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='styles/pages.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/pages.css')}}">
     <title>TigerFriend | Account</title>
 </head>
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
 
-<nav class="myNav">                     
-    <ul>
-        <li style="float:left"><b>TigerFriend</b></li>
-        <li><a href="/logout">Logout</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/">Home</a></li>
-    </ul>
-</nav>
+    <nav class="myNav">
+        <ul>
+            <li style="float:left"><b>TigerFriend</b></li>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
 
-<div class="sidebar">
-    <a></a>
-    <a href="/surveydetails">Survey</a>
-    <a href="/matches">Matches</a>
-    <a href="/chat">Chat</a>
-    <a class="active" href="/accountdetails">Account</a>
-</div>
+    <div class="sidebar">
+        <a></a>
+        <a href="/surveydetails">Survey</a>
+        <a href="/matches">Matches</a>
+        <a href="/matches">Chat</a>
+        <a class="active" href="/accountdetails">Account</a>
+    </div>
 
-<div class="rightsidebar">
-    <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" 
-    class="image" width="150" height="150"/>
-</div>
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />
+    </div>
 
-<div style= "height:auto; padding-top: 70px; text-align: center;">
-    <h1 style="font-size:50px; color:black; margin:10px;">Account Details</h1>
-</div>
+    <div style="height:auto; padding-top: 70px; text-align: center;">
+        <h1 style="font-size:50px; color:black; margin:10px;">Account Details</h1>
+    </div>
 
-<div style= "height:10px; padding-top: 15px; text-align: center;">
-    <h1 style="font-size:20px; color:black; margin:10px;">This information is hidden from other users</h1><br>
-    <h1 style="font-size:20px; color:black; margin:10px;">NetID: {{net_id}}</h1>
-    <h1 style="font-size:20px; color:black; margin:10px;">Your class year is {{year}}</h1>
-    <h1 style="font-size:20px; color:black; margin:10px;">Your major is {{major}}</h1>
-    <br><br><br>
-    <h1 style="font-size:20px; color:black; margin:10px;">This information is shown to other users</h1><br>
-    <h1 style="font-size:20px; color:black; margin:10px;">Username: {{username}}</h1>
-    <h1 style="font-size:20px; color:black; margin:10px;">Bio: {{bio}}</h1>
-</div>
+    <div style="height:10px; padding-top: 15px; text-align: center;">
+        <h1 style="font-size:20px; color:black; margin:10px;">This information is hidden from other users</h1><br>
+        <h1 style="font-size:20px; color:black; margin:10px;">NetID: {{net_id}}</h1>
+        <h1 style="font-size:20px; color:black; margin:10px;">Your class year is {{year}}</h1>
+        <h1 style="font-size:20px; color:black; margin:10px;">Your major is {{major}}</h1>
+        <br><br><br>
+        <h1 style="font-size:20px; color:black; margin:10px;">This information is shown to other users</h1><br>
+        <h1 style="font-size:20px; color:black; margin:10px;">Username: {{username}}</h1>
+        <h1 style="font-size:20px; color:black; margin:10px;">Bio: {{bio}}</h1>
+    </div>
 
 </body>
+
 </html>

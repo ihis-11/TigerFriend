@@ -63,6 +63,27 @@ def update_username(net_id, user):
         print(ex, file=stderr)
         print("Update username failed", file=stderr)
 
+# to get bio for the chat
+def get_bio(username):
+    try:
+        with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
+                              database="dd4c5lulvqtkld",
+                              user="fpzzhwdkkymqrr",
+                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
+            with connect.cursor() as cursor:
+                stmt = "SELECT net_id, bio_string FROM account WHERE username=\'" + username + "\'"
+                print(stmt)
+                cursor.execute(stmt)
+                row = cursor.fetchone()
+                if row is None:
+                    return "No user with this username"
+                else:
+                    return [row[0], row[1]] # returns net_id and bio
+                
+    except (Exception, psycopg2.Error) as ex:
+        print(ex, file=stderr)
+        print("No user with this username", file=stderr)
+
 
 def get_user_data(net_id):  # returns year and major
     try:
