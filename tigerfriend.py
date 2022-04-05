@@ -116,8 +116,10 @@ def live_messaging():
 
     # fetch add the message to the database
     chat_id = get_chat_id(user,receiver)
-    if chat_sent is not None: # when the user sent a message
-        send_chat(chat_id, user, chat_sent)
+
+    # when the user sent a message
+    if (chat_sent is not None) or (chat_sent.strip() != ''): 
+        send_chat(chat_id, user, chat_sent)    
 
     # getting all the messages then
     messages = get_messages(chat_id)
@@ -139,8 +141,6 @@ def about():
     return response
 
 # --------------------------------------------------------------------
-
-
 @app.route('/account', methods=['GET'])
 def account():
     # authenticated net id
