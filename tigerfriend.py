@@ -8,7 +8,7 @@ from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
-import chat
+from chat import get_all_chats, get_messages, get_chat_id, send_chat
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -76,18 +76,6 @@ def matches():
     # authenticated net id
     user = auth.authenticate().strip()
 
-    req = getOneUndergrad(netid=user)
-    yr = ''
-    major = ''
-    res = ''
-    if req.ok:
-        #print(req.json())
-        yr = '20' + str(req.json()['class_year'])
-        major = req.json()['major_code']
-        res = req.json()['res_college']
-    else:
-        print("Error w/API call: " + req.text)
-
     matches = get_matches(user)
 
     html = render_template('matches.html',
@@ -102,31 +90,53 @@ def matches():
 
 
 # --------------------------------------------------------------------
-
 @app.route('/chat', methods=['GET'])
 def chat():
     # authenticated net id
     user = auth.authenticate().strip()
-    receiver_id = request.args.get('receiver')
+    receiver = request.args.get('receiver')
 
-    # fetch the net_id and bio of the receiver
-    receiver_info = get_bio(receiver_id)
+    # fetch the bio of the receiver
+    receiver_bio = get_bio(receiver)
 
     html = render_template('chat.html', 
-                            receiver=receiver_id,
-                            bio_receiver=receiver_info)
+                            receiver=receiver,
+                            bio_receiver=receiver_bio)
     response = make_response(html)
+    response.set_cookie('cur_receiver', receiver)
     return response
 
+# --------------------------------------------------------------------
+@app.route('/livemessages', methods=['GET'])
+def live_messaging():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    receiver = request.cookies.get('cur_receiver')
+    chat_sent = request.args.get('message')
+
+    # fetch add the message to the database
+    chat_id = get_chat_id(user,receiver)
+    if chat_sent is not None: # when the user sent a message
+        send_chat(chat_id, user, chat_sent)
+
+    # getting all the messages then
+    messages = get_messages(chat_id)
+    
+    html = '<table class="table table-striped table-borderless"><tbody>'
+    for bundle in messages:
+        html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
+        html += '<td>%s</td>' % bundle[1]
+        html += '<td>sent at:%s</td></tr>' % bundle[2]
+
+    html += '</tbody></table>'
+    return make_response(html)
 
 # --------------------------------------------------------------------
-
 @app.route('/about', methods=['GET'])
 def about():
     html = render_template('about.html')
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 

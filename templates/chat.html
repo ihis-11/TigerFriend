@@ -12,41 +12,55 @@
         <table class="table table-borderless">
             <thead>
                 <th>
-                    <h2 style="text-align: left;">You are chatting with: <strong>{{receiver}}</strong></h2><br>
+                    <h2 style="text-align: left;">You are chatting with: <strong id="receiver">{{receiver}}</strong></h2><br>
                     <h2 style="text-align: left;"><strong>Bio: </strong>{{bio_receiver}}</h2>
                 </th>
                 <th></th>
+                <th></th>
             </thead>
             <tbody>
-                <tr>{{previousMesssages}}</tr>
-                <tr id="newMessages"></tr>
                 <tr>
                     <td>
                         <textarea id="chatSent" maxlength="500" rows="3" cols="50" name="message" placeholder="Type a message" value={{message}}></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Submit"></td>
+                    <td><button type="button" id="userSentChat">Send Message</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <div id="messages"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
         'use strict';
 
         function handleResponse(response) {
-            $('#newMessages').html(response);
+            $('#messages').html(response);
         }
 
         let request = null
 
-        function getMessages() {}
+        function getMessages() {
+            let messageSent = $('#chatSent').val();
+            messageSent = encodeURIComponent(messageSent)
+            let url = '/livemessages?message=' + messageSent;
+
+            if (request != null)
+                request.abort();
+
+            request = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse
+            });
+        }
 
         function setup() {
             getMessages();
+            $('#userSentChat').click(getMessages);
         }
 
         $('document').ready(setup);
