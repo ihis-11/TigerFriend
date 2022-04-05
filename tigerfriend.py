@@ -8,6 +8,7 @@ from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
+import chat
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -106,8 +107,9 @@ def matches():
 def chat():
     # authenticated net id
     user = auth.authenticate().strip()
-
-    html = render_template('chat.html')
+    receiver_id = request.args.get('receiver')
+    
+    html = render_template('chat.html', receiver=receiver_id)
     response = make_response(html)
     return response
 
