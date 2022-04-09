@@ -1,0 +1,287 @@
+/* Page CSS */
+
+/* Define the top nav bar */
+.myNav {
+    background-color: white;
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  /* Remove bullets, margin, and padding */
+  .myNav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;    
+    width: 100%;
+  }
+  
+  .myNav li {
+    float: right;
+  }
+  
+  /* Styling for links */
+  .myNav li a {
+    display: block;
+    color: black;
+    font-size: 24px;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+  }
+  
+  /* Styling for logo */
+  .myNav li b {
+    display: block;
+    color: black;
+    font-size: 24px;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+  }
+  
+  .myNav li a:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .image{
+    position:absolute;
+    bottom: 10vh;
+    width: 100%; 
+    object-fit: contain;
+  }
+  
+  .image2{
+    position:absolute;
+    bottom: 10vh;
+    width: 100%; 
+    object-fit: contain;
+    transform: scaleX(-1);
+  }
+  
+  /* The side nav bar */
+  .sidebar {
+    margin: 0;
+    padding: 0;
+    width: 12vw;
+    background-color: orange;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    left:0px;
+    top: 55px;
+    font-size: 1.5vw;
+  }
+  
+  /* Sidebar links */
+  .sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+  
+  /* Active/current tab */
+  .sidebar a.active {
+    background-color: #FFD580;
+    color: black;
+  }
+  
+  .sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+  
+  .rightsidebar {
+    margin: 0;
+    padding: 0;
+    width: 12vw;
+    background-color: orange;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    right:0px;
+    top: 55px;
+  }
+  
+  /* FOR THE CHAT */
+  
+  #container{
+    width:750px;
+    height:800px;
+    background:#eff3f7;
+    margin:0 auto;
+    font-size:0;
+    border-radius:5px;
+    overflow:hidden;
+  }
+  aside{
+    width:260px;
+    height:800px;
+    background-color:#ffffff;
+    display:inline-block;
+    font-size:15px;
+    vertical-align:top;
+  }
+  main{
+    width:490px;
+    height:800px;
+    display:inline-block;
+    font-size:15px;
+    vertical-align:top;
+  }
+  
+  aside header{
+    padding:30px 20px;
+  }
+  aside input{
+    width:100%;
+    height:50px;
+    line-height:50px;
+    padding:0 50px 0 20px;
+    background-color:#5e616a;
+    border:none;
+    border-radius:3px;
+    color:#fff;
+    background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
+    background-repeat:no-repeat;
+    background-position:170px;
+    background-size:40px;
+  }
+  aside input::placeholder{
+    color:#fff;
+  }
+  aside ul{
+    padding-left:0;
+    margin:0;
+    list-style-type:none;
+    overflow-y:scroll;
+    height:690px;
+  }
+  aside li{
+    padding:10px 0;
+  }
+  aside li:hover{
+    background-color:#5e616a;
+  }
+  
+  .green{
+    background-color:#58b666;
+  }
+  .orange{
+    background-color:#ff725d;
+  }
+  .blue{
+    background-color:#6fbced;
+    margin-right:0;
+    margin-left:7px;
+  }
+  
+  main header{
+    height:100px;
+    padding:30px 20px 30px 40px;
+  }
+  main header > *{
+    display:inline-block;
+    vertical-align:top;
+  }
+  main header div{
+    margin-left:10px;
+    margin-right:145px;
+  }
+  
+  #chat{
+    padding-left:0;
+    margin:0;
+    list-style-type:none;
+    overflow-y:scroll;
+    height:535px;
+    border-top:2px solid #fff;
+    border-bottom:2px solid #fff;
+  }
+  #chat li{
+    padding:10px 30px;
+  }
+  #chat h2,#chat h3{
+    display:inline-block;
+    font-size:13px;
+    font-weight:normal;
+  }
+  #chat h3{
+    color:#bbb;
+  }
+  #chat .entete{
+    margin-bottom:5px;
+  }
+  #chat .message{
+    padding:20px;
+    color:#fff;
+    line-height:25px;
+    max-width:90%;
+    display:inline-block;
+    text-align:left;
+    border-radius:5px;
+  }
+  #chat .me{
+    text-align:right;
+  }
+  #chat .you{
+    text-align:left;
+  }
+  #chat .you .message{
+    background-color:#58b666;
+  }
+  #chat .me .message{
+    background-color:#6fbced;
+  }
+  #chat .triangle{
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+  }
+  #chat .you .triangle{
+      border-color: transparent transparent #58b666 transparent;
+      margin-left:10px;
+  }
+  #chat .me .triangle{
+      border-color: transparent transparent #6fbced transparent;
+      margin-left:400px;
+  }
+  
+  main footer{
+    height:150px;
+    padding:20px 30px 10px 20px;
+  }
+  main footer textarea{
+    resize:none;
+    border:none;
+    display:block;
+    width:100%;
+    height:60px;
+    border-radius:3px;
+    padding:20px;
+    font-size:13px;
+    margin-bottom:13px;
+  }
+  main footer textarea::placeholder{
+    color:#ddd;
+  }
+  main footer a{
+    text-decoration:none;
+    text-transform:uppercase;
+    font-weight:bold;
+    color:#6fbced;
+    vertical-align:top;
+    margin-left:333px;
+    margin-top:5px;
+    display:inline-block;
+  }
