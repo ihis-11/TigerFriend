@@ -167,3 +167,25 @@
     padding: 5px 30px;
   }
 }
+
+#box {
+  border-radius: 20px; 
+  width: auto; 
+  height: auto; 
+	background:orange;
+  position:absolute;
+  object-fit: contain;
+  left: 15vw;
+  right: 15vw;
+}
+
+#box2 {
+  border-radius: 20px; 
+  width: auto; 
+  height: auto; 
+	background:#FFD580;
+  position:absolute;
+  object-fit: contain;
+  left: 15vw;
+  right: 15vw;
+}
