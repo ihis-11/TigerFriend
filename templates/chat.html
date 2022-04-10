@@ -102,6 +102,7 @@
             let messageSent = $('#chatSent').val();
             messageSent = encodeURIComponent(messageSent)
             let url = '/sendchat?message=' + messageSent;
+            $("#chatSent").val('');
 
             if (request2 != null)
                 request2.abort();
@@ -118,6 +119,14 @@
             getMessages();
             $('#userSentChat').click(sendMessage);
             $('#userSentChat').click(getMessages);
+            $('#chatSent').keypress(function (e) {
+                if(e.which == 13)  // the enter key code
+                {   
+                    e.preventDefault();
+                    sendMessage();
+                    getMessages();
+                }
+            });
         }
 
         $('document').ready(setup);
