@@ -115,8 +115,8 @@
   /* FOR THE CHAT */
   
   #container{
-    width:750px;
-    height:800px;
+    width:76vw;
+    height:93vh;
     background:#eff3f7;
     margin:0 auto;
     font-size:0;
@@ -124,16 +124,16 @@
     overflow:hidden;
   }
   aside{
-    width:260px;
-    height:800px;
+    width:15vw;
+    height:93vh;
     background-color:#ffffff;
     display:inline-block;
     font-size:15px;
     vertical-align:top;
   }
   main{
-    width:490px;
-    height:800px;
+    width:61vw;
+    height:93vh;
     display:inline-block;
     font-size:15px;
     vertical-align:top;
@@ -144,7 +144,7 @@
   }
   aside input{
     width:100%;
-    height:50px;
+    height:5vh;
     line-height:50px;
     padding:0 50px 0 20px;
     background-color:#5e616a;
@@ -153,7 +153,7 @@
     color:#fff;
     background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
     background-repeat:no-repeat;
-    background-position:170px;
+    background-position:130px;
     background-size:40px;
   }
   aside input::placeholder{
@@ -186,7 +186,7 @@
   }
   
   main header{
-    height:100px;
+    height:15vh;
     padding:30px 20px 30px 40px;
   }
   main header > *{
@@ -203,7 +203,7 @@
     margin:0;
     list-style-type:none;
     overflow-y:scroll;
-    height:535px;
+    height:68vh;
     border-top:2px solid #fff;
     border-bottom:2px solid #fff;
   }
@@ -222,7 +222,7 @@
     margin-bottom:5px;
   }
   #chat .message{
-    padding:20px;
+    padding:10px;
     color:#fff;
     line-height:25px;
     max-width:90%;
@@ -242,33 +242,20 @@
   #chat .me .message{
     background-color:#6fbced;
   }
-  #chat .triangle{
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 10px 10px 10px;
-  }
-  #chat .you .triangle{
-      border-color: transparent transparent #58b666 transparent;
-      margin-left:10px;
-  }
-  #chat .me .triangle{
-      border-color: transparent transparent #6fbced transparent;
-      margin-left:400px;
-  }
   
   main footer{
-    height:150px;
+    height:10vh;
     padding:20px 30px 10px 20px;
+    display: flex;
   }
   main footer textarea{
     resize:none;
     border:none;
-    display:block;
-    width:100%;
-    height:60px;
-    border-radius:3px;
-    padding:20px;
+    display:inline-block;
+    width:95%;
+    height:5vh;
+    border-radius:4px;
+    padding:10px;
     font-size:13px;
     margin-bottom:13px;
   }
@@ -276,12 +263,10 @@
     color:#ddd;
   }
   main footer a{
-    text-decoration:none;
-    text-transform:uppercase;
     font-weight:bold;
     color:#6fbced;
-    vertical-align:top;
-    margin-left:333px;
-    margin-top:5px;
     display:inline-block;
+    width:5%;
+    margin-top:5px;
+    padding-left: 1vw;
   }

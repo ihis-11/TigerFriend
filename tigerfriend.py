@@ -128,7 +128,7 @@ def chat():
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
 
-    html = render_template('chat.html', 
+    html = render_template('chatlist.html', 
                             receiver=receiver,
                             bio_receiver=receiver_bio)
     response = make_response(html)
