@@ -45,76 +45,11 @@
                   <p>{{bio_receiver}}</p>
               </header>
               <ul id="chat">
-                <li class="you">
-                    <div class="entete">
-                      <span class="status green"></span>
-                      <h2>Them</h2>
-                      <h3>Time and Date</h3>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                      Message
-                    </div>
-                  </li>
-                <li class="me">
-                  <div class="entete">
-                    <h3>Time and Date</h3>
-                    <h2>You</h2>
-                    <span class="status blue"></span>
-                  </div>
-                  <div class="triangle"></div>
-                  <div class="message">
-                    Message
-                  </div>
-                </li>
-                <li class="me">
-                  <div class="entete">
-                    <h3>Time and Date</h3>
-                    <h2>You</h2>
-                    <span class="status blue"></span>
-                  </div>
-                  <div class="triangle"></div>
-                  <div class="message">
-                    Message
-                  </div>
-                </li>
-                <li class="you">
-                  <div class="entete">
-                    <span class="status green"></span>
-                    <h2>Them</h2>
-                    <h3>Time and Date</h3>
-                  </div>
-                  <div class="triangle"></div>
-                  <div class="message">
-                    Message
-                  </div>
-                </li>
-                <li class="me">
-                    <div class="entete">
-                      <h3>Time and Date</h3>
-                      <h2>You</h2>
-                      <span class="status blue"></span>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                      Message
-                    </div>
-                  </li>
-                  <li class="me">
-                    <div class="entete">
-                      <h3>Time and Date</h3>
-                      <h2>You</h2>
-                      <span class="status blue"></span>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                      Message
-                    </div>
-                  </li>
+                <div id="messages"></div>
               </ul>
               <footer>
-                <textarea placeholder="Type a message"></textarea>
-                <a href="#">Send</a>
+                <textarea id="chatSent" name="message" placeholder="Type a message"></textarea>
+                <a id="userSentChat" href="#">Send</a>
               </footer>
             </main>
           </div>
@@ -144,7 +79,45 @@
             });
         }
 
+        function handleResponse2(response2) {
+            $('#messages').html(response2);
+        }
+
+        let request2 = null
+
+        function getMessages() {
+            let url = '/getmessages'
+
+            if (request2 != null)
+                request2.abort();
+
+            request2 = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse2
+            });
+        }
+
+        function sendMessage() {
+            let messageSent = $('#chatSent').val();
+            messageSent = encodeURIComponent(messageSent)
+            let url = '/sendchat?message=' + messageSent;
+
+            if (request2 != null)
+                request2.abort();
+
+            request2 = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse2
+            });
+        }
+
         function setup() {
+            getMessages();
+            $('#userSentChat').click(getMessages);
+            window.setInterval(getMessages, 5000);
+            $('#userSentChat').click(sendMessage);
             getChats();
             window.setInterval(getChats, 5000);
         }
