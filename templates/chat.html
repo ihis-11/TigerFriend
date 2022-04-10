@@ -1,50 +1,73 @@
 <html>
-
 <head>
-    <title>TigerFriend | Personal Chat</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='styles/chat.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <title>TigerFriend | Chat</title>
 </head>
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
-    <h1 style="text-align: center; font-size: 50px;">Personal Chat</h1>
-    <div class="container-fluid">
-        <table class="table table-borderless">
-            <thead>
-                <th>
-                    <h2 style="text-align: left;">You are chatting with: <strong id="receiver">{{receiver}}</strong></h2><br>
-                    <h2 style="text-align: left;">Their bio: {{bio_receiver}}</h2>
-                </th>
-                <th></th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <textarea id="chatSent" maxlength="500" rows="3" cols="50" name="message" placeholder="Type a message" value={{message}}></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td><button type="button" id="userSentChat">Send Message</td>
-                </tr>
-            </tbody>
-        </table>
+
+    <nav class="myNav">                     
+        <ul>
+            <li style="float:left"><b>TigerFriend</b></li>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidebar">
+        <a></a>
+        <a href="/surveydetails">Survey</a>
+        <a href="/matches">Matches</a>
+        <a class="active" href="/chat">Chat</a>
+        <a href="/accountdetails">Account</a>
     </div>
 
-    <div id="messages"></div>
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" 
+        class="image" width="150" height="150"/>
+    </div>
+
+   
+
+    <div style="height:180px; padding-top: 50px; text-align: center;">
+        <div id="container">
+            <aside>
+              <header>
+                <input type="text" placeholder="search">
+              </header>
+              <div id="allChats" class="container-fluid" style="width: 100%;"></div>
+            </aside>
+            <main>
+              <header>
+                  <h2>{{receiver}}</h2><br>
+                  <p>{{bio_receiver}}</p>
+              </header>
+              <ul id="chat">
+                <div id="messages"></div>
+              </ul>
+              <footer>
+                <textarea id="chatSent" name="message" placeholder="Type a message"></textarea>
+                <a id="userSentChat" href="#">Send</a>
+              </footer>
+            </main>
+          </div>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
         'use strict';
 
         function handleResponse(response) {
-            $('#messages').html(response);
+            $('#allChats').html(response);
         }
 
         let request = null
 
-        function getMessages() {
-            let url = '/getmessages'
+        function getChats() {
+            let url = '/getChats'
 
             if (request != null)
                 request.abort();
@@ -53,6 +76,25 @@
                 type: 'GET',
                 url: url,
                 success: handleResponse
+            });
+        }
+
+        function handleResponse2(response2) {
+            $('#messages').html(response2);
+        }
+
+        let request2 = null
+
+        function getMessages() {
+            let url = '/getmessages'
+
+            if (request2 != null)
+                request2.abort();
+
+            request2 = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse2
             });
         }
 
@@ -61,25 +103,25 @@
             messageSent = encodeURIComponent(messageSent)
             let url = '/sendchat?message=' + messageSent;
 
-            if (request != null)
-                request.abort();
+            if (request2 != null)
+                request2.abort();
 
-            request = $.ajax({
+            request2 = $.ajax({
                 type: 'GET',
                 url: url,
-                success: handleResponse
+                success: handleResponse2
             });
         }
 
         function setup() {
+            getChats();
             getMessages();
-            $('#userSentChat').click(getMessages);
-            window.setInterval(getMessages, 5000);
             $('#userSentChat').click(sendMessage);
+            $('#userSentChat').click(getMessages);
         }
 
         $('document').ready(setup);
     </script>
-</body>
 
+</body>
 </html>

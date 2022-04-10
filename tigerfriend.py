@@ -93,8 +93,9 @@ def matches():
 def all_chats():
     # authenticated net id
     user = auth.authenticate().strip()
-    
-    html = render_template('chatlist.html')
+    receiver = request.cookies.get('cur_receiver')
+    bio = get_bio(receiver)
+    html = render_template('chat.html', receiver=receiver, bio_receiver=bio)
     response = make_response(html)
     return response
 
@@ -128,7 +129,7 @@ def chat():
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
 
-    html = render_template('chatlist.html', 
+    html = render_template('chat.html', 
                             receiver=receiver,
                             bio_receiver=receiver_bio)
     response = make_response(html)
@@ -177,7 +178,7 @@ def get_chats():
     messages = get_messages(chat_id)
 
     html = '<table class="table table-striped table-borderless"><tbody>'
-    for bundle in messages:
+    for bundle in reversed(messages):
         html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
         html += '<td>%s</td>' % bundle[1]
         html += '<td>sent at:%s</td></tr>' % bundle[2]
