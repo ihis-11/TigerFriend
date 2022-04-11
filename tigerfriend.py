@@ -1,6 +1,7 @@
 # --------------------------------------------------------------------
 # tigerfriend.py
 # --------------------------------------------------------------------
+import sys
 
 from flask import Flask, request, make_response, render_template, redirect, url_for
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio
@@ -159,7 +160,7 @@ def send_message():
     messages = get_messages(chat_id)
 
     html = '<table class="table table-striped table-borderless"><tbody>'
-    for bundle in messages:
+    for bundle in reversed(messages):
         html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
         html += '<td>%s</td>' % bundle[1]
         html += '<td>sent at:%s</td></tr>' % bundle[2]

@@ -20,7 +20,7 @@
         <a></a>
         <a href="/surveydetails">Survey</a>
         <a href="/matches">Matches</a>
-        <a class="active" href="/chat">Chat</a>
+        <a class="active" href="/allChats">Chat</a>
         <a href="/accountdetails">Account</a>
     </div>
 
@@ -104,10 +104,10 @@
             let url = '/sendchat?message=' + messageSent;
             $("#chatSent").val('');
 
-            if (request2 != null)
-                request2.abort();
+            if (request != null)
+                request.abort();
 
-            request2 = $.ajax({
+            request = $.ajax({
                 type: 'GET',
                 url: url,
                 success: handleResponse2
@@ -117,14 +117,13 @@
         function setup() {
             getChats();
             getMessages();
+            window.setInterval(getMessages, 5000);
             $('#userSentChat').click(sendMessage);
-            $('#userSentChat').click(getMessages);
             $('#chatSent').keypress(function (e) {
                 if(e.which == 13)  // the enter key code
                 {   
                     e.preventDefault();
                     sendMessage();
-                    getMessages();
                 }
             });
         }
