@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-from datetime import datetime
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
 
 class Account(Base):
     __tablename__ = 'account'
@@ -14,6 +14,7 @@ class Account(Base):
     major = Column(String)
     bio_string = Column(String)
     res_college = Column(String)
+
 
 class RawData(Base):
     __tablename__ = 'rawdata'
@@ -43,6 +44,7 @@ class RawData(Base):
     q23_response = Column(Integer)
     q24_response = Column(Integer)
 
+
 # class MatchScores(Base):
 #     __tablename__  = 'matchscores'
 #     net_id1 = Column(String)
@@ -59,12 +61,14 @@ class Chats(Base):
     net_id2 = Column(String)
     chat_id = Column(String, primary_key=True)
 
+
 class Messages(Base):
     __tablename__ = 'messages'
     chat_id = Column(String)
     sender_id = Column(String)
     message_content = Column(String)
     date_time = Column(DateTime, primary_key=True)
+
 
 # class Reports(Base):
 #     __tablename__ = 'reports'
@@ -76,6 +80,7 @@ class Messages(Base):
 class Administrators(Base):
     __tablename__ = 'administrators'
     net_id = Column(String, primary_key=True)
+
 
 class Survey(Base):
     __tablename__ = 'survey'

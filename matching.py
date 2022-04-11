@@ -1,11 +1,12 @@
 # --------------------------------------------------------------------
 # matching.py
 # --------------------------------------------------------------------
-from cgitb import reset
 from sys import stderr
+
 import psycopg2
 
 DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
+
 
 # --------------------------------------------------------------------
 
@@ -50,7 +51,7 @@ def input_match_scores(net_id):
                 while other_user is not None:
                     other_users.append(str(other_user[0]))
                     other_user = cursor.fetchone()
-                
+
                 for other_user in other_users:
 
                     overall_match_score = 0
@@ -95,12 +96,13 @@ def input_match_scores(net_id):
                         # print(str(user_raw_data[0]) + " and " + other_user + " matched on year " + str(res))
                         overall_match_score += 1
                         extracurricular_match_score += 1
-                    
+
                     # input scores into data table
                     print(net_id, other_user, overall_match_score)
                     stmt = "INSERT INTO matchscores (net_id1, net_id2, overall_score, academic_score, ec_score, \
                             personality_score, opinion_score) VALUES (\'" + net_id + "\', \'" + other_user + "\', "
-                    stmt += str(overall_match_score) + ", " + str(academic_match_score) + ", " + str(extracurricular_match_score)
+                    stmt += str(overall_match_score) + ", " + str(academic_match_score) + ", " + str(
+                        extracurricular_match_score)
                     stmt += ", " + str(personality_match_score) + ", " + str(opinion_match_score) + ");"
                     cursor.execute(stmt)
                     connect.commit()
@@ -109,10 +111,11 @@ def input_match_scores(net_id):
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
 
+
 # --------------------------------------------------------------------
 
 # Returns dict w/"overall", "academic", "ec", "personality", and 
-#"opinion" match arrays
+# "opinion" match arrays
 def get_matches(net_id):
     try:
         # connect to database
@@ -144,19 +147,19 @@ def get_matches(net_id):
 
                 scores = [over, acad, ec, pers, opin]
 
-                #print(id1)
-                #print(over)
+                # print(id1)
+                # print(over)
 
                 matches = {"overall": [None, None, None, None],
-                            "academic": [None, None, None, None],
-                            "ec": [None, None, None, None],
-                            "personality": [None, None, None, None],
-                            "opinion": [None, None, None, None]}
-                match_vals = {"overall": [-1,-1,-1,-1],
-                            "academic": [-1,-1,-1,-1],
-                            "ec": [-1,-1,-1,-1],
-                            "personality": [-1,-1,-1,-1],
-                            "opinion": [-1,-1,-1,-1]}
+                           "academic": [None, None, None, None],
+                           "ec": [None, None, None, None],
+                           "personality": [None, None, None, None],
+                           "opinion": [None, None, None, None]}
+                match_vals = {"overall": [-1, -1, -1, -1],
+                              "academic": [-1, -1, -1, -1],
+                              "ec": [-1, -1, -1, -1],
+                              "personality": [-1, -1, -1, -1],
+                              "opinion": [-1, -1, -1, -1]}
                 categories = ["overall", "academic", "ec", "personality", "opinion"]
 
                 for i in range(len(id1)):
@@ -164,42 +167,42 @@ def get_matches(net_id):
                         match = id2[i]
                     else:
                         match = id1[i]
-                    
+
                     # get top 4
                     for j in range(len(categories)):
-                        if scores[j][i] > match_vals[categories[j]][3]: # if match is better than worst match currently
+                        if scores[j][i] > match_vals[categories[j]][3]:  # if match is better than worst match currently
                             index = firstSmallerIndex(match_vals[categories[j]], scores[j][i])
                             match_vals[categories[j]] = insertAtIndex(match_vals[categories[j]], index, scores[j][i])
                             matches[categories[j]] = insertAtIndex(matches[categories[j]], index, match)
-                
+
                 # remove extra null entries (if any)
                 for i in range(len(categories)):
-                    if (matches[categories[i]][3] is None):
+                    if matches[categories[i]][3] is None:
                         delete = 3
                         while matches[categories[i]][delete] is None:
                             matches[categories[i]].pop(delete)
                             delete = delete - 1
                             if delete == -1:
                                 break
-                
+
                 # Replace net_ids with usernames (get bios in this step as well in the future)
                 for i in range(len(categories)):
                     for j in range(len(matches[categories[i]])):
                         # print(matches[categories[i]][j])
-                        id = matches[categories[i]][j]
-                        stmt = "SELECT username FROM account WHERE net_id=\'" + id + "\'"
+                        net_id = matches[categories[i]][j]
+                        stmt = "SELECT username FROM account WHERE net_id=\'" + str(net_id) + "\'"
                         cursor.execute(stmt)
                         row = cursor.fetchone()
                         matches[categories[i]][j] = row[0]
-                
+
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return {"overall": [],
-            "academic": [],
-            "ec": [],
-            "personality": [],
-            "opinion": []}
+                "academic": [],
+                "ec": [],
+                "personality": [],
+                "opinion": []}
 
     return matches
 
@@ -208,16 +211,18 @@ def get_matches(net_id):
 def firstSmallerIndex(arr, val):
     for i in reversed(range(len(arr))):
         if val < arr[i]:
-            return i+1
+            return i + 1
     return 0
+
 
 def insertAtIndex(arr, index, insert):
     for i in reversed(range(len(arr))):
         if i > index:
-            arr[i] = arr[i-1]
+            arr[i] = arr[i - 1]
         elif i is index:
             arr[i] = insert
     return arr
+
 
 # --------------------------------------------------------------------
 

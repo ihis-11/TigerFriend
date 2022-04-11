@@ -1,15 +1,16 @@
 # --------------------------------------------------------------------
 # chat.py
 # --------------------------------------------------------------------
-from cgitb import reset
-from datetime import datetime
 import random
+from datetime import datetime
 from sys import stderr
+
 import psycopg2
 
 from RawData_SQL import get_account_details
 
 DATABASE_URL = 'file:TigerFriend.sqlite?mode=ro'
+
 
 # --------------------------------------------------------------------
 
@@ -25,7 +26,7 @@ def get_all_chats(user):
             with connect.cursor() as cursor:
 
                 stmt = "SELECT * FROM chats WHERE net_id1=\'" + \
-                    user + "\' OR net_id2=\'" + user + "\'"
+                       user + "\' OR net_id2=\'" + user + "\'"
                 cursor.execute(stmt)
                 chats = cursor.fetchone()
                 other_users = []
@@ -54,6 +55,7 @@ def get_all_chats(user):
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
 
+
 # Takes user (net_id) and their match (username), and returns their
 # chat_id. Makes a new one and inserts if it doesn't exist in the table.
 def get_chat_id(user, match):
@@ -74,7 +76,7 @@ def get_chat_id(user, match):
                 # print("Match's net_id: " + match)
 
                 stmt = "SELECT * FROM chats WHERE net_id1=\'" + \
-                    user + "\' OR net_id2=\'" + user + "\'"
+                       user + "\' OR net_id2=\'" + user + "\'"
                 cursor.execute(stmt)
                 chats = cursor.fetchone()
                 chat_id = None
@@ -95,6 +97,7 @@ def get_chat_id(user, match):
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
 
 # helper method for get_chat_id
 def __insert_chat_id__(user, match):
@@ -117,7 +120,7 @@ def __insert_chat_id__(user, match):
 
                 # print("new chat id: " + chat_id)
                 stmt = "INSERT INTO chats VALUES (\'" + user + \
-                    "\', \'" + match + "\', \'" + chat_id + "\');"
+                       "\', \'" + match + "\', \'" + chat_id + "\');"
                 cursor.execute(stmt)
                 connect.commit()
 
@@ -125,6 +128,7 @@ def __insert_chat_id__(user, match):
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
 
 # Takes chat_id, message content, and sender (net_id), and adds to
 # database
@@ -139,7 +143,7 @@ def send_chat(chat_id, sender, message):
                 now = str(datetime.now())
 
                 stmt = "INSERT INTO messages VALUES (\'" + chat_id + "\', \'" + \
-                    sender + "\', \'" + message + "\', \'" + now + "\');"
+                       sender + "\', \'" + message + "\', \'" + now + "\');"
                 cursor.execute(stmt)
                 connect.commit()
 
@@ -147,6 +151,7 @@ def send_chat(chat_id, sender, message):
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
 
 # get all message history from a given chat_id
 def get_messages(chat_id):
@@ -157,16 +162,15 @@ def get_messages(chat_id):
                               user="fpzzhwdkkymqrr",
                               password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
-
                 stmt = "SELECT * FROM messages WHERE chat_id=\'" + \
-                    chat_id + "\' ORDER BY datetime DESC;"
+                       chat_id + "\' ORDER BY datetime DESC;"
                 cursor.execute(stmt)
                 msgs = cursor.fetchone()
                 chat_history = ()
                 while msgs is not None:
                     user = get_account_details(str(msgs[1]))[0]
                     chat_history += ((user, str(msgs[2]),
-                                     str(msgs[3])),)
+                                      str(msgs[3])),)
                     msgs = cursor.fetchone()
 
                 return chat_history
@@ -175,6 +179,7 @@ def get_messages(chat_id):
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
 
 # unit test
 def main():
@@ -191,6 +196,7 @@ def main():
     print(msgs1)
     msgs2 = get_messages(id2)
     print(msgs2)
+
 
 # ----------------------------------------------------------------------
 

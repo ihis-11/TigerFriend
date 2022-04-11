@@ -19,6 +19,7 @@ app.secret_key = APP_SECRET_KEY
 
 import auth
 
+
 # --------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
@@ -27,6 +28,7 @@ def home():
     html = render_template('home.html')
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -72,7 +74,7 @@ def survey():
 # --------------------------------------------------------------------
 
 @app.route('/matches', methods=['GET'])
-def matches():
+def match():
     # authenticated net id
     user = auth.authenticate().strip()
 
@@ -88,23 +90,24 @@ def matches():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 @app.route('/allChats', methods=['GET'])
 def all_chats():
     # authenticated net id
-    user = auth.authenticate().strip()
     receiver = request.cookies.get('cur_receiver')
     bio = get_bio(receiver)
     html = render_template('chat.html', receiver=receiver, bio_receiver=bio)
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 @app.route('/getChats', methods=['GET'])
 def fetching_chats():
     # authenticated net id
     user = auth.authenticate().strip()
-    
+
     # fetching all the chats for the user
     open_chats = get_all_chats(user)
     if type(open_chats) is not list:
@@ -113,28 +116,29 @@ def fetching_chats():
 
     html = '<table class="table table-striped"><tbody>'
     for chat in open_chats:
-        link = '<a href="chat?receiver=%s">%s</a>' % (chat,chat)
+        link = '<a href="chat?receiver=%s">%s</a>' % (chat, chat)
         html += '<tr><td>%s</td></tr>' % link
 
     html += '</tbody></table>'
     return make_response(html)
-    
+
+
 # --------------------------------------------------------------------
 @app.route('/chat', methods=['GET'])
 def chat():
     # authenticated net id
-    user = auth.authenticate().strip()
     receiver = request.args.get('receiver')
 
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
 
-    html = render_template('chat.html', 
-                            receiver=receiver,
-                            bio_receiver=receiver_bio)
+    html = render_template('chat.html',
+                           receiver=receiver,
+                           bio_receiver=receiver_bio)
     response = make_response(html)
     response.set_cookie('cur_receiver', receiver)
     return response
+
 
 # --------------------------------------------------------------------
 @app.route('/sendchat', methods=['GET'])
@@ -153,7 +157,7 @@ def send_message():
 
     # getting all the messages then
     messages = get_messages(chat_id)
-    
+
     html = '<table class="table table-striped table-borderless"><tbody>'
     for bundle in messages:
         html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
@@ -186,12 +190,14 @@ def get_chats():
     html += '</tbody></table>'
     return make_response(html)
 
+
 # --------------------------------------------------------------------
 @app.route('/about', methods=['GET'])
 def about():
     html = render_template('about.html')
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 @app.route('/account', methods=['GET'])
@@ -274,9 +280,9 @@ def accountdetails():
         # checking if the username is unique
         try:
             with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
-                              database="dd4c5lulvqtkld",
-                              user="fpzzhwdkkymqrr",
-                              password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
+                                  database="dd4c5lulvqtkld",
+                                  user="fpzzhwdkkymqrr",
+                                  password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
 
                 with connect.cursor() as cursor:
                     stmt = "SELECT username FROM account WHERE username=\'" + username + "\'"
@@ -303,7 +309,7 @@ def accountdetails():
 
         api_account_creation(user, yr, major, res, username, bio)
         input_match_scores(user)
- 
+
     data = get_year_major(user)
     html = render_template('accountdetails.html',
                            net_id=user,

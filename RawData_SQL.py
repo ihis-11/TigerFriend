@@ -63,6 +63,7 @@ def update_username(net_id, user):
         print(ex, file=stderr)
         print("Update username failed", file=stderr)
 
+
 # to get bio for the chat
 def get_bio(username):
     try:
@@ -78,8 +79,8 @@ def get_bio(username):
                 if row is None:
                     return "No user with this username"
                 else:
-                    return str(row[0]) # return bio
-                
+                    return str(row[0])  # return bio
+
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
         print("No user with this username", file=stderr)
@@ -107,6 +108,7 @@ def get_user_data(net_id):  # returns year and major
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
 
+
 def get_account_details(net_id):  # returns user and bio, None if account doesn't exist
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
@@ -127,6 +129,7 @@ def get_account_details(net_id):  # returns user and bio, None if account doesn'
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
 
+
 # Method for deleting rows in matchscores, account, and rawdata
 def delete():  # returns user and bio, None if account doesn't exist
     try:
@@ -136,16 +139,16 @@ def delete():  # returns user and bio, None if account doesn't exist
                               password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
             with connect.cursor() as cursor:
                 # HARD CODE IN NET_ID YOU WANT TO DELETE
-                ID = "NET_ID" # REPLACE NET_ID HERE WITH WHAT YOU WANT TO REMOVE - then run "python RawData_SQL.py"
-                stmt = "DELETE FROM matchscores WHERE net_id1=\'" + ID + "\' OR net_id2=\'" + ID + "\'"
+                net_id = "NET_ID"  # REPLACE NET_ID HERE WITH WHAT YOU WANT TO REMOVE - then run "python RawData_SQL.py"
+                stmt = "DELETE FROM matchscores WHERE net_id1=\'" + net_id + "\' OR net_id2=\'" + net_id + "\'"
                 cursor.execute(stmt)
                 connect.commit()
 
-                stmt = "DELETE FROM account WHERE net_id=\'" + ID + "\'"
+                stmt = "DELETE FROM account WHERE net_id=\'" + net_id + "\'"
                 cursor.execute(stmt)
                 connect.commit()
 
-                stmt = "DELETE FROM rawdata WHERE net_id=\'" + ID + "\'"
+                stmt = "DELETE FROM rawdata WHERE net_id=\'" + net_id + "\'"
                 cursor.execute(stmt)
                 connect.commit()
 
@@ -153,6 +156,7 @@ def delete():  # returns user and bio, None if account doesn't exist
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
 
 # ----------------------------------------------------------------------
 
