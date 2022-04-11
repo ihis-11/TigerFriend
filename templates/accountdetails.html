@@ -7,14 +7,7 @@
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
 
-    <nav class="myNav">
-        <ul>
-            <li style="float:left"><b>TigerFriend</b></li>
-            <li><a href="/logout">Logout</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/">Home</a></li>
-        </ul>
-    </nav>
+    {% include 'navbar.html' %}
 
     <div class="sidebar">
         <a></a>
@@ -22,6 +15,9 @@
         <a href="/matches">Matches</a>
         <a href="/allChats">Chat</a>
         <a class="active" href="/accountdetails">Account</a>
+        {% if isAdmin %}
+        <a href="/admin">Admin</a>
+        {% endif %}
     </div>
 
     <div class="rightsidebar">

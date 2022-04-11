@@ -9,22 +9,9 @@
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
 
-    <nav class="myNav">
-        <ul>
-            <li style="float:left"><b>TigerFriend</b></li>
-            <li><a href="/logout">Logout</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/">Home</a></li>
-        </ul>
-    </nav>
+    {% include 'navbar.html' %}
 
-    <div class="sidebar">
-        <a></a>
-        <a class="active">Survey</a>
-        <a>Matches<i class="fa fa-fw fa-lock"></i></a>
-        <a>Chat<i class="fa fa-fw fa-lock"></i></a>
-        <a>Account<i class="fa fa-fw fa-lock"></i></a>
-    </div>
+    {% include 'lockedsidebar.html' %}
 
     <div class="rightsidebar">
         <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />

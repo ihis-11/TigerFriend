@@ -4,6 +4,8 @@
 import sys
 
 from flask import Flask, request, make_response, render_template, redirect, url_for
+
+import admin
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
@@ -81,12 +83,15 @@ def match():
 
     matches = get_matches(user)
 
+    is_admin = admin.is_admin(user)
+
     html = render_template('matches.html',
                            overall=matches["overall"],
                            academic=matches["academic"],
                            ec=matches["ec"],
                            personality=matches["personality"],
                            opinion=matches["opinion"],
+                           isAdmin=is_admin
                            )
     response = make_response(html)
     return response
@@ -96,9 +101,11 @@ def match():
 @app.route('/allChats', methods=['GET'])
 def all_chats():
     # authenticated net id
+    user = auth.authenticate().strip()
     receiver = request.cookies.get('cur_receiver')
     bio = get_bio(receiver)
-    html = render_template('chat.html', receiver=receiver, bio_receiver=bio)
+    is_admin = admin.is_admin(user)
+    html = render_template('chat.html', receiver=receiver, bio_receiver=bio, isAdmin=is_admin)
     response = make_response(html)
     return response
 
@@ -312,12 +319,14 @@ def accountdetails():
         input_match_scores(user)
 
     data = get_year_major(user)
+    is_admin = admin.is_admin(user)
     html = render_template('accountdetails.html',
                            net_id=user,
                            year=data[0],
                            major=data[1],
                            username=username,
-                           bio=bio)
+                           bio=bio,
+                           isAdmin=is_admin)
     response = make_response(html)
     return response
 
@@ -359,6 +368,7 @@ def surveydetails():
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
 
-    html = render_template('surveydetails.html', questions=questions, answers=answers)
+    is_admin = admin.is_admin(user)
+    html = render_template('surveydetails.html', questions=questions, answers=answers, isAdmin=is_admin)
     response = make_response(html)
     return response
