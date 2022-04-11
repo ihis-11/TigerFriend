@@ -29,34 +29,48 @@
     </div>
 
     <div style="height:180px; padding-top: 50px; text-align: center;">
+        </br>
         <h1 style="font-size:80px; color:black; margin:10px;">You've got matches!</h1>
         </br>
-        </br>
-        <h1 style="font-size:30px; color:black; margin:10px;">Overall Matches</h1>
-        {% for i in range(overall|count) %}
-        <h2><a href="chat?receiver={{overall[i]}}">{{ (i+1)|string + ". " + overall[i] }}</a></h2>
-        {% endfor %}
-        </br>
-        <h1 style="font-size:30px; color:black; margin:10px;">Academic Matches</h1>
-        {% for i in range(academic|count) %}
-        <h2><a href="chat?receiver={{academic[i]}}">{{(i+1)|string + ". " + academic[i]}}</a></h2>
-        {% endfor %}
-        </br>
-        <h1 style="font-size:30px; color:black; margin:10px;">Extracurricular Matches</h1>
-        {% for i in range(ec|count) %}
-        <h2><a href="chat?receiver={{ec[i]}}">{{(i+1)|string + ". " + ec[i]}}</a></h2>
-        {% endfor %}
-        </br>
-        <h1 style="font-size:30px; color:black; margin:10px;">Personality Matches</h1>
-        {% for i in range(personality|count) %}
-        <h2><a href="chat?receiver={{personality[i]}}">{{(i+1)|string + ". " + personality[i]}}</a></h2>
-        {% endfor %}
-        </br>
-        <h1 style="font-size:30px; color:black; margin:10px;">Opinions Matches</h1>
-        {% for i in range(opinion|count) %}
-        <h2><a href="chat?receiver={{opinion[i]}}">{{(i+1)|string + ". " + opinion[i]}}</a></h2>
-        {% endfor %}
-        </br>
+        <div id="box">
+            <h1 style="font-size:30px; color:black; margin:10px;">Overall Matches</h1>
+            {% for i in range(overall|count) %}
+            <h2>{{ (i+1)|string + ". " + overall[i] + " "}}<a href="chat?receiver={{overall[i]}}"><button>Chat</button></a></h2>
+            {% endfor %}
+            </br>
+        </div>
+        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+        <div id="box2">
+            <h1 style="font-size:30px; color:black; margin:10px;">Academic Matches</h1>
+            {% for i in range(academic|count) %}
+            <h2>{{(i+1)|string + ". " + academic[i] + " "}}<a href="chat?receiver={{academic[i]}}"><button>Chat</button></a></h2>
+            {% endfor %}
+            </br>
+        </div>
+        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+        <div id="box">
+            <h1 style="font-size:30px; color:black; margin:10px;">Extracurricular Matches</h1>
+            {% for i in range(ec|count) %}
+            <h2>{{(i+1)|string + ". " + ec[i] + " "}}<a href="chat?receiver={{ec[i]}}"><button>Chat</button></a></h2>
+            {% endfor %}
+            </br>
+        </div>
+        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+        <div id="box2">
+            <h1 style="font-size:30px; color:black; margin:10px;">Personality Matches</h1>
+            {% for i in range(personality|count) %}
+            <h2>{{(i+1)|string + ". " + personality[i] + " "}}<a href="chat?receiver={{personality[i]}}"><button>Chat</button></a></h2>
+            {% endfor %}
+            </br>
+        </div>
+        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+        <div id="box">
+            <h1 style="font-size:30px; color:black; margin:10px;">Opinions Matches</h1>
+            {% for i in range(opinion|count) %}
+            <h2>{{(i+1)|string + ". " + opinion[i] + " "}}<a href="chat?receiver={{opinion[i]}}"><button>Chat</button></a></h2>
+            {% endfor %}
+            </br>
+        </div>
     </div>
 
 </body>

@@ -93,8 +93,9 @@ def matches():
 def all_chats():
     # authenticated net id
     user = auth.authenticate().strip()
-    
-    html = render_template('chatlist.html')
+    receiver = request.cookies.get('cur_receiver')
+    bio = get_bio(receiver)
+    html = render_template('chat.html', receiver=receiver, bio_receiver=bio)
     response = make_response(html)
     return response
 
@@ -177,7 +178,7 @@ def get_chats():
     messages = get_messages(chat_id)
 
     html = '<table class="table table-striped table-borderless"><tbody>'
-    for bundle in messages:
+    for bundle in reversed(messages):
         html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
         html += '<td>%s</td>' % bundle[1]
         html += '<td>sent at:%s</td></tr>' % bundle[2]
@@ -212,8 +213,13 @@ def account():
                               database="dd4c5lulvqtkld",
                               user="fpzzhwdkkymqrr",
                               password="b87ef0b3ae33d79f063d25d7ec8dde6871405d7d85b67ddff7f1ddaec3d00361") as connect:
-
             with connect.cursor() as cursor:
+                stmt = "SELECT username FROM account WHERE net_id = (%s)"
+                cursor.execute(stmt, [user])
+                row = cursor.fetchone()
+                if row is not None:
+                    return redirect(url_for("accountdetails", code=302))
+
                 stmt = "INSERT INTO rawdata (net_id, q1_response, q2_response, q3_response, q4_response, q5_response, \
                 q6_response, q7_response, q8_response, q9_response, q10_response, q11_response, q12_response, q13_response, \
                 q14_response, q15_response, q16_response, q17_response, q18_response, q19_response, q20_response, q21_response, \
