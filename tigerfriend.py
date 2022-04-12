@@ -331,7 +331,7 @@ def accountdetails():
                            net_id=user,
                            year=data[0],
                            major=data[1],
-                           res = res,
+                           res = data[2],
                            username=username,
                            bio=bio,
                            isAdmin=admin)

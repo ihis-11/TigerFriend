@@ -119,7 +119,7 @@ def get_bio(username):
         print("No user with this username", file=stderr)
 
 
-# returns year and major
+# returns year and major & res college
 def get_year_major(net_id):
     try:
         engine = create_engine(DATABASE_URL)
@@ -135,7 +135,7 @@ def get_year_major(net_id):
         engine.dispose()
         if not user:
             return ["unknown (" + net_id + " not found)", "?"]
-        return [user[0].class_year, user[0].major]
+        return [user[0].class_year, user[0].major, user[0].res_college]
     except Exception as ex:
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
