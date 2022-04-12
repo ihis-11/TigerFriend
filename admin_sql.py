@@ -22,12 +22,27 @@ def isAdmin(net_id):
 
         admin = (session.query(Administrators)
                 .filter(Administrators.net_id == net_id)
-                .all())
+                .one_or_none())
 
-        if admin != []:
+        if admin is not None:
             return True
         return False
 
     except Exception as ex:
         print(ex, file=stderr)
         print("Admin check failed", file=stderr)
+
+
+# unit test
+def main():
+    myself = 'collado'
+    print(myself + " is admin: " + str(isAdmin(myself)))
+    not_admin = 'notanadmin'
+    print(not_admin + " is admin: " + str(isAdmin(not_admin)))
+
+
+# ----------------------------------------------------------------------
+
+
+if __name__ == '__main__':
+    main()
