@@ -12,7 +12,8 @@ from sys import stderr
 
 DATABASE_URL = configs.DATABASE_URL
 
-def isAdmin(net_id):
+
+def is_admin(net_id):
     # connect to database
     try:
         engine = create_engine(DATABASE_URL)
@@ -21,8 +22,8 @@ def isAdmin(net_id):
         session = Session()
 
         admin = (session.query(Administrators)
-                .filter(Administrators.net_id == net_id)
-                .one_or_none())
+                 .filter(Administrators.net_id == net_id)
+                 .one_or_none())
 
         if admin is not None:
             return True
@@ -36,9 +37,9 @@ def isAdmin(net_id):
 # unit test
 def main():
     myself = 'collado'
-    print(myself + " is admin: " + str(isAdmin(myself)))
+    print(myself + " is admin: " + str(is_admin(myself)))
     not_admin = 'notanadmin'
-    print(not_admin + " is admin: " + str(isAdmin(not_admin)))
+    print(not_admin + " is admin: " + str(is_admin(not_admin)))
 
 
 # ----------------------------------------------------------------------
