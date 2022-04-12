@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/pages.css')}}">
+    <title>TigerFriend | Denied Access</title>
+</head>
+
+<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
+
+    {% include 'navbar.html' %}
+
+    <div class="sidebar">
+        <a></a>
+        <a href="/surveydetails">Survey</a>
+        <a href="/matches">Matches</a>
+        <a href="/allChats">Chat</a>
+        <a href="/accountdetails">Account</a>
+    </div>
+
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />
+    </div>
+
+    <div style="height:auto; padding-top: 70px; text-align: center;">
+        <h1 style="font-size:50px; color:black; margin:10px;">Denied Access</h1>
+        <h2 style="font-size:30px; color:black; margin:10px;">Only administrators may access this page.</h2>
+    </div>
+
+</body>
+
+</html>

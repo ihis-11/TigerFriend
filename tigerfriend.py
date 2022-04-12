@@ -372,3 +372,16 @@ def surveydetails():
     html = render_template('surveydetails.html', questions=questions, answers=answers, isAdmin=is_admin)
     response = make_response(html)
     return response
+
+# --------------------------------------------------------------------
+
+@app.route('/admin', methods=['GET'])
+def adminpage():
+    user = auth.authenticate().strip()
+    html = None
+    if admin.is_admin(user):
+        html = render_template('admin.html')
+    else:
+        html = render_template('deniedaccess.html')
+    response = make_response(html)
+    return response
