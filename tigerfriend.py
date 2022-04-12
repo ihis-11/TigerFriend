@@ -315,7 +315,7 @@ def accountdetails():
         major = ''
         res = ''
         if req.ok:
-            print(req.json())
+            # print(req.json())
             yr = '20' + str(req.json()['class_year'])
             major = req.json()['major_type']
             res = req.json()['res_college']
@@ -331,6 +331,7 @@ def accountdetails():
                            net_id=user,
                            year=data[0],
                            major=data[1],
+                           res = res,
                            username=username,
                            bio=bio,
                            isAdmin=admin)
