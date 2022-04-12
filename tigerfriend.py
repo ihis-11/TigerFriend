@@ -147,7 +147,8 @@ def chat():
 
     html = render_template('chat.html',
                            receiver=receiver,
-                           bio_receiver=receiver_bio)
+                           bio_receiver=receiver_bio,
+                           isAdmin=admin)
     response = make_response(html)
     response.set_cookie('cur_receiver', receiver)
     return response
