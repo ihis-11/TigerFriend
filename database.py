@@ -70,12 +70,14 @@ class Messages(Base):
     date_time = Column(DateTime, primary_key=True)
 
 
-# class Reports(Base):
-#     __tablename__ = 'reports'
-#     reporter_net_id = Column(String)
-#     reported_net_id = Column(String)
-#     type_of_report = Column(Integer)
-#     report_comment = Column(String)
+class Reports(Base):
+    __tablename__ = 'reports'
+    report_id = Column(Integer, primary_key=True)
+    reporter_net_id = Column(String)
+    reported_net_id = Column(String, primary_key=True)
+    type = Column(Integer)
+    comment = Column(String)
+    date_time = Column(DateTime)
 
 class Administrators(Base):
     __tablename__ = 'administrators'

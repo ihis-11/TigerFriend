@@ -1,17 +1,16 @@
 # --------------------------------------------------------------------
 # tigerfriend.py
 # --------------------------------------------------------------------
-import sys
-
 from flask import Flask, request, make_response, render_template, redirect, url_for
 
-import admin
+from admin_sql import isAdmin
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
 from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
+from reports_sql import get_all_reports
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -83,7 +82,7 @@ def match():
 
     matches = get_matches(user)
 
-    is_admin = admin.is_admin(user)
+    is_admin = isAdmin(user)
 
     html = render_template('matches.html',
                            overall=matches["overall"],
@@ -104,7 +103,7 @@ def all_chats():
     user = auth.authenticate().strip()
     receiver = request.cookies.get('cur_receiver')
     bio = get_bio(receiver)
-    is_admin = admin.is_admin(user)
+    is_admin = isAdmin(user)
     html = render_template('chat.html', receiver=receiver, bio_receiver=bio, isAdmin=is_admin)
     response = make_response(html)
     return response
@@ -319,7 +318,7 @@ def accountdetails():
         input_match_scores(user)
 
     data = get_year_major(user)
-    is_admin = admin.is_admin(user)
+    is_admin = isAdmin(user)
     html = render_template('accountdetails.html',
                            net_id=user,
                            year=data[0],
@@ -368,7 +367,53 @@ def surveydetails():
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
 
-    is_admin = admin.is_admin(user)
+    is_admin = isAdmin(user)
     html = render_template('surveydetails.html', questions=questions, answers=answers, isAdmin=is_admin)
     response = make_response(html)
     return response
+
+
+# --------------------------------------------------------------------
+
+@app.route('/admin', methods=['GET'])
+def admin():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    admin = isAdmin(user)
+
+    html = render_template('admin.html', isAdmin=admin)
+
+    response = make_response(html)
+    return response
+
+# --------------------------------------------------------------------
+
+@app.route('/getReports', methods=['GET'])
+def fetching_reports():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    admin = isAdmin(user)
+    if admin is False:
+        return None
+    
+    # fetching all the chats for the user
+    reports = get_all_reports()
+    if reports == []:
+        html = '<h2 style="font-size:20px; color:black; margin:10px;">There are no reports to view at this time</h2>'
+
+    html = ('<table class="table table-striped table-borderless">'
+            '<thead><tr><th>ReportID</th><th>Reported</th><th>Type</th>'
+            '<th>Comment</th></thead><tbody>')
+    for report in reports:
+        html += '<tr>'
+        pattern = '<td>%s</td>'
+        link = '<a href="viewreport?=%s">%s</a>' % (report[0], report[0])
+        html += pattern % link
+        html += pattern % report[1]
+        html += pattern % report[2]
+        html += pattern % report[3]
+        html += '</tr>'
+        
+
+    html += '</tbody></table>'
+    return make_response(html)

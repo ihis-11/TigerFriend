@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/pages.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="import" href="/path/to/template.html">
+    <title>TigerFriend | Account</title>
+</head>
+
+<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display"></body>>
+
+    {% include 'navbar.html' %}
+
+    <div class="sidebar">
+        <a></a>
+        <a href="/surveydetails">Survey</a>
+        <a href="/matches">Matches</a>
+        <a class="active" href="/allChats">Chat</a>
+        <a href="/accountdetails">Account</a>
+        {% if isAdmin %}
+        <a href="/admin">Admin</a>
+        {% endif %}
+    </div>
+
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />
+    </div>
+
+    <div style="height:auto; padding-top: 70px; text-align: center;">
+        <h1 style="font-size:50px; color:black; margin:10px;">Reports</h1>
+    </div>
+
+    <div style="height:10px; padding-top: 15px; text-align: center;">
+        <div id="box">
+            <br>
+            <h1 style="font-size:20px; color:black; margin:10px;">Here are all active reports:</h1>
+            <br>
+            <div id="allReports" class="container-fluid" style="width: 100%;"></div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script>
+        'use strict';
+
+        function handleResponse(response) {
+            $('#allReports').html(response);
+        }
+
+        let request = null
+
+        function getReports() {
+            let url = '/getReports'
+
+            if (request != null)
+                request.abort();
+
+            request = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse
+            });
+        }
+
+        function setup() {
+            getReports()
+        }
+
+        $('document').ready(setup);
+    </script>
+
+</body>
+</html>
