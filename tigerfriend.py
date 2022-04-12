@@ -4,6 +4,7 @@
 from flask import Flask, request, make_response, render_template, redirect, url_for
 
 from admin_sql import is_admin
+from html import escape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
@@ -21,7 +22,14 @@ app.secret_key = APP_SECRET_KEY
 
 import auth
 
+#-----------------------------------------------------------------------
 
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        return redirect(url, code=301)
+        
 # --------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
@@ -30,7 +38,6 @@ def home():
     html = render_template('home.html')
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 
@@ -72,7 +79,6 @@ def survey():
     response = make_response(html)
     return response
 
-
 # --------------------------------------------------------------------
 
 @app.route('/matches', methods=['GET'])
@@ -95,8 +101,8 @@ def match():
     response = make_response(html)
     return response
 
-
 # --------------------------------------------------------------------
+
 @app.route('/allChats', methods=['GET'])
 def all_chats():
     # authenticated net id
@@ -108,8 +114,8 @@ def all_chats():
     response = make_response(html)
     return response
 
-
 # --------------------------------------------------------------------
+
 @app.route('/getChats', methods=['GET'])
 def fetching_chats():
     # authenticated net id
@@ -129,8 +135,8 @@ def fetching_chats():
     html += '</tbody></table>'
     return make_response(html)
 
-
 # --------------------------------------------------------------------
+
 @app.route('/chat', methods=['GET'])
 def chat():
     # authenticated net id
@@ -146,21 +152,22 @@ def chat():
     response.set_cookie('cur_receiver', receiver)
     return response
 
-
 # --------------------------------------------------------------------
+
 @app.route('/sendchat', methods=['GET'])
 def send_message():
     # authenticated net id
     user = auth.authenticate().strip()
     receiver = request.cookies.get('cur_receiver')
     chat_sent = request.args.get('message')
+    message = escape(chat_sent) # handling the attacks on the html pages
 
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)
 
     # when the user sends a non-empty message
     if chat_sent.strip() != "":
-        send_chat(chat_id, user, chat_sent)
+        send_chat(chat_id, user, message)
 
     # getting all the messages then
     messages = get_messages(chat_id)
@@ -174,8 +181,8 @@ def send_message():
     html += '</tbody></table>'
     return make_response(html)
 
-
 # --------------------------------------------------------------------
+
 @app.route('/getmessages', methods=['GET'])
 def get_chats():
     # authenticated net id
@@ -199,14 +206,15 @@ def get_chats():
 
 
 # --------------------------------------------------------------------
+
 @app.route('/about', methods=['GET'])
 def about():
     html = render_template('about.html')
     response = make_response(html)
     return response
 
-
 # --------------------------------------------------------------------
+
 @app.route('/account', methods=['GET'])
 def account():
     # authenticated net id
@@ -258,7 +266,6 @@ def account():
     response = make_response(html)
     return response
 
-
 # --------------------------------------------------------------------
 
 @app.route('/accountdetails', methods=['GET'])
@@ -271,8 +278,8 @@ def accountdetails():
     bio = ""
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
-        username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
-        bio = request.args.get('bio')
+        username = escape(request.args.get('username'))  # DEAL WITH EMPTY USERNAME INPUT HERE
+        bio = escape(request.args.get('bio'))
     else:
         username = account_info[0]
         bio = account_info[1]
@@ -329,7 +336,6 @@ def accountdetails():
     response = make_response(html)
     return response
 
-
 # --------------------------------------------------------------------
 
 @app.route('/surveydetails', methods=['GET'])
@@ -371,7 +377,6 @@ def surveydetails():
     html = render_template('surveydetails.html', questions=questions, answers=answers, isAdmin=admin)
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 
