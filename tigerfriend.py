@@ -5,7 +5,7 @@ import sys
 
 from flask import Flask, request, make_response, render_template, redirect, url_for
 
-import admin
+import admin_sql
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
@@ -83,7 +83,7 @@ def match():
 
     matches = get_matches(user)
 
-    is_admin = admin.is_admin(user)
+    is_admin = admin_sql.is_admin(user)
 
     html = render_template('matches.html',
                            overall=matches["overall"],
@@ -104,7 +104,7 @@ def all_chats():
     user = auth.authenticate().strip()
     receiver = request.cookies.get('cur_receiver')
     bio = get_bio(receiver)
-    is_admin = admin.is_admin(user)
+    is_admin = admin_sql.is_admin(user)
     html = render_template('chat.html', receiver=receiver, bio_receiver=bio, isAdmin=is_admin)
     response = make_response(html)
     return response
@@ -319,7 +319,7 @@ def accountdetails():
         input_match_scores(user)
 
     data = get_year_major(user)
-    is_admin = admin.is_admin(user)
+    is_admin = admin_sql.is_admin(user)
     html = render_template('accountdetails.html',
                            net_id=user,
                            year=data[0],
@@ -368,7 +368,7 @@ def surveydetails():
     except (Exception, psycopg2.Error) as ex:
         print(ex, file=stderr)
 
-    is_admin = admin.is_admin(user)
+    is_admin = admin_sql.is_admin(user)
     html = render_template('surveydetails.html', questions=questions, answers=answers, isAdmin=is_admin)
     response = make_response(html)
     return response
@@ -379,7 +379,7 @@ def surveydetails():
 def adminpage():
     user = auth.authenticate().strip()
     html = None
-    if admin.is_admin(user):
+    if admin_sql.is_admin(user):
         html = render_template('admin.html')
     else:
         html = render_template('deniedaccess.html')
