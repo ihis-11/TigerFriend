@@ -78,7 +78,8 @@
 
             request = $.ajax({
                 type: 'GET',
-                url: url
+                url: url,
+                success: refreshPage()
             });
         }
 
