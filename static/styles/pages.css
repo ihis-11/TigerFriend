@@ -189,3 +189,14 @@
   left: 15vw;
   right: 15vw;
 }
+
+#box3 {
+  border-radius: 20px; 
+  width: auto; 
+  height: auto; 
+	background:orange;
+  position:absolute;
+  object-fit: contain;
+  left: 15vw;
+  right: 15vw;
+}
