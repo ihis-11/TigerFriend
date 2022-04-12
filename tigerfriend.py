@@ -5,7 +5,7 @@ from flask import Flask, request, make_response, render_template, redirect, url_
 
 from admin_sql import is_admin
 from html import escape
-from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio
+from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
@@ -324,6 +324,9 @@ def accountdetails():
 
         api_account_creation(user, yr, major, res, username, bio)
         input_match_scores(user)
+
+    if request.args.get('newbio') is not None:
+        update_bio(user, request.args.get('newbio'))
 
     data = get_year_major(user)
     admin = is_admin(user)
