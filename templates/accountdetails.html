@@ -49,7 +49,7 @@
             <br>
         </div>
 
-        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br>
 
         <div id="box3">
             <br>
@@ -65,11 +65,21 @@
     <script>
         'use strict';
 
+        let request = null
+
         function updateBio() {
             let newBio = $('#updateBio').val();
             newBio = encodeURIComponent(newBio);
             let url = '/accountdetails?newbio=' + newBio;
             $("#updateBio").val('');
+
+            if (request != null)
+                request.abort();
+
+            request = $.ajax({
+                type: 'GET',
+                url: url
+            });
         }
 
         function setup() {
