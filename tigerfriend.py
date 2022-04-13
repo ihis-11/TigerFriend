@@ -171,16 +171,10 @@ def send_message():
         send_chat(chat_id, user, message)
 
     # getting all the messages then
-    messages = get_messages(chat_id)
+    messages = reversed(get_messages(chat_id))
 
-    html = '<table class="table table-striped table-borderless"><tbody>'
-    for bundle in reversed(messages):
-        html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
-        html += '<td>%s</td>' % bundle[1]
-        html += '<td>sent at:%s</td></tr>' % bundle[2]
-
-    html += '</tbody></table>'
-    return make_response(html)
+    return make_response(render_template('messages.html', 
+    messages=messages, receiver=receiver))
 
 # --------------------------------------------------------------------
 
@@ -194,16 +188,10 @@ def get_chats():
     chat_id = get_chat_id(user, receiver)
 
     # refreshing the messages
-    messages = get_messages(chat_id)
+    messages = reversed(get_messages(chat_id))
 
-    html = '<table class="table table-striped table-borderless"><tbody>'
-    for bundle in reversed(messages):
-        html += '<tr><td><strong>%s:</strong></td>' % bundle[0]
-        html += '<td>%s</td>' % bundle[1]
-        html += '<td>sent at:%s</td></tr>' % bundle[2]
-
-    html += '</tbody></table>'
-    return make_response(html)
+    return make_response(render_template('messages.html', 
+    messages=messages, receiver=receiver))
 
 
 # --------------------------------------------------------------------
