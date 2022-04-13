@@ -203,6 +203,9 @@
     margin:0;
     list-style-type:none;
     overflow-y:scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column-reverse;
     height:68vh;
     border-top:2px solid #fff;
     border-bottom:2px solid #fff;
