@@ -163,7 +163,7 @@
   
   main{
     width:61vw;
-    height:93vh;
+    height:94vh;
     display:inline-block;
     font-size:15px;
     vertical-align:top;
@@ -186,7 +186,7 @@
     overflow-x: hidden;
     display: flex;
     flex-direction: column-reverse;
-    height:73vh;
+    height:70vh;
     border-top:2px solid #fff;
     border-bottom:2px solid #fff;
   }
@@ -251,6 +251,6 @@
     color:#6fbced;
     display:inline-block;
     width:5%;
-    margin-top:5px;
+    margin-top:1vh;
     padding-left: 1vw;
   }
