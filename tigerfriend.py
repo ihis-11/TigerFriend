@@ -127,13 +127,9 @@ def fetching_chats():
         html = ''
         return make_response(html)
 
-    html = '<table class="table table-striped"><tbody>'
-    for chat in open_chats:
-        link = '<a href="chat?receiver=%s">%s</a>' % (chat, chat)
-        html += '<tr><td>%s</td></tr>' % link
+    return make_response(render_template('chatusers.html', 
+    open_chats=open_chats))
 
-    html += '</tbody></table>'
-    return make_response(html)
 
 # --------------------------------------------------------------------
 

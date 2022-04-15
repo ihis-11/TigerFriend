@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/chat.css')}}">
+        <title>TigerFriend | Chat</title>
+    </head>
+
+    <body>
+        <br>
+        {% for chat in open_chats: %} 
+            <ul>
+                <a href="chat?receiver={{chat}}">
+                    <li>
+                    <div>
+                        <h2>{{chat}}</h2>
+                    </div>
+                    </li>
+                </a>
+            </ul>
+        {% endfor %}
+    </body>
+</html>

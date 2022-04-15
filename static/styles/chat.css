@@ -138,51 +138,32 @@
     font-size:15px;
     vertical-align:top;
   }
-  
-  aside header{
-    padding:30px 20px;
-  }
-  aside input{
-    width:100%;
-    height:5vh;
-    line-height:50px;
-    padding:0 50px 0 20px;
-    background-color:#5e616a;
-    border:none;
-    border-radius:3px;
-    color:#fff;
-    background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
-    background-repeat:no-repeat;
-    background-position:130px;
-    background-size:40px;
-  }
-  aside input::placeholder{
-    color:#fff;
-  }
+
   aside ul{
+    padding-top: 1vh;
     padding-left:0;
     margin:0;
     list-style-type:none;
     overflow-y:scroll;
-    height:690px;
   }
   aside li{
-    padding:10px 0;
+    border: solid #dcdfe2;
   }
   aside li:hover{
-    background-color:#5e616a;
+    background-color:#dcdfe2;
+  }
+
+  aside li div{
+    padding:3vh 0;
+    display:inline-block;
+    vertical-align:top;
   }
   
-  .green{
-    background-color:#58b666;
-  }
-  .orange{
-    background-color:#ff725d;
-  }
-  .blue{
-    background-color:#6fbced;
-    margin-right:0;
-    margin-left:7px;
+  aside li h2{
+    font-size:1vw;
+    color:rgb(0, 0, 0);
+    font-weight:bold;
+    margin:0;
   }
   
   main header{
