@@ -140,6 +140,9 @@ def fetching_chats():
 @app.route('/chat', methods=['GET'])
 def chat():
     # authenticated net id
+    user = auth.authenticate().strip()
+
+    # authenticated net id
     receiver = request.args.get('receiver')
 
     # fetch the bio of the receiver
