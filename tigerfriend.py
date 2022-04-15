@@ -145,6 +145,8 @@ def chat():
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
 
+    admin = is_admin(user)
+    
     html = render_template('chat.html',
                            receiver=receiver,
                            bio_receiver=receiver_bio,
