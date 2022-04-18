@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -60,6 +60,7 @@ class Chats(Base):
     net_id1 = Column(String)
     net_id2 = Column(String)
     chat_id = Column(String, primary_key=True)
+    latest_date_time = Column(DateTime)
 
 
 class Messages(Base):
@@ -68,6 +69,7 @@ class Messages(Base):
     sender_id = Column(String)
     message_content = Column(String)
     date_time = Column(DateTime, primary_key=True)
+    is_read = Column(Boolean)
 
 
 class Reports(Base):

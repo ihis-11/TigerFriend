@@ -7,7 +7,7 @@ import random
 from datetime import datetime
 from sys import stderr
 
-from sqlalchemy import create_engine, desc
+from sqlalchemy import create_engine, desc, asc
 from sqlalchemy.orm import sessionmaker
 
 import configs
@@ -29,7 +29,9 @@ def get_all_chats(user):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        chats = (session.query(Chats).filter((Chats.net_id1 == user) | (Chats.net_id2 == user)).all())
+        chats = (session.query(Chats).filter((Chats.net_id1 == user) | (Chats.net_id2 == user))
+                 .order_by(desc(Chats.latest_date_time))
+                 .all())
 
         other_ids = []
         for chat in chats:
@@ -147,9 +149,15 @@ def send_chat(chat_id, sender, message):
         new_message = Messages(chat_id=chat_id,
                                sender_id=sender,
                                message_content=message,
-                               date_time=now)
+                               date_time=now,
+                               is_read=False)
 
         session.add(new_message)
+
+        # update latest timestamp
+        chat = session.query(Chats).filter(Chats.chat_id == chat_id)
+        chat.latest_date_time = now
+
         session.commit()
 
         session.close()
@@ -164,27 +172,31 @@ def send_chat(chat_id, sender, message):
 
 
 # get all message history from a given chat_id
-def get_messages(chat_id):
+# UPDATE: marks messages as read depending on user (net_id) seeing messages
+def get_messages(chat_id, user):
     try:
         engine = create_engine(DATABASE_URL)
 
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        chats = (session.query(Messages)
-                 .filter(Messages.chat_id == chat_id)
-                 .order_by(desc(Messages.date_time))
-                 .all())
+        msgs = (session.query(Messages)
+                .filter(Messages.chat_id == chat_id)
+                .order_by(desc(Messages.date_time))
+                .all())
 
-        chat_history = []
-        for chat in chats:
-            user = get_user_bio(chat.sender_id)[0]
-            chat_history.append((user, str(chat.message_content), str(chat.date_time)))
+        msg_history = []
+        for msg in msgs:
+            sender = get_user_bio(msg.sender_id)[0]
+            if user != sender:
+                msg.is_read = True
+            msg_history.append((sender, str(msg.message_content), str(msg.date_time)))
 
+        session.commit()
         session.close()
         engine.dispose()
 
-        return chat_history
+        return msg_history
 
     except Exception as ex:
         session.close()
@@ -194,8 +206,59 @@ def get_messages(chat_id):
         return "unknown (database connection failed)"
 
 
+# returns the most recent message in a given chat
+def get_most_recent_message(chat_id):
+    try:
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        chat = (session.query(Messages)
+                .filter(Messages.chat_id == chat_id)
+                .order_by(desc(Messages.date_time))
+                .first())
+
+        session.close()
+        engine.dispose()
+
+        if chat is not None:
+            user = get_user_bio(chat.sender_id)[0]
+            chat = (user, str(chat.message_content), str(chat.date_time))
+        return chat
+
+    except Exception as ex:
+        session.close()
+        engine.dispose()
+        print(ex, file=stderr)
+        print("Data base connection failed", file=stderr)
+        return "unknown (database connection failed)"
+
+
+# returns true or false if a user (net_id) has unread messages in a given chat
+def is_unread(chat_id, user):
+    engine = create_engine(DATABASE_URL)
+
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    chat = (session.query(Messages)
+            .filter(Messages.chat_id == chat_id)
+            .filter(Messages.sender_id != user)
+            .filter(not Messages.is_read)
+            .first())
+
+    session.close()
+    engine.dispose()
+
+    if chat is None:
+        return False
+    return True
+
+
 # unit test
 def main():
+    print("USER'S CHAT TESTS:")
     myself = 'collado'
     chats = get_all_chats(myself)
     print(chats)
@@ -205,10 +268,30 @@ def main():
     print(id2)
     send_chat(id1, myself, 'hello person 1')
     send_chat(id2, myself, 'hello person 2')
-    msgs1 = get_messages(id1)
+    msgs1 = get_messages(id1, myself)
     print(msgs1)
-    msgs2 = get_messages(id2)
+    msgs2 = get_messages(id2, myself)
     print(msgs2)
+    unread1 = is_unread(id1, myself)
+    print("Chat 1 unread? " + str(unread1))
+    unread2 = is_unread(id2, myself)
+    print("Chat 2 unread? " + str(unread2))
+
+    print("MOST RECENT MSG TESTS: ")
+    engine = create_engine(DATABASE_URL)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    chats = session.query(Chats).all()
+
+    for chat in chats:
+        msg = get_most_recent_message(chat.chat_id)
+        if msg is not None:
+            print(str(chat.chat_id) + ": " + str(msg[1]))
+            chat.latest_date_time = msg[2]
+
+    session.commit()
+    session.close()
+    engine.dispose()
 
 
 # ----------------------------------------------------------------------

@@ -22,14 +22,16 @@ app.secret_key = APP_SECRET_KEY
 
 import auth
 
-#-----------------------------------------------------------------------
+
+# -----------------------------------------------------------------------
 
 @app.before_request
 def before_request():
     if not request.is_secure:
         url = request.url.replace('http://', 'https://', 1)
         return redirect(url, code=301)
-        
+
+
 # --------------------------------------------------------------------
 
 @app.route('/', methods=['GET'])
@@ -38,6 +40,7 @@ def home():
     html = render_template('home.html')
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -79,6 +82,7 @@ def survey():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 
 @app.route('/matches', methods=['GET'])
@@ -101,6 +105,7 @@ def match():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 
 @app.route('/allChats', methods=['GET'])
@@ -113,6 +118,7 @@ def all_chats():
     html = render_template('chat.html', receiver=receiver, bio_receiver=bio, isAdmin=admin)
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -127,8 +133,8 @@ def fetching_chats():
         html = ''
         return make_response(html)
 
-    return make_response(render_template('chatusers.html', 
-    open_chats=open_chats))
+    return make_response(render_template('chatusers.html',
+                                         open_chats=open_chats))
 
 
 # --------------------------------------------------------------------
@@ -145,7 +151,7 @@ def chat():
     receiver_bio = get_bio(receiver)
 
     admin = is_admin(user)
-    
+
     html = render_template('chat.html',
                            receiver=receiver,
                            bio_receiver=receiver_bio,
@@ -153,6 +159,7 @@ def chat():
     response = make_response(html)
     response.set_cookie('cur_receiver', receiver)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -162,7 +169,7 @@ def send_message():
     user = auth.authenticate().strip()
     receiver = request.cookies.get('cur_receiver')
     chat_sent = request.args.get('message')
-    message = escape(chat_sent) # handling the attacks on the html pages
+    message = escape(chat_sent)  # handling the attacks on the html pages
 
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)
@@ -172,10 +179,11 @@ def send_message():
         send_chat(chat_id, user, message)
 
     # getting all the messages then
-    messages = reversed(get_messages(chat_id))
+    messages = reversed(get_messages(chat_id, user))
 
-    return make_response(render_template('messages.html', 
-    messages=messages, receiver=receiver))
+    return make_response(render_template('messages.html',
+                                         messages=messages, receiver=receiver))
+
 
 # --------------------------------------------------------------------
 
@@ -189,10 +197,10 @@ def get_chats():
     chat_id = get_chat_id(user, receiver)
 
     # refreshing the messages
-    messages = reversed(get_messages(chat_id))
+    messages = reversed(get_messages(chat_id, user))
 
-    return make_response(render_template('messages.html', 
-    messages=messages, receiver=receiver))
+    return make_response(render_template('messages.html',
+                                         messages=messages, receiver=receiver))
 
 
 # --------------------------------------------------------------------
@@ -202,6 +210,7 @@ def about():
     html = render_template('about.html')
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -255,6 +264,7 @@ def account():
     html = render_template('account.html', error_msg=error_msg)
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -323,12 +333,13 @@ def accountdetails():
                            net_id=user,
                            year=data[0],
                            major=data[1],
-                           res = data[2],
+                           res=data[2],
                            username=username,
                            bio=bio,
                            isAdmin=admin)
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -372,6 +383,7 @@ def surveydetails():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 
 @app.route('/admin', methods=['GET'])
@@ -387,6 +399,7 @@ def admin():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 
 @app.route('/getReports', methods=['GET'])
@@ -396,7 +409,7 @@ def fetching_reports():
     admin = is_admin(user)
     if admin is False:
         return None
-    
+
     # fetching all the chats for the user
     reports = get_all_reports()
     if reports == []:
@@ -414,7 +427,6 @@ def fetching_reports():
         html += pattern % report[2]
         html += pattern % report[3]
         html += '</tr>'
-        
 
     html += '</tbody></table>'
     return make_response(html)
