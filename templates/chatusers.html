@@ -8,10 +8,18 @@
         <br>
         {% for chat in open_chats: %} 
             <ul>
-                <a href="chat?receiver={{chat}}">
+                <a href="chat?receiver={{chat[1]}}">
                     <li>
                     <div>
-                        <h2>{{chat}}</h2>
+                        {% if chat[2] %}
+                        <h2>{{chat[1]}}</h2>
+                        <h3 style="color: blue;">Say something!</h3>
+                        {% elif chat[3] %}
+                        <h2>{{chat[1]}}</h2>
+                        <h3 style="color: red;">Unread Messages!</h3>
+                        {% else %}
+                        <h2>{{chat[1]}}</h2>
+                        {% endif %}
                     </div>
                     </li>
                 </a>

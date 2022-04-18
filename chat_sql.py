@@ -19,8 +19,8 @@ DATABASE_URL = configs.DATABASE_URL
 
 # --------------------------------------------------------------------
 
-# Takes user (net_id) and returns the list of usernames they have open
-# chats with. SHOULDN'T RETURN DUPLICATES
+# Takes user (net_id) and returns a list of chat info for each open chat they have.
+# UPDATE: List format = [(chat_id, receiver, is_empty, is_unread), ...]
 def get_all_chats(user):
     try:
         # connect to database
@@ -33,23 +33,21 @@ def get_all_chats(user):
                  .order_by(desc(Chats.latest_date_time))
                  .all())
 
-        other_ids = []
+        chat_list = []
         for chat in chats:
-            if chat.net_id1 == user:
-                other_ids.append(chat.net_id2)
-            else:
-                other_ids.append(chat.net_id1)
-
-        other_users = []
-        for other in other_ids:
-            users = (session.query(Account)
-                     .filter(Account.net_id == other)
-                     .all())
-            other_users.append(str(users[0].username))
+            chat_id = str(chat.chat_id)
+            other_id = chat.net_id1
+            if other_id == user:
+                other_id = chat.net_id2
+            receiver = (session.query(Account)
+                        .filter(Account.net_id == other_id)
+                        .first())
+            receiver = str(receiver.username)
+            chat_list.append((chat_id, receiver, is_empty(chat_id), is_unread(chat_id, user)))
 
         session.close()
         engine.dispose()
-        return other_users
+        return chat_list
 
     except Exception as ex:
         session.close()
@@ -155,11 +153,10 @@ def send_chat(chat_id, sender, message):
         session.add(new_message)
 
         # update latest timestamp
-        chat = session.query(Chats).filter(Chats.chat_id == chat_id)
+        chat = (session.query(Chats).filter(Chats.chat_id == chat_id).first())
         chat.latest_date_time = now
 
         session.commit()
-
         session.close()
         engine.dispose()
 
@@ -187,9 +184,10 @@ def get_messages(chat_id, user):
 
         msg_history = []
         for msg in msgs:
-            sender = get_user_bio(msg.sender_id)[0]
+            sender = msg.sender_id
             if user != sender:
                 msg.is_read = True
+            sender = get_user_bio(sender)[0]
             msg_history.append((sender, str(msg.message_content), str(msg.date_time)))
 
         session.commit()
@@ -245,7 +243,7 @@ def is_unread(chat_id, user):
     chat = (session.query(Messages)
             .filter(Messages.chat_id == chat_id)
             .filter(Messages.sender_id != user)
-            .filter(not Messages.is_read)
+            .filter(Messages.is_read == 'false')
             .first())
 
     session.close()
@@ -254,6 +252,25 @@ def is_unread(chat_id, user):
     if chat is None:
         return False
     return True
+
+
+# returns true or false if a chat has no messages
+def is_empty(chat_id):
+    engine = create_engine(DATABASE_URL)
+
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    chat = (session.query(Messages)
+            .filter(Messages.chat_id == chat_id)
+            .first())
+
+    session.close()
+    engine.dispose()
+
+    if chat is None:
+        return True
+    return False
 
 
 # unit test
@@ -292,7 +309,6 @@ def main():
     session.commit()
     session.close()
     engine.dispose()
-
 
 # ----------------------------------------------------------------------
 
