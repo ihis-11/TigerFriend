@@ -9,6 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 import configs
 from database import Banned
+from datetime import datetime, timedelta
 from sys import stderr
 
 DATABASE_URL = configs.DATABASE_URL
@@ -29,7 +30,13 @@ def is_banned(net_id):
         engine.dispose()
 
         if ban is not None:
-            return True
+            ban_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
+            now = datetime.now()
+            if now < ban_time:
+                return True
+            else:
+                delete_ban(net_id)
+                return False
         return False
 
     except Exception as ex:
@@ -49,10 +56,12 @@ def add_ban(banned, time):
                  .one_or_none())
 
         if ban is not None:
-            ban.days_left += time
-            
+            old_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
+            ban.date_unbanned = old_time + timedelta(days=time)
+
         else:
-            new_ban = Banned(net_id=banned, days_left=time)
+            new_time = (datetime.now() + timedelta(days=time)).strftime("%Y-%m-%d %H:%M:%S")
+            new_ban = Banned(net_id=banned, date_unbanned=str(new_time))
             session.add(new_ban)
 
         session.commit()
@@ -63,7 +72,7 @@ def add_ban(banned, time):
         print(ex, file=stderr)
         print("Banned add failed", file=stderr)
 
-def get_days(net_id):
+def get_time(net_id):
     try:
         engine = create_engine(DATABASE_URL)
 
@@ -77,8 +86,27 @@ def get_days(net_id):
         session.close()
         engine.dispose()
 
-        return ban.days_left
+        return ban.date_unbanned
 
     except Exception as ex:
         print(ex, file=stderr)
         print("Banned add failed", file=stderr)
+
+def delete_ban(net_id):
+    try:
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        (session.query(Banned)
+                .filter(Banned.net_id == net_id)
+                .delete())
+
+        session.commit()
+        session.close()
+        engine.dispose()
+
+    except Exception as ex:
+        print(ex, file=stderr)
+        print("Banned delete failed", file=stderr)

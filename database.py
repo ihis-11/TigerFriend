@@ -99,4 +99,4 @@ class Survey(Base):
 class Banned(Base):
     __tablename__ = 'banned'
     net_id = Column(String, primary_key=True)
-    days_left = Column(Integer)
+    date_unbanned(String)
