@@ -96,3 +96,8 @@ class Survey(Base):
     answer3 = Column(String)
     answer4 = Column(String)
     answer5 = Column(String)
+
+class Banned(Base):
+    __tablename__ = 'banned'
+    net_id = Column(String, primary_key=True)
+    days_left = Column(Integer)

@@ -52,7 +52,26 @@ def get_all_reports():
         reports = (session.query(Reports.report_id, Reports.reported_net_id, Reports.type, Reports.comment)
                     .all())
                     
+        session.close()
+        engine.dispose()
+
         return reports
+
+    except Exception as ex:
+        print(ex, file=stderr)
+        exit(1)
+
+def dismiss_report(chat_id):
+    try:
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        session.delete(Reports.report_id == chat_id)
+
+        session.close()
+        engine.dispose()
 
     except Exception as ex:
         print(ex, file=stderr)
