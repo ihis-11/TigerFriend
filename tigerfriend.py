@@ -25,11 +25,11 @@ import auth
 
 # -----------------------------------------------------------------------
 
-# @app.before_request
-# def before_request():
-#     if not request.is_secure:
-#         url = request.url.replace('http://', 'https://', 1)
-#         return redirect(url, code=301)
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        return redirect(url, code=301)
 
 # --------------------------------------------------------------------
 
@@ -102,7 +102,7 @@ def reporting():
     if reported is not None:
         chat_id = get_chat_id(user, reported)
         # if there is already a report in the database
-        if report_exist(chat_id) is None:
+        if report_exist(chat_id) is not None:
             error_msg = "You or the other user already reported you"
             html = render_template('reported.html', error_msg=error_msg)
             return make_response(html)
