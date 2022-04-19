@@ -50,7 +50,7 @@ def get_report(rep_id):
                  .filter(Reports.report_id == rep_id)
                  .one_or_none())
                 
-        rep = [report.reported_net_id, report.reporter_net_id, report.type, report.comment]
+        rep = [report.reported_net_id, report.reporter_net_id, report.comment]
 
         session.commit()
         session.close()
