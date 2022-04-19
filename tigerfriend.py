@@ -220,7 +220,7 @@ def send_message():
         return response
     receiver = request.cookies.get('cur_receiver')
     chat_sent = request.args.get('message')
-    message = escape(chat_sent)  # handling the attacks on the html pages
+    message = chat_sent  # handling the attacks on the html pages
 
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)
