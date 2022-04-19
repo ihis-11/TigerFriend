@@ -10,7 +10,12 @@
     {% include 'navbar.html' %}
 
     <div class="sidebar">
-        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image2" />
+        <br>
+        <a href="/surveydetails">Survey</a>
+        <a href="/matches">Matches</a>
+        <a class="active" href="/allChats">Chat</a>
+        <a href="/accountdetails">Account</a> {% if isAdmin %}
+        <a href="/admin">Admin</a> {% endif %}
     </div>
 
     <div class="rightsidebar">
