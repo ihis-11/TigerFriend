@@ -98,19 +98,20 @@ def reporting():
         return response
     reported = request.cookies.get('cur_receiver')
     reportingmsg = request.args.get("reportmsg")
+    admin = is_admin(user)
 
     if reported is not None:
         chat_id = get_chat_id(user, reported)
         # if there is already a report in the database
         if report_exist(chat_id) is not None:
             error_msg = "This chat has already been reported and is under review."
-            html = render_template('reported.html', error_msg=error_msg)
+            html = render_template('reported.html', error_msg=error_msg, isAdmin=admin)
             return make_response(html)
         else:
             reported_id = get_netid(reported)
             report_user(user, reported_id, escape(reportingmsg))
     
-    return make_response(render_template('reported.html', reported=reported))
+    return make_response(render_template('reported.html', reported=reported, isAdmin=admin))
 
 # --------------------------------------------------------------------
 @app.route('/matches', methods=['GET'])
@@ -220,7 +221,7 @@ def send_message():
         return response
     receiver = request.cookies.get('cur_receiver')
     chat_sent = request.args.get('message')
-    message = escape(chat_sent)  # handling the attacks on the html pages
+    message = chat_sent  # handling the attacks on the html pages
 
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)

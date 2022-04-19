@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import configs
-from database import Account
+from database import Account, RawData
 
 DATABASE_URL = configs.DATABASE_URL
 
@@ -166,12 +166,24 @@ def get_user_bio(net_id):
         return ["unknown (database connection failed)", "unknown"]
 
 
-def delete():
+def clear_account(net_id):
     try:
         engine = create_engine(DATABASE_URL)
 
         Session = sessionmaker(bind=engine)
         session = Session()
+
+        # (session.query(Account)
+        #         .filter(Account.net_id == net_id)
+        #         .delete())
+        # session.commit()
+
+        (session.query(RawData)
+                .filter(RawData.net_id == net_id)
+                .delete())
+        session.commit()
+
+        (session.query())
 
         session.close()
         engine.dispose()
