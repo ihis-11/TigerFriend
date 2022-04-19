@@ -14,10 +14,8 @@
         <a href="/surveydetails">Survey</a>
         <a href="/matches">Matches</a>
         <a href="/allChats">Chat</a>
-        <a class="active" href="/accountdetails">Account</a>
-        {% if isAdmin %}
-        <a href="/admin">Admin</a>
-        {% endif %}
+        <a class="active" href="/accountdetails">Account</a> {% if isAdmin %}
+        <a href="/admin">Admin</a> {% endif %}
     </div>
 
     <div class="rightsidebar">
@@ -38,7 +36,7 @@
             <h1 style="font-size:20px; color:black; margin:10px;">Your res college is: {{res}}</h1>
             <br>
         </div>
-        
+
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
         <div id="box2">
@@ -50,7 +48,7 @@
         </div>
 
         <br><br><br><br><br><br><br><br><br><br>
-        <br style="line-height: 10px"/>
+        <br style="line-height: 10px" />
 
         <div id="box3">
             <br>
@@ -70,6 +68,10 @@
 
         let request = null
 
+        function handleResponse() {
+            window.location.reload();
+        }
+
         function updateBio() {
             let newBio = $('#updateBio').val();
             newBio = encodeURIComponent(newBio);
@@ -81,16 +83,16 @@
 
             request = $.ajax({
                 type: 'GET',
-                url: url
+                url: url,
+                success: handleResponse
             });
         }
-        
+
         function setup() {
-            $('#bioUpdateButton').click(updateBio);  
+            $('#bioUpdateButton').click(updateBio);
         }
 
         $('document').ready(setup);
-
     </script>
 
 
