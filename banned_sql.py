@@ -10,6 +10,7 @@ from sqlalchemy import create_engine
 import configs
 from database import Banned
 from datetime import datetime, timedelta
+from pytz import timezone
 from sys import stderr
 
 DATABASE_URL = configs.DATABASE_URL
@@ -31,7 +32,7 @@ def is_banned(net_id):
 
         if ban is not None:
             ban_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
-            now = datetime.now()
+            now = datetime.now(timezone('US/Eastern'))
             if now < ban_time:
                 return True
             else:
@@ -57,13 +58,13 @@ def add_ban(banned, time):
 
         if ban is not None:
             old_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
-            if old_time < datetime.now():
-                old_time = datetime.now()
+            if old_time < datetime.now(timezone('US/Eastern')):
+                old_time = datetime.now(timezone('US/Eastern'))
 
             ban.date_unbanned = (old_time + timedelta(days=time)).strftime("%Y-%m-%d %H:%M:%S")
 
         else:
-            new_time = (datetime.now() + timedelta(days=time)).strftime("%Y-%m-%d %H:%M:%S")
+            new_time = (datetime.now(timezone('US/Eastern')) + timedelta(days=time)).strftime("%Y-%m-%d %H:%M:%S")
             new_ban = Banned(net_id=banned, date_unbanned=str(new_time))
             session.add(new_ban)
 
