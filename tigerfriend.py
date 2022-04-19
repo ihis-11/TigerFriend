@@ -3,14 +3,14 @@
 # --------------------------------------------------------------------
 from flask import Flask, request, make_response, render_template, redirect, url_for
 
-from admin_sql import is_admin
+from admin_sql import is_admin, get_report
 from html import escape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
-from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
+from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats, get_message_history
 from reports_sql import get_all_reports
 from sys import stderr
 
@@ -21,7 +21,6 @@ app = Flask(__name__, template_folder='templates')
 app.secret_key = APP_SECRET_KEY
 
 import auth
-
 
 # -----------------------------------------------------------------------
 
@@ -421,7 +420,7 @@ def fetching_reports():
     for report in reports:
         html += '<tr>'
         pattern = '<td>%s</td>'
-        link = '<a href="viewreport?=%s">%s</a>' % (report[0], report[0])
+        link = '<a href="viewreport?id=%s">%s</a>' % (report[0], report[0])
         html += pattern % link
         html += pattern % report[1]
         html += pattern % report[2]
@@ -430,3 +429,32 @@ def fetching_reports():
 
     html += '</tbody></table>'
     return make_response(html)
+
+# --------------------------------------------------------------------
+
+@app.route('/viewreport', methods=['GET'])
+def view_report():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    admin = is_admin(user)
+    
+    admin = is_admin(user)
+    if not admin:
+        html = render_template('deniedaccess.html')
+    else:
+        chat_id = request.args.get('id') # chat id
+        chat_history = get_message_history(chat_id)
+        reported, reportee, type, comment = get_report(chat_id)
+
+        html = render_template('viewreport.html',
+                                reported = reported,
+                                reportee = reportee,
+                                type = type,
+                                reason = comment,
+                                hist = chat_history)
+        
+        # TO DO: add in check for clicking block, edit html to display reported user, reason, chat history
+        # and button that causes ban
+
+    response = make_response(html)
+    return response
