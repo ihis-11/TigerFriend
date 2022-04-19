@@ -415,7 +415,7 @@ def fetching_reports():
         html = '<h2 style="font-size:20px; color:black; margin:10px;">There are no reports to view at this time</h2>'
 
     html = ('<table class="table table-striped table-borderless">'
-            '<thead><tr><th>ReportID</th><th>Reported</th><th>Type</th>'
+            '<thead><tr><th>ReportID</th><th>Reported</th>'
             '<th>Comment</th></thead><tbody>')
     for report in reports:
         html += '<tr>'
@@ -424,7 +424,6 @@ def fetching_reports():
         html += pattern % link
         html += pattern % report[1]
         html += pattern % report[2]
-        html += pattern % report[3]
         html += '</tr>'
 
     html += '</tbody></table>'
@@ -444,12 +443,11 @@ def view_report():
     else:
         chat_id = request.args.get('id') # chat id
         chat_history = get_message_history(chat_id)
-        reported, reportee, type, comment = get_report(chat_id)
+        reported, reportee, comment = get_report(chat_id)
 
         html = render_template('viewreport.html',
                                 reported = reported,
                                 reportee = reportee,
-                                type = type,
                                 reason = comment,
                                 hist = chat_history)
         
