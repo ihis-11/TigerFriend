@@ -67,7 +67,8 @@ def dismiss_report(chat_id):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        session.delete(Reports.report_id == chat_id)
+        session.query(Reports).filter(Reports.report_id == chat_id).delete()
+        session.commit()
 
         session.close()
         engine.dispose()

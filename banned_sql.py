@@ -36,7 +36,7 @@ def isBanned(net_id):
         print(ex, file=stderr)
         print("Banned check failed", file=stderr)
 
-def addBan(banned, time):
+def add_ban(banned, time):
     # connect to database
     try:
         engine = create_engine(DATABASE_URL)

@@ -11,7 +11,8 @@ from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
 from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
-from reports_sql import get_all_reports
+from reports_sql import get_all_reports, dismiss_report
+from banned_sql import add_ban
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -391,13 +392,20 @@ def admin():
     user = auth.authenticate().strip()
     admin = is_admin(user)
     if admin:
+        reported = request.args.get('reported')
+        report_length = request.args.get('time')
+        chat_id = request.args.get("chat_id")
+        if reported is not None:
+            report_length = int(report_length)
+            if report_length > 0:
+                add_ban(reported, report_length)
+            dismiss_report(chat_id)
         html = render_template('admin.html', isAdmin=admin)
     else:
         html = render_template('deniedaccess.html')
 
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 
@@ -449,6 +457,7 @@ def view_report():
                                 reported = reported,
                                 reportee = reportee,
                                 reason = comment,
+                                report_id = chat_id,
                                 hist = chat_history)
         
         # TO DO: add in check for clicking block, edit html to display reported user, reason, chat history
