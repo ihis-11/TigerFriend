@@ -4,11 +4,11 @@
 # banned_sql
 # --------------------------------------------------------------------
 
-from sqlalchemy import create_engine, true
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine, desc
+from sqlalchemy import create_engine
 import configs
-from database import Administrators, Banned, Reports, Messages
+from database import Banned
 from sys import stderr
 
 DATABASE_URL = configs.DATABASE_URL
