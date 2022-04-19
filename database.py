@@ -77,7 +77,6 @@ class Reports(Base):
     report_id = Column(Integer, primary_key=True)
     reporter_net_id = Column(String)
     reported_net_id = Column(String, primary_key=True)
-    type = Column(Integer)
     comment = Column(String)
     date_time = Column(DateTime)
 

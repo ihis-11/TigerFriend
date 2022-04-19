@@ -50,15 +50,14 @@ def addBan(banned, time):
 
         if ban is not None:
             ban.days_left += time
-            session.commit()
-            session.close()
-            engine.dispose()
+            
         else:
             new_ban = Banned(net_id=banned, days_left=time)
             session.add(new_ban)
-            session.commit()
-            session.close()
-            engine.dispose()
+
+        session.commit()
+        session.close()
+        engine.dispose()
 
     except Exception as ex:
         print(ex, file=stderr)

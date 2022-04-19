@@ -11,7 +11,7 @@ DATABASE_URL = configs.DATABASE_URL
 
 
 # Report user with given reporter/reported net_id and type and comment
-def report_user(reporter, reported, rep_type, rep_comment):
+def report_user(reporter, reported, rep_comment):
     try:
         engine = create_engine(DATABASE_URL)
 
@@ -28,7 +28,6 @@ def report_user(reporter, reported, rep_type, rep_comment):
         new_report = Reports(report_id=new_id,
                              reporter_net_id=reporter,
                              reported_net_id=reported,
-                             type=rep_type,
                              comment=rep_comment,
                              date_time=now)
 
@@ -49,7 +48,7 @@ def get_all_reports():
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        reports = (session.query(Reports.report_id, Reports.reported_net_id, Reports.type, Reports.comment)
+        reports = (session.query(Reports.report_id, Reports.reported_net_id, Reports.comment)
                     .all())
                     
         session.close()
