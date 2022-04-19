@@ -121,8 +121,8 @@
     margin:0 auto;
     font-size:0;
     border-radius:5px;
-    overflow:hidden;
   }
+  
   aside{
     width:15vw;
     height:94vh;
@@ -130,6 +130,7 @@
     display:inline-block;
     font-size:15px;
     vertical-align:top;
+    overflow-y: scroll;
   }
 
   aside header{
@@ -140,7 +141,6 @@
     padding-left:0;
     margin:0;
     list-style-type:none;
-    overflow-y:scroll;
   }
 
   aside li{
@@ -167,7 +167,7 @@
   
   main{
     width:61vw;
-    height:94vh;
+    height:90vh;
     display:inline-block;
     font-size:15px;
     vertical-align:top;
