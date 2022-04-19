@@ -12,7 +12,7 @@ from req_lib import getOneUndergrad
 import psycopg2
 from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
 from reports_sql import get_all_reports, dismiss_report
-from banned_sql import add_ban
+from banned_sql import add_ban, is_banned, get_days
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -48,6 +48,11 @@ def home():
 def survey():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
 
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
