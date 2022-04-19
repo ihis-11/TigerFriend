@@ -5,6 +5,7 @@ import random
 # chat_sql.py
 # --------------------------------------------------------------------
 from datetime import datetime
+from queue import Queue
 from sys import stderr
 
 from sqlalchemy import create_engine, desc, asc
