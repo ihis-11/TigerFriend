@@ -11,8 +11,8 @@ from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
 from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
-from reports_sql import get_all_reports, dismiss_report, report_user
-from banned_sql import add_ban, is_banned, get_days
+from reports_sql import get_all_reports, dismiss_report, report_user, report_exist
+from banned_sql import add_ban, is_banned, get_time
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -89,8 +89,15 @@ def reporting():
     reportingmsg = request.args.get("reportmsg")
 
     if reported is not None:
-        reported_id = get_netid(reported)
-        report_user(user, reported_id, escape(reportingmsg))
+        chat_id = get_chat_id(user, reported)
+        # if there is already a report in the database
+        if report_exist(chat_id) is None:
+            error_msg = "You or the other user already reported you"
+            html = render_template('reported.html', error_msg=error_msg)
+            return make_response(html)
+        else:
+            reported_id = get_netid(reported)
+            report_user(user, reported_id, escape(reportingmsg))
     
     return make_response(render_template('reported.html', reported=reported))
 

@@ -40,6 +40,27 @@ def report_user(reporter, reported, rep_comment):
         print(ex, file=stderr)
         exit(1)
 
+def report_exist(chat_id):
+    try:
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        report_id = (session.query(Reports)
+                    .filter(Reports.report_id == chat_id)
+                    .one_or_none())
+                    
+        session.close()
+        engine.dispose()
+
+        return report_id
+
+    except Exception as ex:
+        print(ex, file=stderr)
+        exit(1)
+    
+
 def get_all_reports():
     try:
         engine = create_engine(DATABASE_URL)
