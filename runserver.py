@@ -14,7 +14,7 @@ def main():
         exit(1)
 
     try:
-        app.run(host='0.0.0.0', port=port, debug=True) #ssl_context='adhoc'
+        app.run(host='0.0.0.0', port=port, debug=True) #, ssl_context='adhoc')
     except Exception as ex:
         print(ex, file=stderr)
         exit(1)
