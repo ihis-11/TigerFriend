@@ -108,10 +108,21 @@
             });
         }
 
+        let alternator = false;
+
+        function update() {
+            alternator = !alternator
+            if (alternator) {
+                getMessages();
+            } else {
+                getChats();
+            }
+        }
+
         function setup() {
             getChats();
             getMessages();
-            window.setInterval(getMessages, 5000);
+            window.setInterval(update, 3700);
             $('#userSentChat').click(sendMessage);
             $('#chatSent').keypress(function(e) {
                 if (e.which == 13) // the enter key code
