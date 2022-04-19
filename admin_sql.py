@@ -26,6 +26,9 @@ def is_admin(net_id):
                  .filter(Administrators.net_id == net_id)
                  .one_or_none())
 
+        session.close()
+        engine.dispose()
+
         if admin is not None:
             return True
         return False
