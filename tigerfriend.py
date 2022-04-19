@@ -23,12 +23,12 @@ app.secret_key = APP_SECRET_KEY
 import auth
 
 # -----------------------------------------------------------------------
-"""
+
 @app.before_request
 def before_request():
     if not request.is_secure:
         url = request.url.replace('http://', 'https://', 1)
-        return redirect(url, code=301)"""
+        return redirect(url, code=301)
 
 
 # --------------------------------------------------------------------
