@@ -57,7 +57,10 @@ def add_ban(banned, time):
 
         if ban is not None:
             old_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
-            ban.date_unbanned = old_time + timedelta(days=time)
+            if old_time < datetime.now():
+                old_time = datetime.now()
+
+            ban.date_unbanned = (old_time + timedelta(days=time)).strftime("%Y-%m-%d %H:%M:%S")
 
         else:
             new_time = (datetime.now() + timedelta(days=time)).strftime("%Y-%m-%d %H:%M:%S")
