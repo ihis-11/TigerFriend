@@ -94,6 +94,26 @@ def get_message_history(chat_id):
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
 
+# ----------------------------------------------------------------------
+
+def make_admin(net_id):
+    try:
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        new_admin = Administrators(net_id = net_id)
+        session.add(new_admin)
+        session.commit()
+        
+        session.close()
+        engine.dispose()
+
+    except Exception as ex:
+        print(ex, file=stderr)
+        print("Admin add failed", file=stderr)
+
 # unit test
 def main():
     myself = 'collado'
