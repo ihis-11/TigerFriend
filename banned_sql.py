@@ -15,6 +15,7 @@ from sys import stderr
 
 DATABASE_URL = configs.DATABASE_URL
 
+
 def is_banned(net_id):
     # connect to database
     try:
@@ -24,8 +25,8 @@ def is_banned(net_id):
         session = Session()
 
         ban = (session.query(Banned)
-                 .filter(Banned.net_id == net_id)
-                 .one_or_none())
+               .filter(Banned.net_id == net_id)
+               .one_or_none())
 
         session.close()
         engine.dispose()
@@ -44,6 +45,7 @@ def is_banned(net_id):
         print(ex, file=stderr)
         print("Banned check failed", file=stderr)
 
+
 def add_ban(banned, time):
     # connect to database
     try:
@@ -53,8 +55,8 @@ def add_ban(banned, time):
         session = Session()
 
         ban = (session.query(Banned)
-                 .filter(Banned.net_id == banned)
-                 .one_or_none())
+               .filter(Banned.net_id == banned)
+               .one_or_none())
 
         if ban is not None:
             old_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
@@ -76,6 +78,7 @@ def add_ban(banned, time):
         print(ex, file=stderr)
         print("Banned add failed", file=stderr)
 
+
 def get_time(net_id):
     try:
         engine = create_engine(DATABASE_URL)
@@ -84,9 +87,9 @@ def get_time(net_id):
         session = Session()
 
         ban = (session.query(Banned)
-                .filter(Banned.net_id == net_id)
-                .one_or_none())
-        
+               .filter(Banned.net_id == net_id)
+               .one_or_none())
+
         session.close()
         engine.dispose()
 
@@ -96,6 +99,7 @@ def get_time(net_id):
         print(ex, file=stderr)
         print("Banned add failed", file=stderr)
 
+
 def delete_ban(net_id):
     try:
         engine = create_engine(DATABASE_URL)
@@ -104,8 +108,8 @@ def delete_ban(net_id):
         session = Session()
 
         (session.query(Banned)
-                .filter(Banned.net_id == net_id)
-                .delete())
+         .filter(Banned.net_id == net_id)
+         .delete())
 
         session.commit()
         session.close()
