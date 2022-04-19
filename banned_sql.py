@@ -4,7 +4,7 @@
 # banned_sql
 # --------------------------------------------------------------------
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, true
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, desc
 import configs
@@ -36,7 +36,7 @@ def isBanned(net_id):
         print(ex, file=stderr)
         print("Banned check failed", file=stderr)
 
-def addBan(net_id, time):
+def addBan(banned, time):
     # connect to database
     try:
         engine = create_engine(DATABASE_URL)
@@ -45,8 +45,21 @@ def addBan(net_id, time):
         session = Session()
 
         ban = (session.query(Banned)
-                 .filter(Banned.net_id == net_id)
+                 .filter(Banned.net_id == banned)
                  .one_or_none())
 
         if ban is not None:
-            
+            ban.days_left += time
+            session.commit()
+            session.close()
+            engine.dispose()
+        else:
+            new_ban = Banned(net_id=banned, days_left=time)
+            session.add(new_ban)
+            session.commit()
+            session.close()
+            engine.dispose()
+
+    except Exception as ex:
+        print(ex, file=stderr)
+        print("Banned add failed", file=stderr)
