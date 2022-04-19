@@ -47,6 +47,12 @@ def home():
 def survey():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
+
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
                               database="dd4c5lulvqtkld",
@@ -85,6 +91,11 @@ def survey():
 @app.route('/reporting', methods=['GET'])
 def reporting():
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     reported = request.cookies.get('cur_receiver')
     reportingmsg = request.args.get("reportmsg")
 
@@ -106,6 +117,11 @@ def reporting():
 def match():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
 
     matches = get_matches(user)
 
@@ -129,6 +145,11 @@ def match():
 def all_chats():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     receiver = request.cookies.get('cur_receiver')
     bio = get_bio(receiver)
     admin = is_admin(user)
@@ -143,7 +164,11 @@ def all_chats():
 def fetching_chats():
     # authenticated net id
     user = auth.authenticate().strip()
-
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     # fetching all the chats for the user
     open_chats = get_all_chats(user)
     if type(open_chats) is not list:
@@ -160,6 +185,11 @@ def fetching_chats():
 def chat():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     # authenticated net id
     receiver = request.args.get('receiver')
 
@@ -183,6 +213,11 @@ def chat():
 def send_message():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     receiver = request.cookies.get('cur_receiver')
     chat_sent = request.args.get('message')
     message = escape(chat_sent)  # handling the attacks on the html pages
@@ -207,6 +242,11 @@ def send_message():
 def get_chats():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     receiver = request.cookies.get('cur_receiver')
 
     # fetch add the message to the database
@@ -234,6 +274,11 @@ def about():
 def account():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     # error handling
     error_msg = request.args.get('error_msg')
     if error_msg is None:
@@ -287,6 +332,11 @@ def account():
 def accountdetails():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     account_info = get_user_bio(user)
     username = ""
     bio = ""
@@ -361,6 +411,11 @@ def accountdetails():
 def surveydetails():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
                               database="dd4c5lulvqtkld",
@@ -403,6 +458,11 @@ def surveydetails():
 def admin():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     admin = is_admin(user)
     if admin:
         reported = request.args.get('reported')
@@ -426,6 +486,11 @@ def admin():
 def fetching_reports():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     admin = is_admin(user)
     if admin is False:
         return None
@@ -457,6 +522,11 @@ def fetching_reports():
 def view_report():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
     admin = is_admin(user)
     
     admin = is_admin(user)
