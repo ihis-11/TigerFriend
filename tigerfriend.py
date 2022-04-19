@@ -5,13 +5,13 @@ from flask import Flask, request, make_response, render_template, redirect, url_
 
 from admin_sql import is_admin, get_report, get_message_history
 from html import escape
-from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio
+from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio, get_netid
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
 from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
-from reports_sql import get_all_reports, dismiss_report
+from reports_sql import get_all_reports, dismiss_report, report_user
 from banned_sql import add_ban, is_banned, get_days
 from sys import stderr
 
@@ -25,11 +25,11 @@ import auth
 
 # -----------------------------------------------------------------------
 
-@app.before_request
-def before_request():
-    if not request.is_secure:
-        url = request.url.replace('http://', 'https://', 1)
-        return redirect(url, code=301)
+# @app.before_request
+# def before_request():
+#     if not request.is_secure:
+#         url = request.url.replace('http://', 'https://', 1)
+#         return redirect(url, code=301)
 
 # --------------------------------------------------------------------
 
@@ -47,12 +47,6 @@ def home():
 def survey():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
-
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
                               database="dd4c5lulvqtkld",
@@ -88,16 +82,23 @@ def survey():
 
 
 # --------------------------------------------------------------------
+@app.route('/reporting', methods=['GET'])
+def reporting():
+    user = auth.authenticate().strip()
+    reported = request.cookies.get('cur_receiver')
+    reportingmsg = request.args.get("reportmsg")
 
+    if reported is not None:
+        reported_id = get_netid(reported)
+        report_user(user, reported_id, escape(reportingmsg))
+    
+    return make_response(render_template('reported.html', reported=reported))
+
+# --------------------------------------------------------------------
 @app.route('/matches', methods=['GET'])
 def match():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
 
     matches = get_matches(user)
 
@@ -152,11 +153,6 @@ def fetching_chats():
 def chat():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
     # authenticated net id
     receiver = request.args.get('receiver')
 
@@ -231,11 +227,6 @@ def about():
 def account():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
     # error handling
     error_msg = request.args.get('error_msg')
     if error_msg is None:
@@ -289,11 +280,6 @@ def account():
 def accountdetails():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
     account_info = get_user_bio(user)
     username = ""
     bio = ""
@@ -368,11 +354,6 @@ def accountdetails():
 def surveydetails():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
                               database="dd4c5lulvqtkld",
@@ -415,11 +396,6 @@ def surveydetails():
 def admin():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
     admin = is_admin(user)
     if admin:
         reported = request.args.get('reported')
@@ -474,11 +450,6 @@ def fetching_reports():
 def view_report():
     # authenticated net id
     user = auth.authenticate().strip()
-    if is_banned(user):
-        days = get_days(user)
-        html = render_template('banned.html', days_left = days)
-        response = make_response(html)
-        return response
     admin = is_admin(user)
     
     admin = is_admin(user)

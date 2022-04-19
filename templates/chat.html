@@ -6,7 +6,7 @@
     <title>TigerFriend | Chat</title>
 </head>
 
-<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display; overflow-y: hidden;">
+<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
 
     {% include 'navbar.html' %}
 
@@ -38,10 +38,10 @@
                         <h3>{{bio_receiver}}</h3>
 
                         <div class="form-popup" id="myReport">
-                            <form action="/action_page.php" class="form-container">
+                            <form action="/reporting" class="form-container" method="get">
                                 <h1>Report this user</h1>
 
-                                <input id="report" type="text" placeholder="Why are you reporting this user?" name="complaints" required>
+                                <input id="report" type="text" placeholder="Why are you reporting this user?" name="reportmsg" required>
 
                                 <button type="submit" class="btn">Submit Report</button>
                                 <button type="button" class="btn cancel" onclick="closeReport()">Go back</button>
