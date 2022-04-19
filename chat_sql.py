@@ -34,6 +34,7 @@ def get_all_chats(user):
                  .all())
 
         chat_list = []
+        q = Queue();
         for chat in chats:
             chat_id = str(chat.chat_id)
             other_id = chat.net_id1
@@ -43,7 +44,16 @@ def get_all_chats(user):
                         .filter(Account.net_id == other_id)
                         .first())
             receiver = str(receiver.username)
-            chat_list.append((chat_id, receiver, is_empty(chat_id), is_unread(chat_id, user)))
+            if chat.latest_date_time is None or is_empty(chat_id):
+                print("Empty chat! " + chat_id)
+                q.put((chat_id, receiver, is_empty(chat_id), is_unread(chat_id, user)))
+            else:
+                print("Non-Empty chat! " + chat_id)
+                chat_list.append((chat_id, receiver, is_empty(chat_id), is_unread(chat_id, user)))
+
+        for chat in q.queue:
+            print("Inserting empty chats at end")
+            chat_list.append(chat)
 
         session.close()
         engine.dispose()
