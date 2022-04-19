@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/pages.css')}}">
+    <title>TigerFriend | About</title>
+</head>
+
+<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
+
+    {% include 'navbar.html' %}
+
+    <div class="sidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image2" />
+    </div>
+
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" />
+    </div>
+
+    <div style="padding-top: 10vh; padding-left: 20vw; padding-right: 20vw; text-align: center;">
+        <p style="color:black;">Successfully reported {{reported}}</p>
+    </div>
+
+</body>
+
+</html>
