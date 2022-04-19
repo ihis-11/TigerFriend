@@ -421,6 +421,7 @@ def fetching_reports():
     reports = get_all_reports()
     if reports == []:
         html = '<h2 style="font-size:20px; color:black; margin:10px;">There are no reports to view at this time</h2>'
+        return make_response(html)
 
     html = ('<table class="table table-striped table-borderless">'
             '<thead><tr><th>ReportID</th><th>Reported</th>'
