@@ -103,7 +103,7 @@ def reporting():
         chat_id = get_chat_id(user, reported)
         # if there is already a report in the database
         if report_exist(chat_id) is not None:
-            error_msg = "You or the other user already reported you"
+            error_msg = "This chat has already been reported and is under review."
             html = render_template('reported.html', error_msg=error_msg)
             return make_response(html)
         else:
