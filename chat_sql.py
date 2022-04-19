@@ -5,6 +5,7 @@ import random
 # chat_sql.py
 # --------------------------------------------------------------------
 from datetime import datetime
+from pytz import timezone
 from queue import Queue
 from sys import stderr
 
@@ -150,7 +151,7 @@ def send_chat(chat_id, sender, message):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        now = str(datetime.now())
+        now = str(datetime.now(timezone('US/Eastern')))
 
         new_message = Messages(chat_id=chat_id,
                                sender_id=sender,
