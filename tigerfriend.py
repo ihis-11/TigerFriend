@@ -3,14 +3,14 @@
 # --------------------------------------------------------------------
 from flask import Flask, request, make_response, render_template, redirect, url_for
 
-from admin_sql import is_admin, get_report
+from admin_sql import is_admin, get_report, get_message_history
 from html import escape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
 import psycopg2
-from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats, get_message_history
+from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
 from reports_sql import get_all_reports
 from sys import stderr
 

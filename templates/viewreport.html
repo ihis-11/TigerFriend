@@ -29,6 +29,10 @@
     </div>
 
     <div style="height:10px; padding-top: 15px; text-align: left;">
+        <span href="/admin">Back to all reports</span>
+    </div>
+
+    <div style="height:10px; padding-top: 15px; text-align: left;">
         <div id="box">
             <br>
             <h1 style="font-size:20px; color:black; margin:10px;">Reported User: {{reported}}</h1>
@@ -36,7 +40,20 @@
             <h1 style="font-size:20px; color:black; margin:10px;">Report type: {{type}}</h1>
             <h1 style="font-size:20px; color:black; margin:10px;">Reason: {{reason}}</h1>
             <br>
-            <div id="allReports" class="container-fluid" style="width: 100%;"></div>
+        </div>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+        <div id="box">
+            <br>
+            <h1 style="font-size:20px; color:black; margin:10px;">Chat History:</h1>
+            <ul style="list-style-type:none;">
+            {% for msg in hist %}
+                <li>
+                <h1 style="font-size:20px; color:black; margin:10px;"><span style="font-size:10px; color:grey; margin:10x;">{{msg[2]}}</span>          {{msg[0]}}: {{msg[1]}}</h1>
+                </li>
+            {% endfor %}
+            </ul>
         </div>
     </div>
 
