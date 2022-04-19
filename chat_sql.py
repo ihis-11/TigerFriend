@@ -46,14 +46,11 @@ def get_all_chats(user):
                         .first())
             receiver = str(receiver.username)
             if chat.latest_date_time is None or is_empty(chat_id):
-                print("Empty chat! " + chat_id)
                 q.put((chat_id, receiver, is_empty(chat_id), is_unread(chat_id, user)))
             else:
-                print("Non-Empty chat! " + chat_id)
                 chat_list.append((chat_id, receiver, is_empty(chat_id), is_unread(chat_id, user)))
 
         for chat in q.queue:
-            print("Inserting empty chats at end")
             chat_list.append(chat)
 
         session.close()
