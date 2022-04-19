@@ -121,7 +121,7 @@
     margin:0 auto;
     font-size:0;
     border-radius:5px;
-    overflow: -moz-hidden-unscrollable;
+    overflow-y: hidden;
   }
 
   aside{
