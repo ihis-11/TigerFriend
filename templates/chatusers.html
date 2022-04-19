@@ -6,10 +6,10 @@
 
     <body>
         <br>
-        {% for chat in open_chats: %} 
-            <ul>
+        <ul>
+            {% for chat in open_chats: %} 
+            <li>
                 <a href="chat?receiver={{chat[1]}}">
-                    <li>
                     <div>
                         {% if chat[2] %}
                         <h2>{{chat[1]}}</h2>
@@ -21,9 +21,10 @@
                         <h2>{{chat[1]}}</h2>
                         {% endif %}
                     </div>
-                    </li>
-                </a>
-            </ul>
-        {% endfor %}
+                </a>  
+            </li>
+                
+            {% endfor %}
+        </ul>
     </body>
 </html>

@@ -27,15 +27,19 @@
     <div style="height:180px; padding-top: 45px; text-align: center;">
         <div id="container">
             <aside>
+                <header>
+                    <h3>Your Chats</h3>
+                </header>
                 <div id="allChats" class="container-fluid" style="width: 100%;"></div>
             </aside>
             <main>
                 <header>
                     <div>
-                        <h2 style="font-size: 2vw;">{{receiver}}</h2>
-                        <p style="font-size: 1vw;">{{bio_receiver}}</p>
+                      <h2>{{receiver}} <a id="report" href="#">Report User</a></h2>
+                      <h3>{{bio_receiver}}</h3>
                     </div>
                 </header>
+
                 <ul id="chat">
                     <div id="messages"></div>
                 </ul>

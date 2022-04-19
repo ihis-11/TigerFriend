@@ -132,14 +132,20 @@
     vertical-align:top;
   }
 
+  aside header{
+    padding:1vh 1vh;
+  }
+
   aside ul{
-    padding-top: 1vh;
+    padding-top: 0;
     padding-left:0;
     margin:0;
     list-style-type:none;
     overflow-y:scroll;
   }
+
   aside li{
+    padding:3.5vh 0;
     background-color:#ffffff;
     border: solid #000000;
     border-width: 2px;
@@ -149,7 +155,6 @@
   }
 
   aside li div{
-    padding:3.5vh 0;
     display:inline-block;
     vertical-align:top;
   }
@@ -171,11 +176,27 @@
 
   main header{
     height:10vh;
+    padding:0px 2vw 4vh 2vw;
+  }
+  main header > *{
+    display:inline-block;
+    vertical-align:top;
+  }
+  main header h2{
+    font-size:3vh;
+    margin-bottom:1vh;
+  }
+  main header h3{
+    font-size:2vh;
+    font-weight:normal;
+    color:#7e818a;
   }
 
-  main header div{
-    margin-left:10vw;
-    margin-right:10vw;
+  main header a{
+    font-size:2vh;
+    font-weight:bold;
+    color:#6fbced;
+    display:inline-block;
   }
   
   #chat{
