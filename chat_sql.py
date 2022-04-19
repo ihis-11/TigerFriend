@@ -203,6 +203,38 @@ def get_messages(chat_id, user):
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
 
+# get all message history from a given chat_id (w/no updates to is read (for admin))
+def get_message_history(chat_id):
+    try:
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        msgs = (session.query(Messages)
+                .filter(Messages.chat_id == chat_id)
+                .order_by(desc(Messages.date_time))
+                .all())
+
+        msg_history = []
+        for msg in msgs:
+            sender = msg.sender_id
+            sender = get_user_bio(sender)[0]
+            msg_history.append((sender, str(msg.message_content), str(msg.date_time)))
+
+        session.commit()
+        session.close()
+        engine.dispose()
+
+        return msg_history
+
+    except Exception as ex:
+        session.close()
+        engine.dispose()
+        print(ex, file=stderr)
+        print("Data base connection failed", file=stderr)
+        return "unknown (database connection failed)"
+
 
 # returns the most recent message in a given chat
 def get_most_recent_message(chat_id):

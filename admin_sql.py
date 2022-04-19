@@ -7,7 +7,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import configs
-from database import Administrators
+from database import Administrators, Reports
 from sys import stderr
 
 DATABASE_URL = configs.DATABASE_URL
@@ -33,6 +33,24 @@ def is_admin(net_id):
         print(ex, file=stderr)
         print("Admin check failed", file=stderr)
 
+# Returns [reported, reportee, type, comment] of a certain report
+def get_report(rep_id):
+    # connect to database
+    try:
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        report = (session.query(Reports)
+                 .filter(Reports.report_id == rep_id)
+                 .one_or_none())
+
+        return [report.reported_net_id, report.reporter_net_id, report.type, report.comment]
+
+    except Exception as ex:
+        print(ex, file=stderr)
+        print("Admin check failed", file=stderr)
 
 # unit test
 def main():
