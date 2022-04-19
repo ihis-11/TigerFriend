@@ -3,7 +3,7 @@
 from sys import stderr
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
-from database import Reports
+from database import Chats, Reports
 import configs
 from datetime import datetime
 
@@ -18,14 +18,13 @@ def report_user(reporter, reported, rep_comment):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        last_id = (session.query(Reports)
-                    .order_by(desc(Reports.date_time))
-                    .first())
-
-        new_id = int(last_id.report_id) + 1
+        chat_id = (session.query(Chats.chat_id)
+                    .filter((Chats.net_id1 == reporter) | (Chats.net_id2 == reporter))
+                    .filter((Chats.net_id1 == reported) | (Chats.net_id2 == reported))
+                    .one_or_none())
         now = str(datetime.now())
 
-        new_report = Reports(report_id=new_id,
+        new_report = Reports(report_id=chat_id[0],
                              reporter_net_id=reporter,
                              reported_net_id=reported,
                              comment=rep_comment,
