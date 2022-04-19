@@ -12,7 +12,7 @@ from req_lib import getOneUndergrad
 import psycopg2
 from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
 from reports_sql import get_all_reports, dismiss_report
-from banned_sql import add_ban
+from banned_sql import add_ban, is_banned, get_days
 from sys import stderr
 
 # --------------------------------------------------------------------
@@ -47,6 +47,11 @@ def home():
 def survey():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
 
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
@@ -88,6 +93,11 @@ def survey():
 def match():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
 
     matches = get_matches(user)
 
@@ -142,7 +152,11 @@ def fetching_chats():
 def chat():
     # authenticated net id
     user = auth.authenticate().strip()
-
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
     # authenticated net id
     receiver = request.args.get('receiver')
 
@@ -217,7 +231,11 @@ def about():
 def account():
     # authenticated net id
     user = auth.authenticate().strip()
-
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
     # error handling
     error_msg = request.args.get('error_msg')
     if error_msg is None:
@@ -271,7 +289,11 @@ def account():
 def accountdetails():
     # authenticated net id
     user = auth.authenticate().strip()
-
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
     account_info = get_user_bio(user)
     username = ""
     bio = ""
@@ -346,7 +368,11 @@ def accountdetails():
 def surveydetails():
     # authenticated net id
     user = auth.authenticate().strip()
-
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
     try:
         with psycopg2.connect(host="ec2-3-217-113-25.compute-1.amazonaws.com",
                               database="dd4c5lulvqtkld",
@@ -389,6 +415,11 @@ def surveydetails():
 def admin():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
     admin = is_admin(user)
     if admin:
         reported = request.args.get('reported')
@@ -443,6 +474,11 @@ def fetching_reports():
 def view_report():
     # authenticated net id
     user = auth.authenticate().strip()
+    if is_banned(user):
+        days = get_days(user)
+        html = render_template('banned.html', days_left = days)
+        response = make_response(html)
+        return response
     admin = is_admin(user)
     
     admin = is_admin(user)

@@ -2,7 +2,19 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/pages.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>TigerFriend | Banned</title>
 </head>
 
+<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
+    {% include 'navbar.html' %}
+
+    {% include 'lockedsidebar.html' %}
+
+    <div style="padding-top: 10vh; padding-left: 20vw; padding-right: 20vw; text-align: center;">
+        <h1 style="font-size:3vw; color:black; margin:10px;">You have been banned for chat abuse</h1>
+        <p style="color:black;">You will be unbanned in {{days_left}} days</p>
+    </div>
+
+</body>
 </html>
