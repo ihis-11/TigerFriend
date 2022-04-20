@@ -8,7 +8,7 @@
         <br>
         <ul>
             {% for chat in open_chats: %} 
-            <a href="chat?receiver={{chat[1]}}"></a>
+            <a href="chat?receiver={{chat[1]}}">
                 <li>
                     <div>
                         
@@ -23,7 +23,7 @@
                             {% endif %}
                     </div>
                 </li>
-            </a>     
+            </a>
             {% endfor %}
         </ul>
     </body>
