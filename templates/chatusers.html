@@ -9,8 +9,8 @@
         <ul>
             {% for chat in open_chats: %} 
             <li>
-                <a href="chat?receiver={{chat[1]}}">
-                    <div>
+                <div>
+                    <a href="chat?receiver={{chat[1]}}">
                         {% if chat[2] %}
                         <h2>{{chat[1]}}</h2>
                         <h3 style="color: blue; font-size: 1vw;">Say something!</h3>
@@ -20,8 +20,8 @@
                         {% else %}
                         <h2>{{chat[1]}}</h2>
                         {% endif %}
-                    </div>
-                </a>  
+                    </a>  
+                </div>
             </li>
                 
             {% endfor %}
