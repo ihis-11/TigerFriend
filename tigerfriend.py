@@ -564,6 +564,11 @@ def stats():
         response = make_response(html)
         return response
 
+    # Stats is an array of 3 dicts
+    # First dict: counts by class year: {"2022": 5, "2023": 10, ...}
+    # Second dict: counts by res college: {"Butler": 7, ...}
+    # Third dict: three dicts by question, each with counts of responses:
+    #     {"question 1 text": {"answer 1 text": 3, ...}, "question 2 text": {...}, ...}
     stats = get_stats()
     html = render_template('stats.html',
                             stats = stats)
