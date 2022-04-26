@@ -6,6 +6,7 @@ from flask import Flask, request, make_response, render_template, redirect, url_
 from admin_sql import is_admin, get_report, get_message_history
 from html import escape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio, get_netid
+from stats_sql import get_stats
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
@@ -547,6 +548,25 @@ def view_report():
         
         # TO DO: add in check for clicking block, edit html to display reported user, reason, chat history
         # and button that causes ban
+
+    response = make_response(html)
+    return response
+
+# --------------------------------------------------------------------
+
+@app.route('/stats', methods=['GET'])
+def stats():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
+
+    stats = get_stats()
+    html = render_template('stats.html',
+                            stats = stats)
 
     response = make_response(html)
     return response
