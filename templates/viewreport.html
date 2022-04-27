@@ -45,7 +45,7 @@
             <label for="week">Ban 1 Week</label><br>
             <input type="radio" id="forever" name="reporter_time" value="10000">
             <label for="forever">Ban Forever</label><br><br>
-            <a id="adminSubmit" href="#">Resolve</a>
+            <a id="adminSubmit" href="#">Submit</a>
         </form>
     </div>
 
@@ -83,7 +83,7 @@
         'use strict';
         
         function handleResponse(response) {
-            $('#admin').html(response);
+            location.href="/admin"
         }
 
         let request = null

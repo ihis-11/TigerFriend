@@ -26,11 +26,11 @@ import auth
 
 # -----------------------------------------------------------------------
 
-# @app.before_request
-# def before_request():
-#     if not request.is_secure:
-#         url = request.url.replace('http://', 'https://', 1)
-#         return redirect(url, code=301)
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        return redirect(url, code=301)
 
 # --------------------------------------------------------------------
 
@@ -476,15 +476,14 @@ def admin():
         t1 = request.args.get('time1')
         t2 = request.args.get('time2')
         chat_id = request.args.get("chat_id")
-        if reported is not None:
+        if reported is not None and reporter is not None:
             reported_time = int(t1)
             if reported_time > 0:
                 add_ban(reported, reported_time)
-        if reporter is not None:
             reporter_time = int(t2)
             if reporter_time > 0:
                 add_ban(reporter, reporter_time)    
-        dismiss_report(chat_id)
+            dismiss_report(chat_id)
         html = render_template('admin.html', isAdmin=admin)
     else:
         html = render_template('deniedaccess.html')
