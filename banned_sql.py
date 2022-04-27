@@ -33,7 +33,7 @@ def is_banned(net_id):
 
         if ban is not None:
             ban_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
-            now = datetime.now(timezone('US/Eastern'))
+            now = datetime.now()
             if now < ban_time:
                 return True
             else:
@@ -60,8 +60,8 @@ def add_ban(banned, time):
 
         if ban is not None:
             old_time = datetime.strptime(ban.date_unbanned, "%Y-%m-%d %H:%M:%S")
-            if old_time < datetime.now(timezone('US/Eastern')):
-                old_time = datetime.now(timezone('US/Eastern'))
+            if old_time < datetime.now():
+                old_time = datetime.now()
 
             ban.date_unbanned = (old_time + timedelta(days=time)).strftime("%Y-%m-%d %H:%M:%S")
 
