@@ -110,7 +110,7 @@ def reporting():
             return make_response(html)
         else:
             reported_id = get_netid(reported)
-            report_user(user, reported_id, escape(reportingmsg))
+            report_user(user, reported_id, reportingmsg)
     
     return make_response(render_template('reported.html', reported=reported, isAdmin=admin))
 
@@ -197,7 +197,6 @@ def chat():
 
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
-
     admin = is_admin(user)
 
     html = render_template('chat.html',
@@ -345,7 +344,7 @@ def accountdetails():
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
         username = escape(request.args.get('username'))  # DEAL WITH EMPTY USERNAME INPUT HERE
-        bio = escape(request.args.get('bio'))
+        bio = request.args.get('bio')
     else:
         username = account_info[0]
         bio = account_info[1]
