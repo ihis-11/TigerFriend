@@ -50,7 +50,10 @@ def survey():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        year = unbanned.year
+        month = unbanned.month
+        day = unbanned.day
+        html = render_template('banned.html', year = year, month = month, day = day)
         response = make_response(html)
         return response
 
