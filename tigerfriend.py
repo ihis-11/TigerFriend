@@ -6,6 +6,7 @@ from flask import Flask, request, make_response, render_template, redirect, url_
 from admin_sql import is_admin, get_report, get_message_history
 from html import escape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio, get_netid
+from stats_sql import get_stats
 from matching import input_match_scores, get_matches
 from keys import APP_SECRET_KEY
 from req_lib import getOneUndergrad
@@ -109,7 +110,7 @@ def reporting():
             return make_response(html)
         else:
             reported_id = get_netid(reported)
-            report_user(user, reported_id, escape(reportingmsg))
+            report_user(user, reported_id, reportingmsg)
     
     return make_response(render_template('reported.html', reported=reported, isAdmin=admin))
 
@@ -196,7 +197,6 @@ def chat():
 
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
-
     admin = is_admin(user)
 
     html = render_template('chat.html',
@@ -343,8 +343,8 @@ def accountdetails():
     bio = ""
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
-        username = escape(request.args.get('username'))  # DEAL WITH EMPTY USERNAME INPUT HERE
-        bio = escape(request.args.get('bio'))
+        username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
+        bio = request.args.get('bio')
     else:
         username = account_info[0]
         bio = account_info[1]
@@ -352,6 +352,11 @@ def accountdetails():
     # Dealing with empty username input
     if username.strip() == '':
         error_msg = "Please input a username."
+        return redirect(url_for('account', error_msg=error_msg))
+
+    # Dealing with empty username input
+    if bio.strip() == '':
+        error_msg = "Please input a bio."
         return redirect(url_for('account', error_msg=error_msg))
 
         # if the user doesn't already have an account
@@ -467,12 +472,17 @@ def admin():
     admin = is_admin(user)
     if admin:
         reported = request.args.get('reported')
-        report_length = request.args.get('time')
+        reporter = request.args.get('reporter')
+        t1 = request.args.get('time1')
+        t2 = request.args.get('time2')
         chat_id = request.args.get("chat_id")
-        if reported is not None:
-            report_length = int(report_length)
-            if report_length > 0:
-                add_ban(reported, report_length)
+        if reported is not None and reporter is not None:
+            reported_time = int(t1)
+            if reported_time > 0:
+                add_ban(reported, reported_time)
+            reporter_time = int(t2)
+            if reporter_time > 0:
+                add_ban(reporter, reporter_time)    
             dismiss_report(chat_id)
         html = render_template('admin.html', isAdmin=admin)
     else:
@@ -547,6 +557,30 @@ def view_report():
         
         # TO DO: add in check for clicking block, edit html to display reported user, reason, chat history
         # and button that causes ban
+
+    response = make_response(html)
+    return response
+
+# --------------------------------------------------------------------
+
+@app.route('/stats', methods=['GET'])
+def stats():
+    # authenticated net id
+    user = auth.authenticate().strip()
+    if is_banned(user):
+        unbanned = get_time(user)
+        html = render_template('banned.html', time = unbanned)
+        response = make_response(html)
+        return response
+
+    # Stats is an array of 3 dicts
+    # First dict: counts by class year: {"2022": 5, "2023": 10, ...}
+    # Second dict: counts by res college: {"Butler": 7, ...}
+    # Third dict: three dicts by question, each with counts of responses:
+    #     {"question 1 text": {"answer 1 text": 3, ...}, "question 2 text": {...}, ...}
+    stats = get_stats()
+    html = render_template('stats.html',
+                            stats = stats)
 
     response = make_response(html)
     return response
