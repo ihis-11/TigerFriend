@@ -35,6 +35,27 @@
         <a href="/admin?reported={{reported}}&time=0&chat_id={{report_id}}"><button>Dismiss Report</button></a>
     </div>
 
+    <div style="height:auto; padding-top: 70px; text-align: center;">
+        <form action="/action_page.php">
+            <p>Please input an action for the <strong>reported User</strong>:</p>
+            <input type="radio" id="dismiss" name="reported_action" value="Dismiss" checked>
+            <label for="dismiss">Dismiss</label><br>
+            <input type="radio" id="week" name="reported_action" value="7">
+            <label for="week">Ban 1 Week</label><br>
+            <input type="radio" id="forever" name="reported_action" value="10000">
+            <label for="forever">Ban Forever</label>
+
+            <p>Please input an action for the <strong>reporter</strong>:</p>
+            <input type="radio" id="dismiss" name="reported_action" value="Dismiss" checked>
+            <label for="dismiss">Dismiss</label><br>
+            <input type="radio" id="week" name="reported_action" value="7">
+            <label for="week">Ban 1 Week</label><br>
+            <input type="radio" id="forever" name="reported_action" value="10000">
+            <label for="forever">Ban Forever</label>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
     <div style="height:10px; padding-top: 15px; text-align: left;">
         <div id="box">
             <br>
