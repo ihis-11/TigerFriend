@@ -95,7 +95,8 @@ def reporting():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     reported = request.cookies.get('cur_receiver')
@@ -122,7 +123,8 @@ def match():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
 
@@ -150,7 +152,8 @@ def all_chats():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     receiver = request.cookies.get('cur_receiver')
@@ -169,7 +172,8 @@ def fetching_chats():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     # fetching all the chats for the user
@@ -190,7 +194,8 @@ def chat():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     # authenticated net id
@@ -217,7 +222,8 @@ def send_message():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     receiver = request.cookies.get('cur_receiver')
@@ -246,7 +252,8 @@ def get_chats():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     receiver = request.cookies.get('cur_receiver')
@@ -278,7 +285,8 @@ def account():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     # error handling
@@ -336,7 +344,8 @@ def accountdetails():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     account_info = get_user_bio(user)
@@ -420,7 +429,8 @@ def surveydetails():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     try:
@@ -467,7 +477,8 @@ def admin():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
@@ -500,7 +511,8 @@ def fetching_reports():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
@@ -536,7 +548,8 @@ def view_report():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
@@ -570,7 +583,8 @@ def stats():
     user = auth.authenticate().strip()
     if is_banned(user):
         unbanned = get_time(user)
-        html = render_template('banned.html', time = unbanned)
+        times = unbanned.split(" ")
+        html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
