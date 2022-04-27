@@ -568,6 +568,8 @@ def stats():
         response = make_response(html)
         return response
 
+    admin = is_admin(user) 
+
     # Stats is an array of 3 dicts
     # First dict: counts by class year: {"2022": 5, "2023": 10, ...}
     # Second dict: counts by res college: {"Butler": 7, ...}
@@ -575,7 +577,8 @@ def stats():
     #     {"question 1 text": {"answer 1 text": 3, ...}, "question 2 text": {...}, ...}
     stats = get_stats()
     html = render_template('stats.html',
-                            stats = stats)
+                            stats = stats,
+                            isAdmin = admin)
 
     response = make_response(html)
     return response

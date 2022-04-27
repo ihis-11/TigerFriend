@@ -2,7 +2,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/pages.css')}}">
-    <title>TigerFriend | Matches</title>
+    <title>TigerFriend | Stats</title>
 </head>
 
 <body style="background-color:rgb(243, 237, 237); font-family:Playfair Display">
@@ -19,7 +19,7 @@
         {% if isAdmin %}
         <a href="/admin">Admin</a>
         {% endif %}
-    </div>
+    </div> 
 
     <div class="rightsidebar">
         <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />
@@ -27,47 +27,62 @@
 
     <div style="height:180px; padding-top: 50px; text-align: center;">
         </br>
-        <h1 style="font-size:80px; color:black; margin:10px;">You've got matches!</h1>
+        <h1 style="font-size:45px; color:black; margin:10px;">Stats Page</h1>
         </br>
-        <div id="box">
-            <h1 style="font-size:30px; color:black; margin:10px;">Overall Matches</h1>
-            {% for i in range(overall|count) %}
-            <h2>{{ (i+1)|string + ". " + overall[i] + " "}}<a href="chat?receiver={{overall[i]}}"><button>Chat</button></a></h2>
-            {% endfor %}
-            </br>
-        </div>
-        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-        <div id="box2">
-            <h1 style="font-size:30px; color:black; margin:10px;">Academic Matches</h1>
-            {% for i in range(academic|count) %}
-            <h2>{{(i+1)|string + ". " + academic[i] + " "}}<a href="chat?receiver={{academic[i]}}"><button>Chat</button></a></h2>
-            {% endfor %}
-            </br>
-        </div>
-        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-        <div id="box">
-            <h1 style="font-size:30px; color:black; margin:10px;">Extracurricular Matches</h1>
-            {% for i in range(ec|count) %}
-            <h2>{{(i+1)|string + ". " + ec[i] + " "}}<a href="chat?receiver={{ec[i]}}"><button>Chat</button></a></h2>
-            {% endfor %}
-            </br>
-        </div>
-        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-        <div id="box2">
-            <h1 style="font-size:30px; color:black; margin:10px;">Personality Matches</h1>
-            {% for i in range(personality|count) %}
-            <h2>{{(i+1)|string + ". " + personality[i] + " "}}<a href="chat?receiver={{personality[i]}}"><button>Chat</button></a></h2>
-            {% endfor %}
-            </br>
-        </div>
-        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-        <div id="box">
-            <h1 style="font-size:30px; color:black; margin:10px;">Opinions Matches</h1>
-            {% for i in range(opinion|count) %}
-            <h2>{{(i+1)|string + ". " + opinion[i] + " "}}<a href="chat?receiver={{opinion[i]}}"><button>Chat</button></a></h2>
-            {% endfor %}
-            </br>
-        </div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+            <canvas id="piechart" style="padding-left: 28vw; width:100%;max-width:600px"></canvas>
+
+            <script>
+            var xValues = ["2022", "2023", "2024", "2025"];
+            var yValues = [{{stats[0]["2022"]}}, {{stats[0]["2023"]}}, {{stats[0]["2024"]}}, {{stats[0]["2025"]}}];
+            var barColors = ["red", "green","blue","orange"];
+
+            new Chart("piechart", {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+                }]
+            },
+            options: {
+                title: {
+                display: true,
+                text: "Distribution of Class Years"
+                }
+            }
+            });
+            </script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+            <canvas id="bargraph" style="padding-left: 28vw; padding-top: 5vh; padding-bottom: 5vh; width:100%;max-width:600px"></canvas>
+
+            <script>
+            var xValues = ["Butler", "Whitman", "Forbes", "Mathey", "Rocky", "First"];
+            var yValues = [{{stats[1]["Butler"]}}, {{stats[1]["Whitman"]}}, {{stats[1]["Forbes"]}}, {{stats[1]["Mathey"]}}, {{stats[1]["Rocky"]}}, {{stats[1]["First"]}}];
+            var barColors = ["red", "green","blue","orange","brown", "yellow"];
+
+            new Chart("bargraph", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+                }]
+            },
+            options: {
+                legend: {display: false},
+                title: {
+                display: true,
+                text: "Distribution of Res Colleges"
+                }
+            }
+            });
+            </script>
+
     </div>
 
 </body>
