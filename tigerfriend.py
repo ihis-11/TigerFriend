@@ -26,11 +26,11 @@ import auth
 
 # -----------------------------------------------------------------------
 
-@app.before_request
-def before_request():
-    if not request.is_secure:
-        url = request.url.replace('http://', 'https://', 1)
-        return redirect(url, code=301)
+# @app.before_request
+# def before_request():
+#     if not request.is_secure:
+#         url = request.url.replace('http://', 'https://', 1)
+#         return redirect(url, code=301)
 
 # --------------------------------------------------------------------
 
@@ -472,13 +472,19 @@ def admin():
     admin = is_admin(user)
     if admin:
         reported = request.args.get('reported')
-        report_length = request.args.get('time')
+        reporter = request.args.get('reporter')
+        t1 = request.args.get('time1')
+        t2 = request.args.get('time2')
         chat_id = request.args.get("chat_id")
         if reported is not None:
-            report_length = int(report_length)
-            if report_length > 0:
-                add_ban(reported, report_length)
-            dismiss_report(chat_id)
+            reported_time = int(t1)
+            if reported_time > 0:
+                add_ban(reported, reported_time)
+        if reporter is not None:
+            reporter_time = int(t2)
+            if reporter_time > 0:
+                add_ban(reporter, reporter_time)    
+        dismiss_report(chat_id)
         html = render_template('admin.html', isAdmin=admin)
     else:
         html = render_template('deniedaccess.html')
@@ -568,8 +574,6 @@ def stats():
         response = make_response(html)
         return response
 
-    admin = is_admin(user) 
-
     # Stats is an array of 3 dicts
     # First dict: counts by class year: {"2022": 5, "2023": 10, ...}
     # Second dict: counts by res college: {"Butler": 7, ...}
@@ -577,8 +581,7 @@ def stats():
     #     {"question 1 text": {"answer 1 text": 3, ...}, "question 2 text": {...}, ...}
     stats = get_stats()
     html = render_template('stats.html',
-                            stats = stats,
-                            isAdmin = admin)
+                            stats = stats)
 
     response = make_response(html)
     return response

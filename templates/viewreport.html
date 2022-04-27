@@ -16,7 +16,6 @@
         <a href="/surveydetails">Survey</a>
         <a href="/matches">Matches</a>
         <a href="/allChats">Chat</a>
-        <a href="/stats">Stats</a>
         <a href="/accountdetails">Account</a>
         <a class="active" href="/admin">Admin</a>
     </div>
@@ -29,30 +28,24 @@
         <h1 style="font-size:50px; color:black; margin:10px;">Report:</h1>
     </div>
 
-    <div style="height:auto; padding-top: 20px; text-align: center;">
-        <a href="/admin?reported={{reported}}&time=7&chat_id={{report_id}}"><button>Ban 1 Week</button></a>
-        <a href="/admin?reported={{reported}}&time=10000&chat_id={{report_id}}"><button>Ban Forever</button></a>
-        <a href="/admin?reported={{reported}}&time=0&chat_id={{report_id}}"><button>Dismiss Report</button></a>
-    </div>
-
-    <div style="height:auto; padding-top: 70px; text-align: center;">
+    <div style="height:auto; padding-top: 15px; text-align: center;">
         <form action="/action_page.php">
-            <p>Please input an action for the <strong>reported User</strong>:</p>
-            <input type="radio" id="dismiss" name="reported_action" value="Dismiss" checked>
-            <label for="dismiss">Dismiss</label><br>
-            <input type="radio" id="week" name="reported_action" value="7">
+            <p>Please input an action for the <strong>reported</strong> User:</p>
+            <input type="radio" id="dismiss" name="reported_time" value="0" checked>
+            <label for="dismiss">Ignore Report</label><br>
+            <input type="radio" id="week" name="reported_time" value="7">
             <label for="week">Ban 1 Week</label><br>
-            <input type="radio" id="forever" name="reported_action" value="10000">
+            <input type="radio" id="forever" name="reported_time" value="10000">
             <label for="forever">Ban Forever</label>
 
             <p>Please input an action for the <strong>reporter</strong>:</p>
-            <input type="radio" id="dismiss" name="reported_action" value="Dismiss" checked>
-            <label for="dismiss">Dismiss</label><br>
-            <input type="radio" id="week" name="reported_action" value="7">
+            <input type="radio" id="dismiss" name="reporter_time" value="0" checked>
+            <label for="dismiss">Ignore Report</label><br>
+            <input type="radio" id="week" name="reporter_time" value="7">
             <label for="week">Ban 1 Week</label><br>
-            <input type="radio" id="forever" name="reported_action" value="10000">
-            <label for="forever">Ban Forever</label>
-            <input type="submit" value="Submit">
+            <input type="radio" id="forever" name="reporter_time" value="10000">
+            <label for="forever">Ban Forever</label><br><br>
+            <a id="adminSubmit" href="#">Resolve</a>
         </form>
     </div>
 
@@ -77,12 +70,43 @@
             <ul style="list-style-type:none;">
             {% for msg in hist %}
                 <li>
-                <h1 style="font-size:20px; color:black; margin:10px;"><span style="font-size:10px; color:grey; margin:10x;">{{msg[2].split('.')[0]}}</span>          {{msg[0]}}: {{msg[1]}}</h1>
+                <h1 style="font-size:20px; color:black; margin:10px;"><span style="font-size:10px; color:grey; margin:10x;">{{msg[2]}}</span>          {{msg[0]}}: {{msg[1]}}</h1>
                 </li>
             {% endfor %}
             </ul>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        'use strict';
+        
+        function handleResponse(response) {
+            $('#admin').html(response);
+        }
+
+        let request = null
+
+        function resolveReport() {
+            let time1 = $("input[name='reported_time'][type='radio']:checked").val();
+            let time2 = $("input[name='reporter_time'][type='radio']:checked").val();
+            let url = '/admin?reported={{reported}}&time1=' + time1 + '&reporter={{reportee}}&time2=' + time2 + '&chat_id={{report_id}}';
+            if (request != null)
+                request.abort();
+            
+            request = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse
+            });
+        }
+        function setup() {
+            $('#adminSubmit').click(resolveReport);
+        }
+
+        $('document').ready(setup);
+    </script>
 
 </body>
 </html>
