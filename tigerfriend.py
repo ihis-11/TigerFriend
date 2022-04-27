@@ -343,7 +343,7 @@ def accountdetails():
     bio = ""
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
-        username = escape(request.args.get('username'))  # DEAL WITH EMPTY USERNAME INPUT HERE
+        username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
         bio = request.args.get('bio')
     else:
         username = account_info[0]
