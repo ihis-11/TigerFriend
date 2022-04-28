@@ -19,9 +19,9 @@ def report_user(reporter, reported, rep_comment):
         session = Session()
 
         chat_id = (session.query(Chats.chat_id)
-                    .filter((Chats.net_id1 == reporter) | (Chats.net_id2 == reporter))
-                    .filter((Chats.net_id1 == reported) | (Chats.net_id2 == reported))
-                    .one_or_none())
+                   .filter((Chats.net_id1 == reporter) | (Chats.net_id2 == reporter))
+                   .filter((Chats.net_id1 == reported) | (Chats.net_id2 == reported))
+                   .one_or_none())
         now = str(datetime.now())
 
         new_report = Reports(report_id=chat_id[0],
@@ -40,6 +40,7 @@ def report_user(reporter, reported, rep_comment):
         print(ex, file=stderr)
         exit(1)
 
+
 def report_exist(chat_id):
     try:
         engine = create_engine(DATABASE_URL)
@@ -48,9 +49,9 @@ def report_exist(chat_id):
         session = Session()
 
         report_id = (session.query(Reports)
-                    .filter(Reports.report_id == chat_id)
-                    .one_or_none())
-                    
+                     .filter(Reports.report_id == chat_id)
+                     .one_or_none())
+
         session.close()
         engine.dispose()
 
@@ -59,7 +60,7 @@ def report_exist(chat_id):
     except Exception as ex:
         print(ex, file=stderr)
         exit(1)
-    
+
 
 def get_all_reports():
     try:
@@ -69,8 +70,8 @@ def get_all_reports():
         session = Session()
 
         reports = (session.query(Reports.report_id, Reports.reported_net_id, Reports.comment)
-                    .all())
-                    
+                   .all())
+
         session.close()
         engine.dispose()
 
@@ -79,6 +80,7 @@ def get_all_reports():
     except Exception as ex:
         print(ex, file=stderr)
         exit(1)
+
 
 def dismiss_report(chat_id):
     try:
@@ -96,3 +98,14 @@ def dismiss_report(chat_id):
     except Exception as ex:
         print(ex, file=stderr)
         exit(1)
+
+
+# unit test
+def main():
+    report_user('Tester', 'Bully', 'This person was mean to me.')
+
+
+# -----------------------------------------------------------------------
+
+if __name__ == '__main__':
+    main()
