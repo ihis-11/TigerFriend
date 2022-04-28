@@ -56,13 +56,47 @@
             });
             </script>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-            <canvas id="bargraph" style="padding-left: 28vw; padding-top: 5vh; padding-bottom: 5vh; width:100%;max-width:600px"></canvas>
+            <canvas id="doughnut" style="padding-left: 28vw; padding-top: 5vh; width:100%;max-width:600px"></canvas>
 
             <script>
-            var xValues = ["Butler", "Whitman", "Forbes", "Mathey", "Rocky", "First"];
-            var yValues = [{{stats[1]["Butler"]}}, {{stats[1]["Whitman"]}}, {{stats[1]["Forbes"]}}, {{stats[1]["Mathey"]}}, {{stats[1]["Rocky"]}}, {{stats[1]["First"]}}];
-            var barColors = ["red", "green","blue","orange","brown", "yellow"];
+            var xValues = ["Butler", "First", "Forbes", "Mathey", "Rocky", "Whitman"];
+            var yValues = [{{stats[1]["Butler"]}}, {{stats[1]["First"]}}, {{stats[1]["Forbes"]}}, {{stats[1]["Mathey"]}}, {{stats[1]["Rockefeller"]}}, {{stats[1]["Whitman"]}}];
+            var barColors = ["red", "green","blue","orange","brown","purple"];
+
+            new Chart("doughnut", {
+            type: "doughnut",
+            data: {
+                labels: xValues,
+                datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+                }]
+            },
+            options: {
+                title: {
+                display: true,
+                text: "Distribution of Res Colleges"
+                }
+            }
+            });
+            </script>
+
+            </br>
+            <h1 style="padding-top: 5vh; font-size:25px; color:black; margin:10px;">Some Question Stats!</h1>
+            <h2 style="font-size:20px; color:black; margin:10px;">See how your peers answered the questions</h2>
+            </br>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+            <canvas id="bargraph" style="padding-left: 28vw; width:100%;max-width:600px"></canvas>
+
+            <script>
+            var xValues = ['Rue', 'Player 456', 'Aang', 'Daenerys', 'Judge Judy'];
+            var yValues = [{{stats[2]["You’re the main character! Who are you?"]["Rue (Euphoria)"]}}, 
+            {{stats[2]["You’re the main character! Who are you?"]["Player 456 (Squid Game)"]}},
+            {{stats[2]["You’re the main character! Who are you?"]["Aang (The Last Airbender)"]}},
+            {{stats[2]["You’re the main character! Who are you?"]["Daenerys (Game of Thrones)"]}},
+            {{stats[2]["You’re the main character! Who are you?"]["Judge Judy (Judge Judy)"]}}];
+            var barColors = ["red", "green","blue","orange","brown"];
 
             new Chart("bargraph", {
             type: "bar",
@@ -77,7 +111,67 @@
                 legend: {display: false},
                 title: {
                 display: true,
-                text: "Distribution of Res Colleges"
+                text: "You're the main character! Who are you?"
+                }
+            }
+            });
+            </script>
+
+            <canvas id="bargraph2" style="padding-left: 28vw; padding-top: 5vh; width:100%;max-width:600px"></canvas>
+
+            <script>
+            var xValues = ["Mint Chocoloate", "Oxford Comma", "Cereal before Milk", "GIF", "Consuming Dairy"];
+            var yValues = [{{stats[2]["Smallest hill you’d die on?"]["Mint chocolate is a good flavor"]}}, 
+            {{stats[2]["Smallest hill you’d die on?"]["The oxford comma"]}},
+            {{stats[2]["Smallest hill you’d die on?"]["Cereal before milk"]}},
+            {{stats[2]["Smallest hill you’d die on?"]["The pronunciation of the word “gif”"]}},
+            {{stats[2]["Smallest hill you’d die on?"]["Eating dairy even though I’m lactose intolerant"]}}];
+            var barColors = ["red", "green","blue","orange","brown"];
+
+            new Chart("bargraph2", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+                }]
+            },
+            options: {
+                legend: {display: false},
+                title: {
+                display: true,
+                text: "Smallest hill you’d die on?"
+                }
+            }
+            });
+            </script>
+
+            <canvas id="bargraph3" style="padding-left: 28vw; padding-top: 5vh; padding-bottom: 5vh; width:100%;max-width:600px"></canvas>
+
+            <script>
+            var xValues = ["Dance Team", "Improv Group", "Club Sports", "A capella", "E-club"];
+            var yValues = [{{stats[2]["The clubs are recruiting, which club are you trying out for?"]["Dance Team"]}}, 
+            {{stats[2]["The clubs are recruiting, which club are you trying out for?"]["The oxford comma"]}},
+            {{stats[2]["The clubs are recruiting, which club are you trying out for?"]["Club Sports"]}},
+            {{stats[2]["The clubs are recruiting, which club are you trying out for?"]["A capella"]}},
+            {{stats[2]["The clubs are recruiting, which club are you trying out for?"]["E-club"]}}];
+            var barColors = ["red", "green","blue","orange","brown"];
+
+            new Chart("bargraph3", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+                }]
+            },
+            options: {
+                legend: {display: false},
+                title: {
+                display: true,
+                text: "The clubs are recruiting, which club are you trying out for?"
                 }
             }
             });

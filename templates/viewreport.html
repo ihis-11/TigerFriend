@@ -16,6 +16,7 @@
         <a href="/surveydetails">Survey</a>
         <a href="/matches">Matches</a>
         <a href="/allChats">Chat</a>
+        <a href="/stats">Stats</a>
         <a href="/accountdetails">Account</a>
         <a class="active" href="/admin">Admin</a>
     </div>
@@ -70,7 +71,7 @@
             <ul style="list-style-type:none;">
             {% for msg in hist %}
                 <li>
-                <h1 style="font-size:20px; color:black; margin:10px;"><span style="font-size:10px; color:grey; margin:10x;">{{msg[2]}}</span>          {{msg[0]}}: {{msg[1]}}</h1>
+                <h1 style="font-size:20px; color:black; margin:10px;"><span style="font-size:10px; color:grey; margin:10x;">{{msg[2].split('.')[0]}}</span>          {{msg[0]}}: {{msg[1]}}</h1>
                 </li>
             {% endfor %}
             </ul>
