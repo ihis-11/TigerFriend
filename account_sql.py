@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-
+from queue import Queue
 from sys import stderr
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 
 import configs
-from database import Account, RawData
+from database import Account, RawData, Messages, Chats, Banned
 
 DATABASE_URL = configs.DATABASE_URL
 
@@ -166,6 +166,36 @@ def get_user_bio(net_id):
         return ["unknown (database connection failed)", "unknown"]
 
 
+# adapted from chat_sql.py to avoid circular import
+def get_chat_ids(user):
+    try:
+        # connect to database
+        engine = create_engine(DATABASE_URL)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        chats = (session.query(Chats).filter((Chats.net_id1 == user) | (Chats.net_id2 == user))
+                 .order_by(desc(Chats.latest_date_time))
+                 .all())
+
+        chat_ids = []
+        for chat in chats:
+            chat_ids.append(chat.chat_id)
+
+        session.close()
+        engine.dispose()
+        return chat_ids
+
+    except Exception as ex:
+        session.close()
+        engine.dispose()
+        print(ex, file=stderr)
+        print("Data base connection failed", file=stderr)
+        return "unknown (database connection failed)"
+
+# Deletes account associated with net_id and all other info (except admin status)
+# Match scores must be deleted in PGAdmin due to SQLAlchemy incompatibility
 def clear_account(net_id):
     try:
         engine = create_engine(DATABASE_URL)
@@ -173,14 +203,48 @@ def clear_account(net_id):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        # (session.query(Account)
-        #         .filter(Account.net_id == net_id)
+        chat_ids = get_chat_ids(net_id)
+
+        for chat in chat_ids:
+            (session.query(Messages)
+                    .filter(Messages.chat_id == chat)
+                    .delete())
+
+            session.commit()
+
+            (session.query(Chats)
+                    .filter(Chats.chat_id == chat)
+                    .delete())
+
+            session.commit()
+
+        # DOESN'T WORK WITH SQLAlchemy; NO PRIMARY KEY IN MATCHSCORES
+        # DELETE MATCHSCORES MANUALLY IN PGAdmin using:
+        #
+        # DELETE FROM public.matchscores
+        #     WHERE net_id1 = {{net_id}} OR net_id2 = {{net_id}};
+        #
+        # (session.query(MatchScores)
+        #         .filter((MatchScores.net_id1 == net_id) | (MatchScores.net_id2 == net_id))
         #         .delete())
         # session.commit()
+
+        (session.query(Account)
+                .filter(Account.net_id == net_id)
+                .delete())
+
+        session.commit()
 
         (session.query(RawData)
                 .filter(RawData.net_id == net_id)
                 .delete())
+
+        session.commit()
+
+        (session.query(Banned)
+                .filter(Banned.net_id == net_id)
+                .delete())
+
         session.commit()
 
         (session.query())
@@ -192,3 +256,13 @@ def clear_account(net_id):
         print(ex, file=stderr)
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
+
+# run main to delete user
+def main():
+    clear_account('collado')
+
+# ----------------------------------------------------------------------
+
+
+if __name__ == '__main__':
+    main()
