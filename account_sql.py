@@ -259,7 +259,9 @@ def clear_account(net_id):
 
 # run main to delete user
 def main():
-    clear_account('collado')
+    user = 'collado'
+    clear_account(user)
+    print(user + "'s account was deleted")
 
 # ----------------------------------------------------------------------
 

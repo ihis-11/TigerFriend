@@ -150,15 +150,26 @@ def match():
 def all_chats():
     # authenticated net id
     user = auth.authenticate().strip()
+
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
         html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
-    receiver = request.cookies.get('cur_receiver')
-    bio = get_bio(receiver)
     admin = is_admin(user)
+    receiver = request.cookies.get('cur_receiver')
+    # no cookie set, get most recent chat
+    if receiver is None:
+        chats = get_all_chats(user)
+        if len(chats) >= 1:
+            receiver = chats[0][1]
+    # no most recent chat
+    if receiver is None:
+        html = render_template('nochat.html', isAdmin=admin)
+        response = make_response(html)
+        return response
+    bio = get_bio(receiver)
     html = render_template('chat.html', receiver=receiver, bio_receiver=bio, isAdmin=admin)
     response = make_response(html)
     return response
@@ -198,12 +209,19 @@ def chat():
         html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
-    # authenticated net id
+    admin = is_admin(user)
     receiver = request.args.get('receiver')
 
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
-    admin = is_admin(user)
+
+    # if user does not exist
+    if receiver_bio == "No user with this username":
+        html = render_template('badchat.html',
+                               receiver=receiver,
+                               isAdmin=admin)
+        response = make_response(html)
+        return response
 
     html = render_template('chat.html',
                            receiver=receiver,

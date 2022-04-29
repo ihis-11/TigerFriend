@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/chat.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/popup.css')}}">
+    <title>TigerFriend | Chat</title>
+</head>
+
+<body style="background-color:rgb(243, 237, 237); font-family:Playfair Display; overflow: hidden;">
+
+    {% include 'navbar.html' %}
+
+    <div class="sidebar">
+        <br>
+        <a href="/surveydetails">Survey</a>
+        <a href="/matches">Matches</a>
+        <a class="active" href="/allChats">Chat</a>
+        <a href="/stats">Stats</a>
+        <a href="/accountdetails">Account</a> {% if isAdmin %}
+        <a href="/admin">Admin</a> {% endif %}
+    </div>
+
+    <div class="rightsidebar">
+        <img src="https://i.pinimg.com/originals/f9/c2/66/f9c26616722f0b5ae43b87acc3a5ee1d.png" class="image" width="150" height="150" />
+    </div>
+
+    <div style="height:180px; padding-top: 45px; text-align: center;">
+        <div id="container">
+            <aside>
+                <header>
+                    <h3>Your Chats</h3>
+                </header>
+                <div id="allChats" class="container-fluid" style="width: 100%;"></div>
+            </aside>
+            <main>
+                <header>
+                    <div>
+                        <h2 id="reported">{{receiver}}</h2>
+                    </div>
+                </header>
+
+                <div id="messages">
+                    <h1>We couldn't find user {{receiver}}. Try chatting with someone else from the Matches page!</h1>
+                </div>
+
+            </main>
+        </div>
+    </div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+        'use strict';
+
+        function handleResponse(response) {
+            $('#allChats').html(response);
+        }
+
+        let request = null
+
+        function getChats() {
+            let url = '/getChats'
+
+            if (request != null)
+                request.abort();
+
+            request = $.ajax({
+                type: 'GET',
+                url: url,
+                success: handleResponse
+            });
+        }
+
+        function update() {
+            getChats();
+        }
+
+        function setup() {
+            getChats();
+            window.setInterval(update, 3000);
+        }
+
+        $('document').ready(setup);
+    </script>
+
+</html>
