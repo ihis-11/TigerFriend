@@ -399,11 +399,6 @@ def accountdetails():
         error_msg = "Please input a username."
         return redirect(url_for('account', error_msg=error_msg))
 
-    # Dealing with empty username input
-    if bio.strip() == '':
-        error_msg = "Please input a bio."
-        return redirect(url_for('account', error_msg=error_msg))
-
     # if the user doesn't already have an account
     if account_info is None:
         # checking if the username is unique
