@@ -86,6 +86,19 @@ def authenticate():
     session['username'] = username
     return username
 
+# ----------------------------------------------------------------------
+
+# Check if user is logged in or not
+
+def loggedIn():
+    # If the username is in the session, then the user was
+    # authenticated previously.  So return the username.
+    if 'username' in session:
+        return session.get('username')
+    else: 
+        username = None
+    return username
+
 
 # ----------------------------------------------------------------------
 

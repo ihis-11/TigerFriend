@@ -26,11 +26,11 @@ import auth
 
 # -----------------------------------------------------------------------
 
-# @app.before_request
-# def before_request():
-#     if not request.is_secure:
-#         url = request.url.replace('http://', 'https://', 1)
-#         return redirect(url, code=301)
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        return redirect(url, code=301)
 
 # --------------------------------------------------------------------
 
@@ -290,7 +290,12 @@ def get_chats():
 
 @app.route('/about', methods=['GET'])
 def about():
-    html = render_template('about.html')
+    user = auth.loggedIn()
+    if user is not None:
+        loggedIn = True
+    else:
+        loggedIn = False
+    html = render_template('about.html', loggedIn = loggedIn)
     response = make_response(html)
     return response
 
