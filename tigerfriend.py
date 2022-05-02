@@ -26,11 +26,11 @@ import auth
 
 # -----------------------------------------------------------------------
 
-@app.before_request
-def before_request():
-    if not request.is_secure:
-        url = request.url.replace('http://', 'https://', 1)
-        return redirect(url, code=301)
+# @app.before_request
+# def before_request():
+#     if not request.is_secure:
+#         url = request.url.replace('http://', 'https://', 1)
+#         return redirect(url, code=301)
 
 # --------------------------------------------------------------------
 
@@ -355,7 +355,19 @@ def account():
 
 
 # --------------------------------------------------------------------
+@app.route('/bioupdate', methods=['GET'])
+def bioupdate():
+    # authenticated net id
+    user = auth.authenticate().strip()
 
+     # handles updating the bio
+    if request.args.get('newbio') is not None:
+        print("updated bio_-----------------________---_--------")
+        update_bio(user, request.args.get('newbio'))
+    
+    return make_response('')
+
+# --------------------------------------------------------------------
 @app.route('/accountdetails', methods=['GET'])
 def accountdetails():
     # authenticated net id
@@ -387,7 +399,7 @@ def accountdetails():
         error_msg = "Please input a bio."
         return redirect(url_for('account', error_msg=error_msg))
 
-        # if the user doesn't already have an account
+    # if the user doesn't already have an account
     if account_info is None:
         # checking if the username is unique
         try:
@@ -422,9 +434,6 @@ def accountdetails():
         api_account_creation(user, yr, major, res, username, bio)
         input_match_scores(user)
 
-    if request.args.get('newbio') is not None:
-        update_bio(user, request.args.get('newbio'))
-
     data = get_year_major(user)
     admin = is_admin(user)
     html = render_template('accountdetails.html',
@@ -437,7 +446,6 @@ def accountdetails():
                            isAdmin=admin)
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 

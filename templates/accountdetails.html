@@ -54,7 +54,7 @@
         <div id="box3">
             <br>
             <h1 style="font-size:20px; color:black; margin:10px;">Update Bio</h1><br>
-            <textarea maxlength="150" rows="3" cols="50" id="updateBio" name="bio" placeholder="Type your new bio here"></textarea> <br><br>
+            <textarea maxlength="150" rows="3" cols="50" id="updateBio" name="bio" placeholder="Type your new bio here"></textarea><br><br>
             <a id="bioUpdateButton" href="#"><button>Update</button></a>
             <br>
             <p></p>
@@ -70,13 +70,13 @@
         let request = null
 
         function handleResponse() {
-            window.location.reload();
+            location.href = "/accountdetails"
         }
 
         function updateBio() {
             let newBio = $('#updateBio').val();
             newBio = encodeURIComponent(newBio);
-            let url = '/accountdetails?newbio=' + newBio;
+            let url = '/bioupdate?newbio=' + newBio;
             $("#updateBio").val('');
 
             if (request != null)
