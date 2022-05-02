@@ -161,8 +161,7 @@ def all_chats():
     chats = get_all_chats(user)
     if len(chats) >= 1:
         receiver = chats[0][1]
-    # no most recent chat
-    if receiver is None:
+    else:
         html = render_template('nochat.html', isAdmin=admin)
         response = make_response(html)
         return response
