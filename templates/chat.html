@@ -123,7 +123,7 @@
         let request2 = null
 
         function getMessages() {
-            let url = '/getmessages'
+            let url = '/getmessages?receiver=' + {{receiver}};
 
             if (request2 != null)
                 request2.abort();

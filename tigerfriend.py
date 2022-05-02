@@ -270,8 +270,8 @@ def get_chats():
         html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
-    receiver = request.cookies.get('cur_receiver')
 
+    receiver = request.args.get('receiver')
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)
 
