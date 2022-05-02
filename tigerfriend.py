@@ -158,12 +158,9 @@ def all_chats():
         response = make_response(html)
         return response
     admin = is_admin(user)
-    receiver = request.cookies.get('cur_receiver')
-    # no cookie set, get most recent chat
-    if receiver is None:
-        chats = get_all_chats(user)
-        if len(chats) >= 1:
-            receiver = chats[0][1]
+    chats = get_all_chats(user)
+    if len(chats) >= 1:
+        receiver = chats[0][1]
     # no most recent chat
     if receiver is None:
         html = render_template('nochat.html', isAdmin=admin)
