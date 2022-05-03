@@ -4,13 +4,14 @@
 # banned_sql
 # --------------------------------------------------------------------
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
-import configs
-from database import Banned
 from datetime import datetime, timedelta
 from sys import stderr
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+import configs
+from database import Banned
 
 DATABASE_URL = configs.DATABASE_URL
 

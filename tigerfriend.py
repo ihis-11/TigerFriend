@@ -1,21 +1,21 @@
 # --------------------------------------------------------------------
 # tigerfriend.py
 # --------------------------------------------------------------------
+import os
+from html import unescape
+from sys import stderr
+
+import psycopg2
 from flask import Flask, request, make_response, render_template, redirect, url_for
 
-from admin_sql import is_admin, get_report, get_message_history
-from urllib.parse import unquote
-from html import unescape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio, get_netid
-from stats_sql import get_stats
-from matching import input_match_scores, get_matches
-import os
-from req_lib import getOneUndergrad
-import psycopg2
-from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
-from reports_sql import get_all_reports, dismiss_report, report_user, report_exist
+from admin_sql import is_admin, get_report, get_message_history
 from banned_sql import add_ban, is_banned, get_time
-from sys import stderr
+from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
+from matching import input_match_scores, get_matches
+from reports_sql import get_all_reports, dismiss_report, report_user, report_exist
+from req_lib import getOneUndergrad
+from stats_sql import get_stats
 
 # --------------------------------------------------------------------
 
@@ -25,6 +25,7 @@ app.secret_key = os.environ['APP_SECRET_KEY']
 
 import auth
 
+
 # -----------------------------------------------------------------------
 
 @app.before_request
@@ -32,6 +33,7 @@ def before_request():
     if not request.is_secure:
         url = request.url.replace('http://', 'https://', 1)
         return redirect(url, code=301)
+
 
 # --------------------------------------------------------------------
 
@@ -42,6 +44,7 @@ def home():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 
 @app.route('/survey', methods=['GET'])
@@ -51,7 +54,7 @@ def survey():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
 
@@ -96,7 +99,7 @@ def reporting():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     reported = request.args.get("receiver")
@@ -118,6 +121,7 @@ def reporting():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 @app.route('/matches', methods=['GET'])
 def match():
@@ -126,7 +130,7 @@ def match():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
 
@@ -144,6 +148,7 @@ def match():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 
 @app.route('/allChats', methods=['GET'])
@@ -154,7 +159,7 @@ def all_chats():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
@@ -180,7 +185,7 @@ def fetching_chats():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     # fetching all the chats for the user
@@ -202,12 +207,12 @@ def chat():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
     receiver = unescape(request.args.get('receiver'))
-    
+
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
 
@@ -236,7 +241,7 @@ def send_message():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     receiver = unescape(request.args.get('receiver'))
@@ -265,7 +270,7 @@ def get_chats():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
 
@@ -290,7 +295,7 @@ def about():
         loggedIn = True
     else:
         loggedIn = False
-    html = render_template('about.html', loggedIn = loggedIn)
+    html = render_template('about.html', loggedIn=loggedIn)
     response = make_response(html)
     return response
 
@@ -304,7 +309,7 @@ def account():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     # error handling
@@ -360,12 +365,13 @@ def bioupdate():
     # authenticated net id
     user = auth.authenticate().strip()
 
-     # handles updating the bio
+    # handles updating the bio
     if request.args.get('newbio') is not None:
         print("updated bio_-------------------------------")
         update_bio(user, request.args.get('newbio'))
-    
+
     return make_response('')
+
 
 # --------------------------------------------------------------------
 @app.route('/accountdetails', methods=['GET'])
@@ -375,7 +381,7 @@ def accountdetails():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     account_info = get_user_bio(user)
@@ -384,7 +390,7 @@ def accountdetails():
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
         # DEAL WITH EMPTY USERNAME INPUT HERE
-        username = unescape(request.args.get('username'))  
+        username = unescape(request.args.get('username'))
         bio = request.args.get('bio')
     else:
         username = account_info[0]
@@ -394,7 +400,7 @@ def accountdetails():
     if username.strip() == '':
         error_msg = "Please input a username."
         return redirect(url_for('account', error_msg=error_msg))
-    
+
     # dealing with the usernames with spaces
     if ' ' in username:
         error_msg = "Please input in a username without a space"
@@ -448,6 +454,7 @@ def accountdetails():
     response = make_response(html)
     return response
 
+
 # --------------------------------------------------------------------
 
 @app.route('/surveydetails', methods=['GET'])
@@ -457,7 +464,7 @@ def surveydetails():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     try:
@@ -505,7 +512,7 @@ def admin():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
@@ -521,7 +528,7 @@ def admin():
                 add_ban(reported, reported_time)
             reporter_time = int(t2)
             if reporter_time > 0:
-                add_ban(reporter, reporter_time)    
+                add_ban(reporter, reporter_time)
             dismiss_report(chat_id)
         html = render_template('admin.html', isAdmin=admin)
     else:
@@ -529,6 +536,7 @@ def admin():
 
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -539,7 +547,7 @@ def fetching_reports():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
@@ -548,7 +556,7 @@ def fetching_reports():
 
     # fetching all the chats for the user
     reports = get_all_reports()
-    if reports == []:
+    if not reports:
         html = '<h2 style="font-size:20px; color:black; margin:10px;">There are no reports to view at this time</h2>'
         return make_response(html)
 
@@ -567,6 +575,7 @@ def fetching_reports():
     html += '</tbody></table>'
     return make_response(html)
 
+
 # --------------------------------------------------------------------
 
 @app.route('/viewreport', methods=['GET'])
@@ -576,30 +585,31 @@ def view_report():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
-    
+
     admin = is_admin(user)
     if not admin:
         html = render_template('deniedaccess.html')
     else:
-        chat_id = request.args.get('id') # chat id
+        chat_id = request.args.get('id')  # chat id
         chat_history = get_message_history(chat_id)
         reported, reportee, comment = get_report(chat_id)
 
         html = render_template('viewreport.html',
-                                reported = reported,
-                                reportee = reportee,
-                                reason = comment,
-                                report_id = chat_id,
-                                hist = chat_history)
-        
+                               reported=reported,
+                               reportee=reportee,
+                               reason=comment,
+                               report_id=chat_id,
+                               hist=chat_history)
+
         # TO DO: add in check for clicking block, edit html to display reported user, reason, chat history
         # and button that causes ban
 
     response = make_response(html)
     return response
+
 
 # --------------------------------------------------------------------
 
@@ -610,7 +620,7 @@ def stats():
     if is_banned(user):
         unbanned = get_time(user)
         times = unbanned.split(" ")
-        html = render_template('banned.html', time = times[0])
+        html = render_template('banned.html', time=times[0])
         response = make_response(html)
         return response
     admin = is_admin(user)
@@ -622,8 +632,8 @@ def stats():
     #     {"question 1 text": {"answer 1 text": 3, ...}, "question 2 text": {...}, ...}
     stats = get_stats()
     html = render_template('stats.html',
-                            stats = stats,
-                            isAdmin=admin)
+                           stats=stats,
+                           isAdmin=admin)
 
     response = make_response(html)
     return response

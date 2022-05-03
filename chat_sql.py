@@ -5,11 +5,11 @@ import random
 # chat_sql.py
 # --------------------------------------------------------------------
 from datetime import datetime
-from pytz import timezone
 from queue import Queue
 from sys import stderr
 
-from sqlalchemy import create_engine, desc, asc
+from pytz import timezone
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 
 import configs
@@ -36,7 +36,7 @@ def get_all_chats(user):
                  .all())
 
         chat_list = []
-        q = Queue();
+        q = Queue()
         for chat in chats:
             chat_id = str(chat.chat_id)
             other_id = chat.net_id1
@@ -212,6 +212,7 @@ def get_messages(chat_id, user):
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
 
+
 # returns the most recent message in a given chat
 def get_most_recent_message(chat_id):
     try:
@@ -317,6 +318,7 @@ def main():
     session.commit()
     session.close()
     engine.dispose()
+
 
 # ----------------------------------------------------------------------
 

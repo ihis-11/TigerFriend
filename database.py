@@ -80,6 +80,7 @@ class Reports(Base):
     comment = Column(String)
     date_time = Column(DateTime)
 
+
 class Administrators(Base):
     __tablename__ = 'administrators'
     net_id = Column(String, primary_key=True)
@@ -95,6 +96,7 @@ class Survey(Base):
     answer3 = Column(String)
     answer4 = Column(String)
     answer5 = Column(String)
+
 
 class Banned(Base):
     __tablename__ = 'banned'

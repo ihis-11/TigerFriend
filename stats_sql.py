@@ -4,14 +4,16 @@
 # stats_sql
 # --------------------------------------------------------------------
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine, desc
-import configs
-from database import Account, RawData, Survey
 from sys import stderr
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+import configs
+from database import Account, RawData, Survey
+
 DATABASE_URL = configs.DATABASE_URL
+
 
 # Returns stats; specifically, [dict of class year counts, dict of res college counts]
 def get_stats():
@@ -31,10 +33,10 @@ def get_stats():
                 years[account.class_year] += 1
             if account.res_college in ["Butler", "Whitman", "Rockefeller", "Forbes", "Mathey", "First"]:
                 res[account.res_college] += 1
-        
-        responses = {"21": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0,}, 
-                    "13": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0,},
-                    "23": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0,}} # questions displayed = #13, #21, #23
+
+        responses = {"21": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, },
+                     "13": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, },
+                     "23": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, }}  # questions displayed = #13, #21, #23
         user_responses = (session.query(RawData).all())
         for response in user_responses:
             responses["13"][str(response.q13_response)] += 1
@@ -62,6 +64,7 @@ def get_stats():
     except Exception as ex:
         print(ex, file=stderr)
         print("Stats get failed", file=stderr)
+
 
 # --------------------------------------------------------------------
 

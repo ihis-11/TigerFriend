@@ -4,12 +4,13 @@
 # admin_sql
 # --------------------------------------------------------------------
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sys import stderr
+
 from sqlalchemy import create_engine, desc
+from sqlalchemy.orm import sessionmaker
+
 import configs
 from database import Administrators, Reports, Messages
-from sys import stderr
 
 DATABASE_URL = configs.DATABASE_URL
 
@@ -37,6 +38,7 @@ def is_admin(net_id):
         print(ex, file=stderr)
         print("Admin check failed", file=stderr)
 
+
 # Returns [reported, reportee, type, comment] of a certain report
 def get_report(rep_id):
     # connect to database
@@ -47,9 +49,9 @@ def get_report(rep_id):
         session = Session()
 
         report = (session.query(Reports)
-                 .filter(Reports.report_id == rep_id)
-                 .one_or_none())
-                
+                  .filter(Reports.report_id == rep_id)
+                  .one_or_none())
+
         rep = [report.reported_net_id, report.reporter_net_id, report.comment]
 
         session.commit()
@@ -61,6 +63,7 @@ def get_report(rep_id):
     except Exception as ex:
         print(ex, file=stderr)
         print("Admin check failed", file=stderr)
+
 
 # get all message history from a given chat_id (w/no updates to is read (for admin))
 # net_id not username for sender
@@ -94,6 +97,7 @@ def get_message_history(chat_id):
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
 
+
 # ----------------------------------------------------------------------
 
 def make_admin(net_id):
@@ -103,16 +107,17 @@ def make_admin(net_id):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        new_admin = Administrators(net_id = net_id)
+        new_admin = Administrators(net_id=net_id)
         session.add(new_admin)
         session.commit()
-        
+
         session.close()
         engine.dispose()
 
     except Exception as ex:
         print(ex, file=stderr)
         print("Admin add failed", file=stderr)
+
 
 # unit test
 def main():

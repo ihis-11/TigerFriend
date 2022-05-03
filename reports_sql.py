@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
-from sys import stderr
-from sqlalchemy import create_engine, desc
-from sqlalchemy.orm import sessionmaker
-from database import Chats, Reports
-import configs
 from datetime import datetime
+from sys import stderr
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+import configs
+from database import Chats, Reports
 
 DATABASE_URL = configs.DATABASE_URL
 

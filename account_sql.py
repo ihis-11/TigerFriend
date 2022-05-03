@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from queue import Queue
 from sys import stderr
+
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 
