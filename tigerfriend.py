@@ -8,7 +8,6 @@ from html import escape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio, get_netid
 from stats_sql import get_stats
 from matching import input_match_scores, get_matches
-# from keys import APP_SECRET_KEY
 import os
 from req_lib import getOneUndergrad
 import psycopg2
