@@ -119,7 +119,9 @@
         function sendMessage() {
             let messageSent = $('#chatSent').val();
             messageSent = encodeURIComponent(messageSent)
-            let url = '/sendchat?message=' + messageSent;
+            let receiver = document.getElementById("reported").innerHTML;
+            receiver = encodeURIComponent(receiver);
+            let url = '/sendchat?message=' + messageSent + '&receiver=' + receiver;
             $("#chatSent").val('');
 
             if (request != null)

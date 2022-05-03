@@ -226,7 +226,6 @@ def chat():
                            bio_receiver=receiver_bio,
                            isAdmin=admin)
     response = make_response(html)
-    response.set_cookie('cur_receiver', receiver)
     return response
 
 
@@ -242,7 +241,7 @@ def send_message():
         html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
-    receiver = request.cookies.get('cur_receiver')
+    receiver = request.args.get('receiver')
     chat_sent = request.args.get('message')
     message = chat_sent  # handling the attacks on the html pages
 
