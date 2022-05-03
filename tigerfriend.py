@@ -560,7 +560,7 @@ def fetching_reports():
         html = '<h2 style="font-size:20px; color:black; margin:10px;">There are no reports to view at this time</h2>'
         return make_response(html)
 
-    html = ('<table class="table table-striped table-borderless">'
+    html = ('<table style="text-align: left;" class="table table-striped table-borderless">'
             '<thead><tr><th>ReportID</th><th>Reported</th>'
             '<th>Comment</th></thead><tbody>')
     for report in reports:
