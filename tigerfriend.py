@@ -8,7 +8,9 @@ from html import escape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio, get_netid
 from stats_sql import get_stats
 from matching import input_match_scores, get_matches
-from keys import APP_SECRET_KEY
+# from keys import APP_SECRET_KEY
+from boto.s3.connection import S3Connection
+import os
 from req_lib import getOneUndergrad
 import psycopg2
 from chat_sql import get_messages, get_chat_id, send_chat, get_all_chats
@@ -20,7 +22,8 @@ from sys import stderr
 
 app = Flask(__name__, template_folder='templates')
 
-app.secret_key = APP_SECRET_KEY
+# app.secret_key = APP_SECRET_KEY
+s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
 import auth
 
