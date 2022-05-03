@@ -182,7 +182,7 @@ def clear_account(net_id):
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        chat_ids = get_chat_ids(net_id)
+        chat_ids = __get_chat_ids__(net_id)
 
         for chat in chat_ids:
             (session.query(Messages)
