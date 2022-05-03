@@ -99,7 +99,7 @@ def reporting():
         html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
-    reported = request.cookies.get('cur_receiver')
+    reported = request.args.get("receiver")
     reportingmsg = request.args.get("reportmsg")
     admin = is_admin(user)
 
@@ -113,8 +113,10 @@ def reporting():
         else:
             reported_id = get_netid(reported)
             report_user(user, reported_id, reportingmsg)
-    
-    return make_response(render_template('reported.html', reported=reported, isAdmin=admin))
+
+    html = render_template('reported.html', reported=reported, isAdmin=admin)
+    response = make_response(html)
+    return response
 
 # --------------------------------------------------------------------
 @app.route('/matches', methods=['GET'])

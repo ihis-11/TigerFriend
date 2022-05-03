@@ -35,15 +35,14 @@
             <main>
                 <header>
                     <div>
-                        <h2 id="reported">{{receiver}} <button onclick="openReport()">Report User</button></h2>
+                        <h2 id="header"><p id="reported">{{receiver}}</p> <button onclick="openReport()">Report User</button></h2>
                         <h3>{{bio_receiver}}</h3>
 
                         <div class="form-popup" id="myReport">
                             <form action="/reporting" class="form-container" method="get">
                                 <h1>Report this user</h1>
-
                                 <input id="report" type="text" placeholder="Why are you reporting this user?" name="reportmsg" required>
-
+                                <input type="hidden" name="receiver" value={{receiver}}>
                                 <button type="submit" class="btn">Submit Report</button>
                                 <button type="button" class="btn cancel" onclick="closeReport()">Go back</button>
                             </form>
@@ -77,26 +76,6 @@
             document.getElementById("myReport").style.display = "none";
         }
 
-        let request1 = null
-
-        function reporting() {
-            let reported = document.getElementById("reported").innerHTML;
-            reported = encodeURIComponent(reported);
-            let report = $('#report').val();
-            report = encodeURIComponent(report);
-            let url = '/matches?reporteduser=' + reported + '&reportmsg' + report;
-            $("#report").val('');
-
-            if (request != null)
-                request.abort();
-
-            request = $.ajax({
-                type: 'GET',
-                url: url,
-                success: closeReport
-            });
-        }
-
         function handleResponse(response) {
             $('#allChats').html(response);
         }
@@ -123,7 +102,9 @@
         let request2 = null
 
         function getMessages() {
-            let url = '/getmessages?receiver=' + {{receiver}};
+            let receiver = document.getElementById("reported").innerHTML;
+            receiver = encodeURIComponent(receiver);
+            let url = '/getmessages?receiver=' + receiver;
 
             if (request2 != null)
                 request2.abort();
