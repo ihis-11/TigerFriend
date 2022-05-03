@@ -7,11 +7,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, desc
-import configs
+import os
 from database import Administrators, Reports, Messages
 from sys import stderr
 
-DATABASE_URL = configs.DATABASE_URL
+DATABASE_URL = os.environ['DATABASE_URL']
 
 
 def is_admin(net_id):

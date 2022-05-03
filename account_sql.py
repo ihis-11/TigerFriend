@@ -4,10 +4,10 @@ from sys import stderr
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 
-import configs
+import os
 from database import Account, RawData, Messages, Chats, Banned
 
-DATABASE_URL = configs.DATABASE_URL
+DATABASE_URL = os.environ['DATABASE_URL']
 
 
 def api_account_creation(net_id, year, maj, res, user, bio):

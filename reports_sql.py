@@ -4,11 +4,10 @@ from sys import stderr
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 from database import Chats, Reports
-import configs
+import os
 from datetime import datetime
 
-DATABASE_URL = configs.DATABASE_URL
-
+DATABASE_URL = os.environ['DATABASE_URL']
 
 # Report user with given reporter/reported net_id and type and comment
 def report_user(reporter, reported, rep_comment):
