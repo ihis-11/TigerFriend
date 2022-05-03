@@ -144,7 +144,7 @@ def get_user_bio(net_id):
 
 
 # adapted from chat_sql.py to avoid circular import
-def get_chat_ids(user):
+def __get_chat_ids__(user):
     try:
         # connect to database
         engine = create_engine(DATABASE_URL)
