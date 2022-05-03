@@ -21,9 +21,7 @@ from sys import stderr
 
 app = Flask(__name__, template_folder='templates')
 
-# app.secret_key = APP_SECRET_KEY
-from boto.s3.connection import S3Connection
-s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+app.secret_key = os.environ['APP_SECRET_KEY']
 
 import auth
 
