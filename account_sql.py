@@ -56,29 +56,6 @@ def update_bio(net_id, bio):
         print(ex, file=stderr)
         print("Update bio failed", file=stderr)
 
-
-# update net_id's new username to user
-def update_username(net_id, user):
-    try:
-        engine = create_engine(DATABASE_URL)
-
-        Session = sessionmaker(bind=engine)
-        session = Session()
-
-        update = (session.query(Account)
-                  .filter(Account.net_id == net_id)
-                  .one())
-        update.username = user
-
-        session.commit()
-        session.close()
-        engine.dispose()
-
-    except Exception as ex:
-        print(ex, file=stderr)
-        print("Update username failed", file=stderr)
-
-
 # to get net_id from username
 def get_netid(user):
     engine = create_engine(DATABASE_URL)

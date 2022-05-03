@@ -4,7 +4,8 @@
 from flask import Flask, request, make_response, render_template, redirect, url_for
 
 from admin_sql import is_admin, get_report, get_message_history
-from html import escape
+from urllib.parse import unquote
+from html import unescape
 from account_sql import api_account_creation, get_year_major, get_user_bio, get_bio, update_bio, get_netid
 from stats_sql import get_stats
 from matching import input_match_scores, get_matches
@@ -40,7 +41,6 @@ def home():
     html = render_template('home.html')
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ def survey():
 
 
 # --------------------------------------------------------------------
-@app.route('/reporting', methods=['GET'])
+@app.route('/reporting', methods=['GET', 'POST'])
 def reporting():
     user = auth.authenticate().strip()
     if is_banned(user):
@@ -131,7 +131,6 @@ def match():
         return response
 
     matches = get_matches(user)
-
     admin = is_admin(user)
 
     html = render_template('matches.html',
@@ -144,7 +143,6 @@ def match():
                            )
     response = make_response(html)
     return response
-
 
 # --------------------------------------------------------------------
 
@@ -208,8 +206,8 @@ def chat():
         response = make_response(html)
         return response
     admin = is_admin(user)
-    receiver = request.args.get('receiver')
-
+    receiver = unescape(request.args.get('receiver'))
+    
     # fetch the bio of the receiver
     receiver_bio = get_bio(receiver)
 
@@ -241,15 +239,14 @@ def send_message():
         html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
-    receiver = request.args.get('receiver')
-    chat_sent = request.args.get('message')
-    message = chat_sent  # handling the attacks on the html pages
+    receiver = unescape(request.args.get('receiver'))
+    message = request.args.get('message')
 
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)
 
     # when the user sends a non-empty message
-    if chat_sent.strip() != "":
+    if message.strip() != "":
         send_chat(chat_id, user, message)
 
     # getting all the messages then
@@ -272,7 +269,8 @@ def get_chats():
         response = make_response(html)
         return response
 
-    receiver = request.args.get('receiver')
+    receiver = unescape(request.args.get('receiver'))
+
     # fetch add the message to the database
     chat_id = get_chat_id(user, receiver)
 
@@ -364,7 +362,7 @@ def bioupdate():
 
      # handles updating the bio
     if request.args.get('newbio') is not None:
-        print("updated bio_-----------------________---_--------")
+        print("updated bio_-------------------------------")
         update_bio(user, request.args.get('newbio'))
     
     return make_response('')
@@ -385,7 +383,8 @@ def accountdetails():
     bio = ""
     # Only happens when coming from account creation
     if request.args.get('username') is not None:
-        username = request.args.get('username')  # DEAL WITH EMPTY USERNAME INPUT HERE
+        # DEAL WITH EMPTY USERNAME INPUT HERE
+        username = unescape(request.args.get('username'))  
         bio = request.args.get('bio')
     else:
         username = account_info[0]
@@ -394,6 +393,11 @@ def accountdetails():
     # Dealing with empty username input
     if username.strip() == '':
         error_msg = "Please input a username."
+        return redirect(url_for('account', error_msg=error_msg))
+    
+    # dealing with the usernames with spaces
+    if ' ' in username:
+        error_msg = "Please input in a username without a space"
         return redirect(url_for('account', error_msg=error_msg))
 
     # if the user doesn't already have an account
@@ -575,7 +579,6 @@ def view_report():
         html = render_template('banned.html', time = times[0])
         response = make_response(html)
         return response
-    admin = is_admin(user)
     
     admin = is_admin(user)
     if not admin:
