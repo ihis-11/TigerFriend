@@ -56,6 +56,7 @@ def update_bio(net_id, bio):
         print(ex, file=stderr)
         print("Update bio failed", file=stderr)
 
+
 # to get net_id from username
 def get_netid(user):
     engine = create_engine(DATABASE_URL)
@@ -171,6 +172,7 @@ def __get_chat_ids__(user):
         print("Data base connection failed", file=stderr)
         return "unknown (database connection failed)"
 
+
 # Deletes account associated with net_id and all other info (except admin status)
 # Match scores must be deleted in PGAdmin due to SQLAlchemy incompatibility
 def clear_account(net_id):
@@ -184,14 +186,14 @@ def clear_account(net_id):
 
         for chat in chat_ids:
             (session.query(Messages)
-                    .filter(Messages.chat_id == chat)
-                    .delete())
+             .filter(Messages.chat_id == chat)
+             .delete())
 
             session.commit()
 
             (session.query(Chats)
-                    .filter(Chats.chat_id == chat)
-                    .delete())
+             .filter(Chats.chat_id == chat)
+             .delete())
 
             session.commit()
 
@@ -207,20 +209,20 @@ def clear_account(net_id):
         # session.commit()
 
         (session.query(Account)
-                .filter(Account.net_id == net_id)
-                .delete())
+         .filter(Account.net_id == net_id)
+         .delete())
 
         session.commit()
 
         (session.query(RawData)
-                .filter(RawData.net_id == net_id)
-                .delete())
+         .filter(RawData.net_id == net_id)
+         .delete())
 
         session.commit()
 
         (session.query(Banned)
-                .filter(Banned.net_id == net_id)
-                .delete())
+         .filter(Banned.net_id == net_id)
+         .delete())
 
         session.commit()
 
@@ -234,11 +236,13 @@ def clear_account(net_id):
         print("Data base connection failed", file=stderr)
         return ["unknown (database connection failed)", "unknown"]
 
+
 # run main to delete user
 def main():
     user = 'collado'
     clear_account(user)
     print(user + "'s account was deleted")
+
 
 # ----------------------------------------------------------------------
 
