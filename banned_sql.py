@@ -7,12 +7,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-import os
+import configs
 from database import Banned
 from datetime import datetime, timedelta
 from sys import stderr
 
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = configs.DATABASE_URL
 
 
 def is_banned(net_id):

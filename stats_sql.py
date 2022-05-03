@@ -7,11 +7,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, desc
-import os
+import configs
 from database import Account, RawData, Survey
 from sys import stderr
 
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = configs.DATABASE_URL
 
 # Returns stats; specifically, [dict of class year counts, dict of res college counts]
 def get_stats():

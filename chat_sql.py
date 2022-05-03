@@ -12,11 +12,11 @@ from sys import stderr
 from sqlalchemy import create_engine, desc, asc
 from sqlalchemy.orm import sessionmaker
 
-import os
+import configs
 from account_sql import get_user_bio, get_netid
 from database import Chats, Account, Messages
 
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = configs.DATABASE_URL
 
 
 # --------------------------------------------------------------------
